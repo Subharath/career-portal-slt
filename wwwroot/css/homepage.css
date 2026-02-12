@@ -1,0 +1,63 @@
+﻿body {
+    /*background: linear-gradient(#808def, white) no-repeat;*/
+    background-image: url('../images/bgpic-s.jpg');
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.8;
+}
+
+/*a {
+    color: inherit;
+    text-decoration: none;
+}*/
+
+/*///////*/
+a.joblink {
+    color: white;
+    text-decoration: none;
+}
+
+a.joblink:link {
+    color: white;
+    text-decoration: none;
+}
+
+a.joblink:active {
+    color: white;
+    text-decoration: none;
+}
+
+a.joblink:hover {
+    color: #54B4D3;
+    text-decoration: none;
+}
+
+/*///////*/
+a.genlink {
+    color: white;
+    text-decoration: none;
+}
+
+a.genlink:link {
+    color: white;
+    text-decoration: none;
+}
+
+a.genlink:active {
+    color: white;
+    text-decoration: none;
+}
+
+a.genlink:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.sltgreen {
+    color: #4DB848;
+}
+
+

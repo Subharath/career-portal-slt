@@ -1,0 +1,56 @@
+﻿@model IEnumerable<JobApp.Models.IntakeViewModel>
+@{
+    ViewData["Title"] = "SLT";
+}
+
+<link href="~/css/homepage.css" rel="stylesheet" />
+
+<div class="row mt-1 p-5 bg-light bg-opacity-90 text-black border border-1 border-light rounded-3">
+    <div class="col-10">
+        <div>
+            <h1 class="display-5">Welcome! to SLT JOBAPP <small class="text-muted">Applicant Portal</small></h1>
+            <h4 class="sltgreen">Join our team and be part of something extraordinary!</h4>
+        </div>
+    </div>
+    <div class="col-2 align-items-center justify-content-md-center">
+        <img src="~/images/logo.png" width="125%" height="80%"/>
+    </div>
+</div>
+
+<div class="row mt-1 bg-dark bg-opacity-75 text-white border border-1 border-white rounded-3" style="height:auto">
+
+@{
+    if (Model.Any())
+    {
+        <div class="col-7">
+            <h4 class="text-info p-5">Following Job Opportunities are opened for you</h4>
+        </div>
+
+        <div class="col-5">
+            <ul class="fa-ul p-5">
+                @{
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <i class="fa-li fa-solid fa-square-check"></i>@Html.ActionLink(item.JobPositionName, "InitApply", "Application", new { intakeCode=item.IntakeCode, jobPositionName=item.JobPositionName, jobTemplate=item.JobTemplate }, new {@class="joblink"})
+                            <br>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+}
+
+</div>
+
+<div class="row">
+    <div class="mt-1 p-5 bg-secondary bg-opacity-75 text-white border border-1 border-white rounded-3" style="height:100pt">
+        <h5 class="float-end">You can join with our Talent Pool. @Html.ActionLink("Post your resume", "Join", "Home", "", new { @class="genlink btn btn-info btn-sm" }) and find your next job.</h5>
+    </div>
+</div>
+
+@*<p>
+    <a asp-action="Apply" asp-controller="Application" class="btn btn-outline-dark btn-md float-lg-end"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;Apply Now</a>
+</p>*@
+
