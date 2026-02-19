@@ -1,0 +1,84 @@
+name: Generate Security Report
+
+on:
+  schedule:
+    # Run daily at 9 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+permissions:
+  contents: write
+  security-events: read
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    name: Generate CodeQL Security Report
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml requests
+
+      - name: Fetch CodeQL Alerts
+        run: |
+          python .github/scripts/generate_report.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Commit and push report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if there are changes
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git add security-report.html
+            git add security-report.md
+            git commit -m "📊 Auto-generated security report from CodeQL scan"
+            git push
+          fi
+        continue-on-error: true
+
+  upload-sarif:
+    runs-on: ubuntu-latest
+    name: Export SARIF Report
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch SARIF from CodeQL
+        run: |
+          mkdir -p reports
+          curl -L \
+            -H "Accept: application/sarif+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/${{ github.repository }}/code-scanning/sarifs \
+            > reports/codeql-sarif-export.json || echo "SARIF export not available"
+        continue-on-error: true
+
+      - name: Upload SARIF artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sarif-reports
+          path: reports/
+          retention-days: 30
+        continue-on-error: true
