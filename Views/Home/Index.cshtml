@@ -1,56 +1,94 @@
 ﻿@model IEnumerable<JobApp.Models.IntakeViewModel>
 @{
-    ViewData["Title"] = "SLT";
+    ViewData["Title"] = "SLT JobApp - Welcome";
 }
 
 <link href="~/css/homepage.css" rel="stylesheet" />
 
-<div class="row mt-1 p-5 bg-light bg-opacity-90 text-black border border-1 border-light rounded-3">
-    <div class="col-10">
-        <div>
-            <h1 class="display-5">Welcome! to SLT JOBAPP <small class="text-muted">Applicant Portal</small></h1>
-            <h4 class="sltgreen">Join our team and be part of something extraordinary!</h4>
+<section class="home-hero mb-4">
+    <div class="home-hero-media"></div>
+    <div class="home-hero-overlay position-relative">
+        <img src="~/images/logo.png" alt="SLT Mobitel" class="home-hero-top-right-logo" />
+        <div class="row align-items-center g-4 w-100">
+            <div class="col-lg-8">
+                <p class="home-eyebrow mb-2">SLT MOBITEL CAREERS</p>
+                <h1 class="home-title mb-3">Build your future with us</h1>
+                <p class="home-subtitle mb-4">
+                    A streamlined portal for new employees to discover opportunities and apply with confidence.
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="#openings" class="btn btn-light btn-lg px-4">View Openings</a>
+                    @Html.ActionLink("Join Talent Pool", "Join", "Home", null, new { @class = "btn btn-outline-light btn-lg px-4" })
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-2 align-items-center justify-content-md-center">
-        <img src="~/images/logo.png" width="125%" height="80%"/>
-    </div>
-</div>
+</section>
 
-<div class="row mt-1 bg-dark bg-opacity-75 text-white border border-1 border-white rounded-3" style="height:auto">
-
-@{
-    if (Model.Any())
-    {
-        <div class="col-7">
-            <h4 class="text-info p-5">Following Job Opportunities are opened for you</h4>
-        </div>
-
-        <div class="col-5">
-            <ul class="fa-ul p-5">
-                @{
+@if (Model != null && Model.Any())
+{
+    <section class="portal-card portal-openings mb-4" id="openings">
+        <div class="row g-4 align-items-start">
+            <div class="col-lg-5">
+                <h2 class="mb-3"><i class="fas fa-briefcase me-2"></i>Current Openings</h2>
+                <p class="mb-0">
+                    Explore active positions and start your application in a few clicks.
+                </p>
+            </div>
+            <div class="col-lg-7">
+                <ul class="home-opening-list mb-0">
                     @foreach (var item in Model)
                     {
                         <li>
-                            <i class="fa-li fa-solid fa-square-check"></i>@Html.ActionLink(item.JobPositionName, "InitApply", "Application", new { intakeCode=item.IntakeCode, jobPositionName=item.JobPositionName, jobTemplate=item.JobTemplate }, new {@class="joblink"})
-                            <br>
+                            @Html.ActionLink(
+                                item.JobPositionName,
+                                "InitApply",
+                                "Application",
+                                new { intakeCode = item.IntakeCode, jobPositionName = item.JobPositionName, jobTemplate = item.JobTemplate },
+                                new { @class = "joblink" }
+                            )
+                            <span class="home-opening-meta">Apply now</span>
                         </li>
                     }
-                }
-            </ul>
+                </ul>
+            </div>
         </div>
-    }
+    </section>
 }
 
-</div>
-
-<div class="row">
-    <div class="mt-1 p-5 bg-secondary bg-opacity-75 text-white border border-1 border-white rounded-3" style="height:100pt">
-        <h5 class="float-end">You can join with our Talent Pool. @Html.ActionLink("Post your resume", "Join", "Home", "", new { @class="genlink btn btn-info btn-sm" }) and find your next job.</h5>
+<section class="portal-card portal-talent mb-4">
+    <div class="row g-3 align-items-center">
+        <div class="col-md-8">
+            <h3 class="mb-2"><i class="fas fa-users me-2"></i>Join Our Talent Pool</h3>
+            <p class="mb-0">No matching role right now? Share your resume and we will contact you when a fit opens.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            @Html.ActionLink("Post Your Resume", "Join", "Home", null, new { @class = "btn btn-success btn-lg px-4" })
+        </div>
     </div>
-</div>
+</section>
 
-@*<p>
-    <a asp-action="Apply" asp-controller="Application" class="btn btn-outline-dark btn-md float-lg-end"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;Apply Now</a>
-</p>*@
+<section class="row g-3 mb-2">
+    <div class="col-md-4">
+        <article class="home-feature-card h-100">
+            <i class="fas fa-bolt home-feature-icon"></i>
+            <h5>Fast Process</h5>
+            <p>Simple steps and clear flow from listing to submission.</p>
+        </article>
+    </div>
+    <div class="col-md-4">
+        <article class="home-feature-card h-100">
+            <i class="fas fa-lock home-feature-icon"></i>
+            <h5>Secure Data</h5>
+            <p>Your information is protected throughout the process.</p>
+        </article>
+    </div>
+    <div class="col-md-4">
+        <article class="home-feature-card h-100">
+            <i class="fas fa-headset home-feature-icon"></i>
+            <h5>HR Support</h5>
+            <p>Guidance is available whenever you need help.</p>
+        </article>
+    </div>
+</section>
 
