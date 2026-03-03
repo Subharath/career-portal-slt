@@ -1,29 +1,277 @@
-﻿.nav-tabs .nav-link {
-    border-top-right-radius: 1rem;
+﻿/* ============================================
+   MODERN APPLICATION FORM STYLES
+   ============================================ */
+
+/* Main Form Container */
+.container {
+    position: relative;
+    z-index: 2;
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    background-color: thistle;
+/* Form Cards with Clean White Background */
+.wizard-content,
+.application-form,
+form {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg, 16px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    margin-bottom: 2rem;
 }
 
-.accordion-button:focus {
-    background-color: #4DB848;
-    border-color: black;
-    border: thin;
-    color: white;
-    font-weight: bold;
+/* Ensure all form sections have white backgrounds */
+.tab-content,
+.accordion-body {
+    background: #FFFFFF !important;
 }
 
-.accordion-button:not(.collapsed) {
-    background-color: #4DB848;
-    color: white;
-    font-weight: bold;
+/* MODERN TAB NAVIGATION */
+.nav-tabs {
+    border-bottom: 2px solid #E0E6ED;
+    gap: 0.5rem;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    border-top-left-radius: var(--radius-md, 10px);
+    border-top-right-radius: var(--radius-md, 10px);
+    color: var(--text-secondary, #546E7A);
+    font-weight: 600;
+    padding: 0.875rem 1.5rem;
+    transition: all var(--transition-base, 250ms);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-tabs .nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-blue, #0066CC), var(--accent-green, #00C853));
+    transform: translateX(-50%);
+    transition: width var(--transition-base, 250ms);
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--primary-blue, #0066CC);
+    background: rgba(0, 102, 204, 0.05);
+}
+
+.nav-tabs .nav-link:hover::before {
+    width: 80%;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(0, 200, 83, 0.1));
+    color: var(--primary-blue-dark, #004C99);
+    border-bottom: 3px solid var(--primary-blue, #0066CC);
+    box-shadow: 0 -4px 12px rgba(0, 102, 204, 0.1);
+}
+
+.nav-tabs .nav-link.active::before {
+    width: 100%;
+}
+
+/* ============================================
+   MODERN ACCORDION STYLES
+   ============================================ */
+
+.accordion {
+    border-radius: var(--radius-md, 10px);
+    overflow: hidden;
+    box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
+}
+
+.accordion-item {
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: var(--radius-sm, 6px);
+    overflow: hidden;
+    background: #FFFFFF;
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.08));
+    transition: all var(--transition-base, 250ms);
+}
+
+.accordion-item:hover {
+    box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
 }
 
 .accordion-button {
-    background-color: #97f893;
-    color: black;
-    font-weight: bold;
+    background: linear-gradient(135deg, rgba(77, 184, 72, 0.15), rgba(77, 184, 72, 0.1));
+    color: var(--text-primary, #2C3E50);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 1.25rem 1.5rem;
+    border: none;
+    transition: all var(--transition-base, 250ms);
+    box-shadow: none;
+    letter-spacing: 0.3px;
+}
+
+.accordion-button::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--slt-green-light, #71C66D);
+    transform: scaleY(0);
+    transition: transform var(--transition-base, 250ms);
+}
+
+.accordion-button:hover {
+    background: linear-gradient(135deg, rgba(77, 184, 72, 0.25), rgba(77, 184, 72, 0.15));
+    transform: translateX(4px);
+}
+
+.accordion-button:hover::before {
+    transform: scaleY(1);
+}
+
+.accordion-button:focus {
+    background: linear-gradient(135deg, var(--slt-green, #4DB848), var(--slt-green-dark, #3A9036));
+    border: none;
+    color: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(77, 184, 72, 0.3);
+    z-index: 3;
+}
+
+.accordion-button:not(.collapsed) {
+    background: linear-gradient(135deg, var(--slt-green, #4DB848), var(--slt-green-dark, #3A9036));
+    color: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(77, 184, 72, 0.3);
+    position: relative;
+}
+
+.accordion-button:not(.collapsed)::before {
+    background: #FFFFFF;
+    transform: scaleY(1);
+}
+
+.accordion-button:not(.collapsed)::after {
+    filter: brightness(0) invert(1);
+    transform: rotate(180deg);
+}
+
+.accordion-button::after {
+    background-size: 1.25rem;
+    transition: all var(--transition-base, 250ms);
+}
+
+.accordion-body {
+    padding: 1.5rem;
+    background: #FFFFFF;
+    border-top: 1px solid rgba(77, 184, 72, 0.2);
+}
+
+/* ============================================
+   ACCORDION ANIMATION
+   ============================================ */
+
+.accordion-collapse {
+    transition: all var(--transition-slow, 350ms) ease-in-out;
+}
+
+/* ============================================
+   STEP INDICATORS (Optional Enhancement)
+   ============================================ */
+
+.step-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-blue, #0066CC), var(--primary-blue-dark, #004C99));
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin-right: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+/* ============================================
+   MODERN PROGRESS BAR
+   ============================================ */
+
+.progress {
+    height: 0.75rem;
+    border-radius: var(--radius-full, 9999px);
+    background: #E0E6ED;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--slt-green, #4DB848), var(--accent-green, #00C853));
+    border-radius: var(--radius-full, 9999px);
+    box-shadow: 0 2px 8px rgba(77, 184, 72, 0.4);
+    transition: width var(--transition-slow, 350ms) ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ============================================
+   FORM SECTION HEADERS
+   ============================================ */
+
+.section-header {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(0, 200, 83, 0.05));
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--primary-blue, #0066CC);
+    border-radius: var(--radius-sm, 6px);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-blue-dark, #004C99);
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.08));
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .accordion-button {
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .accordion-body {
+        padding: 1rem;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 0.625rem 1rem;
+        font-size: 0.9rem;
+    }
 }
 
 
