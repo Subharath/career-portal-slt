@@ -1,64 +1,124 @@
 ﻿@{
-    ViewData["Title"] = "Instructions";
+    ViewData["Title"] = "Guidelines & Instructions";
 }
 
-<style>
-    .swal-text {
-        color: black;
-    }
+<div class="row justify-content-center my-4 animate-fade-in">
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-header border-0 py-4">
+                <h2 class="mb-0 text-white text-center fw-bold" style="letter-spacing: 0.5px;">
+                    <i class="fas fa-book-open me-3"></i>
+                    General Guidelines & Instructions
+                </h2>
+            </div>
+            
+            <div class="card-body p-5">
+                <!-- Important Notice -->
+                <div class="alert shadow-sm border-0 mb-5" style="background: var(--bg-secondary); border-left: 5px solid var(--warning); border-radius: var(--radius-lg); padding: 2rem;">
+                    <h4 style="color: var(--warning); font-weight: 700;" class="mb-3 d-flex align-items-center">
+                        <i class="fas fa-exclamation-triangle me-3 fs-3"></i>
+                        Important Notice
+                    </h4>
+                    <p class="mb-0 fs-5" style="color: var(--text-primary); line-height: 1.6;">
+                        For the best experience, please complete this application form using a <strong>desktop or laptop</strong>. 
+                        Due to the complexity and size of the form, mobile devices are not recommended.
+                    </p>
+                </div>
 
-    .swal-button {
-        color: black;
-        border-color: navy;
-    }
+                <div class="row g-5">
+                    <!-- Guidelines List -->
+                    <div class="col-md-6">
+                        <h4 class="mb-4 d-flex align-items-center" style="color: var(--primary-blue); font-weight: 700;">
+                            <i class="fas fa-clipboard-list me-3 fs-4"></i>
+                            Before You Begin
+                        </h4>
+                        
+                        <ul class="list-unstyled">
+                            <li class="mb-4 d-flex align-items-start hover-lift p-3 rounded-modern transition-fast" style="background: var(--bg-secondary);">
+                                <i class="fas fa-asterisk text-danger mt-1 me-3 fs-6"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Required Fields</h6>
+                                    <span style="color: var(--text-secondary);">Entries marked with a red asterisk are mandatory.</span>
+                                </div>
+                            </li>
+                            
+                            <li class="mb-4 d-flex align-items-start hover-lift p-3 rounded-modern transition-fast" style="background: var(--bg-secondary);">
+                                <i class="fas fa-file-upload text-primary mt-1 me-3 fs-5"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">File Size Limits</h6>
+                                    <span style="color: var(--text-secondary);">Each attachment must not exceed <strong>1MB</strong> in size.</span>
+                                </div>
+                            </li>
 
-    .swal-title {
-        color: navy;
-    }
-</style>
+                            <li class="mb-4 d-flex align-items-start hover-lift p-3 rounded-modern transition-fast" style="background: var(--bg-secondary);">
+                                <i class="fas fa-calendar-alt text-success mt-1 me-3 fs-5"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Age Calculation</h6>
+                                    <span style="color: var(--text-secondary);">Age is calculated as of the closing date of the application.</span>
+                                </div>
+                            </li>
 
-@*<partial name="_LoadingPartial" />*@
+                            <li class="mb-4 d-flex align-items-start hover-lift p-3 rounded-modern transition-fast" style="background: var(--bg-secondary);">
+                                <i class="fas fa-graduation-cap text-info mt-1 me-3 fs-5"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">A/L Results</h6>
+                                    <span style="color: var(--text-secondary);">Only the core subjects of the main stream need to be entered. Optional subjects are disregarded.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
 
-<div class="card">
-  <div class="card-header">
-        General Guidelines & Instructions on Application Form
-  </div>
-  <div class="card-body">
-    <h5 class="card-title"></h5>
-    <p class="card-text">
-        <ul>
-            <li><span class="required"></span> marked entries are manadatory.</li>
-            <li>Each attachment size must not exceed 1MB.</li>
-            <li>Age is calculated as of the closing date of the application or the date of application for Talent Pool.</li>
-            <li>For Advanced Level exam results, only the core subjects of the main stream need to be entered. Grades for optional subjects will be disregarded.</li>
-            <li>Please make ready the following documents in .pdf or .jpg format (each not exceeding 1MB) before starting to fill the application form
-                <ul>
-                    <li>Result sheets of Ordinary & Advanced Level exams</li>
-                    <li>Cerficates of Higher & Professional qualifications</li>
-                    <li>Service letters of employments (optional)</li>
-                    <li>Curriculum Vitae</li>
-                    <li>NIC/Passport</li>
-                    <li>Birth Certificate</li>
-                    <li>Driving License</li>
-                </ul>
-            </li>
-            <li>For certain job positions, some of the aforementioned documents may not be mandatory.</li>
-            <li><b>Important Notice:</b> For the best experience, please complete this application form using a desktop or laptop. Due to the complexity and size of the form, mobile devices are not recommended.</li>
-        </ul>
-    </p>
-  </div>
+                    <!-- Required Documents -->
+                    <div class="col-md-6">
+                        <div class="h-100 rounded-modern-lg shadow-sm" style="background: linear-gradient(145deg, var(--primary-blue), var(--primary-blue-dark)); padding: 2rem; color: white;">
+                            <h4 class="mb-4 d-flex align-items-center text-white" style="font-weight: 700;">
+                                <i class="fas fa-paperclip me-3 fs-4"></i>
+                                Required Documents
+                            </h4>
+                            
+                            <p class="mb-4" style="opacity: 0.9; font-size: 1.05rem;">
+                                Prepare the following documents in <strong>.pdf</strong> or <strong>.jpg</strong> format:
+                            </p>
+                            
+                            <div class="bg-white rounded-modern p-4 text-dark shadow-sm">
+                                <ul class="list-unstyled mb-0" style="color: var(--text-primary);">
+                                    <li class="mb-3 d-flex align-items-center"><i class="fas fa-check-circle text-success me-3"></i> O/L & A/L Result Sheets</li>
+                                    <li class="mb-3 d-flex align-items-center"><i class="fas fa-check-circle text-success me-3"></i> Higher & Professional Certificates</li>
+                                    <li class="mb-3 d-flex align-items-center"><i class="fas fa-check-circle text-success me-3"></i> Service Letters <span class="badge bg-secondary ms-2">Optional</span></li>
+                                    <li class="mb-3 d-flex align-items-center"><i class="fas fa-check-circle text-success me-3"></i> Curriculum Vitae</li>
+                                    <hr class="my-3 text-muted">
+                                    <li class="mb-3 d-flex align-items-center"><i class="fas fa-id-card text-primary me-3"></i> NIC or Passport</li>
+                                    <li class="mb-3 d-flex align-items-center"><i class="fas fa-baby text-primary me-3"></i> Birth Certificate</li>
+                                    <li class="mb-0 d-flex align-items-center"><i class="fas fa-car text-primary me-3"></i> Driving License <span class="badge bg-secondary ms-2">If Applicable</span></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mt-4 pt-3 border-top border-light" style="opacity: 0.85;">
+                                <p class="mb-0 fs-6">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <em>Note: For certain job positions, some documents may not be mandatory.</em>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5 pt-4 border-top">
+                    <a asp-action="Index" class="btn btn-success btn-lg px-5 py-3 shadow-md fw-bold" style="border-radius: 50px; font-size: 1.2rem; min-width: 300px;">
+                        <i class="fas fa-arrow-right me-3"></i>
+                        I Understand - Proceed to Apply
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-@*<input type ="button" id="btnclick" value="click"/>*@
 
 @section Scripts 
 {
     <script>
         $(document).ready(function() {
-           
-
-            
+            // Document ready logic
         });
     </script>
 }
