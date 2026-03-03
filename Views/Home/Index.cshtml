@@ -5,7 +5,7 @@
 
 <link href="~/css/homepage.css" rel="stylesheet" />
 
-<section class="home-hero mb-4">
+<section class="home-hero mb-4" data-aos="fade-in" data-aos-duration="1000">
     <div class="home-hero-media"></div>
     <div class="home-hero-overlay position-relative">
         <img src="~/images/logo.png" alt="SLT Mobitel" class="home-hero-top-right-logo" />
@@ -27,7 +27,7 @@
 
 @if (Model != null && Model.Any())
 {
-    <section class="portal-card portal-openings mb-4" id="openings">
+    <section class="portal-card portal-openings mb-4" id="openings" data-aos="fade-up" data-aos-delay="100">
         <div class="row g-4 align-items-start">
             <div class="col-lg-5">
                 <h2 class="mb-3"><i class="fas fa-briefcase me-2"></i>Current Openings</h2>
@@ -56,11 +56,11 @@
     </section>
 }
 
-<section class="portal-card portal-talent mb-4">
+<section class="portal-card portal-talent mb-4" data-aos="fade-up" data-aos-delay="150">
     <div class="row g-3 align-items-center">
         <div class="col-md-8">
             <h3 class="mb-2"><i class="fas fa-users me-2"></i>Join Our Talent Pool</h3>
-            <p class="mb-0">No matching role right now? Share your resume and we will contact you when a fit opens.</p>
+            <p class="mb-0">You can join with our Talent Pool and find your next job.</p>
         </div>
         <div class="col-md-4 text-md-end">
             @Html.ActionLink("Post Your Resume", "Join", "Home", null, new { @class = "btn btn-success btn-lg px-4" })
@@ -68,7 +68,7 @@
     </div>
 </section>
 
-<section class="row g-3 mb-2">
+<section class="row g-3 mb-2" data-aos="fade-up" data-aos-delay="200">
     <div class="col-md-4">
         <article class="home-feature-card h-100">
             <i class="fas fa-bolt home-feature-icon"></i>
