@@ -1,31 +1,52 @@
 ﻿@{
-    ViewData["Title"] = "Join";
+    ViewData["Title"] = "Join Talent Pool";
 }
 
-<div class="row">
-    <div class="row mt-2 p-5 bg-light text-black border border-1 border-light rounded-3">
-        <form asp-action="InitApply" asp-controller="Application">
-            <input type="hidden" id="jobPositionName" name="jobPositionName" />
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-header border-0 py-4" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));">
+                <h3 class="mb-0 text-white"><i class="fas fa-users me-2"></i>Join Our Talent Pool</h3>
+                <p class="mb-0 mt-2" style="opacity: 0.9;">Submit your profile for future opportunities</p>
+            </div>
+            <div class="card-body p-5">
+                <form asp-action="InitApply" asp-controller="Application">
+                    <input type="hidden" id="jobPositionName" name="jobPositionName" />
 
-            <div class="form-group row">
-                <div class="col-3 form-group">
-                    <p class="control-label required">Select your interested job position</p>
-                </div>
-                <div class="col-4 form-group">
-                    <select asp-items="@ViewBag.JobPosition" id="intakeCode" name="intakeCode" class="form-select form-select-sm" required autofocus>
-                        <option disabled selected></option>
-                    </select>
-                </div>
-                <div class="col-2 form-group">
-                    <button type="submit" class="btn btn-primary btn-sm">Proceed</button>
+                    <div class="row align-items-end g-3">
+                        <div class="col-md-6">
+                            <label class="control-label required" for="intakeCode">
+                                Select your interested job position
+                            </label>
+                            <select asp-items="@ViewBag.JobPosition" 
+                                    id="intakeCode" 
+                                    name="intakeCode" 
+                                    class="form-select" 
+                                    required 
+                                    autofocus>
+                                <option disabled selected>-- Choose a position --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-arrow-right me-2"></i>Proceed
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="alert" style="background: var(--bg-tertiary); border-left: 4px solid var(--primary-blue); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 2rem;">
+                    <h6 style="color: var(--primary-blue-dark); margin-bottom: 1rem;">
+                        <i class="fas fa-info-circle me-2"></i>Important Notice
+                    </h6>
+                    <p style="color: #2C3E50; margin: 0; line-height: 1.6;">
+                        Applications and CVs submitted for the Talent Pool will be retained for a period of <strong>six months</strong> 
+                        and securely discarded thereafter.
+                    </p>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div class="row">
-    <p>Please note that Applications and CVs submitted for Talent Pool, will be retained only for a period of six months and securely discarded thereafter.</p>
 </div>
 
 @section Scripts {
