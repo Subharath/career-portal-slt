@@ -1,48 +1,147 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿/* ============================================
+   MODERN LAYOUT STYLES - SLT JOBAPP
+   ============================================ */
 
+/* Navbar Brand */
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-weight: 700;
+    transition: all var(--transition-base, 250ms);
 }
 
+a.navbar-brand:hover {
+    transform: translateY(-2px);
+}
+
+/* Modern Link Styling */
 a {
-  color: #0077cc;
+    color: var(--primary-blue, #0066CC);
+    text-decoration: none;
+    transition: all var(--transition-fast, 150ms);
 }
 
+a:hover {
+    color: var(--primary-blue-light, #4D94E6);
+}
+
+/* Modern Primary Button */
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, var(--primary-blue, #0066CC), var(--primary-blue-dark, #004C99));
+    border: none;
+    font-weight: 600;
+    padding: 0.625rem 1.5rem;
+    border-radius: var(--radius-sm, 6px);
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.08));
+    transition: all var(--transition-base, 250ms);
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-blue-light, #4D94E6), var(--primary-blue, #0066CC));
+    box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
+    transform: translateY(-2px);
 }
 
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Modern Nav Pills */
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    color: #FFFFFF;
+    background: linear-gradient(135deg, var(--primary-blue, #0066CC), var(--primary-blue-dark, #004C99));
+    border: none;
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.08));
+}
+
+.nav-pills .nav-link {
+    border-radius: var(--radius-sm, 6px);
+    transition: all var(--transition-base, 250ms);
+    font-weight: 600;
+}
+
+.nav-pills .nav-link:hover {
+    background: rgba(0, 102, 204, 0.1);
+}
+
+/* Modern Borders */
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid rgba(0, 102, 204, 0.15) !important;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid rgba(0, 102, 204, 0.15) !important;
 }
 
+/* Modern Box Shadow */
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1)) !important;
 }
 
+/* Button Enhancements */
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
+    transition: all var(--transition-base, 250ms);
 }
 
+button.accept-policy:hover {
+    transform: translateY(-2px);
+}
+
+/* Modern Footer Positioning */
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+/* Smooth Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus Visible for Accessibility */
+:focus-visible {
+    outline: 3px solid var(--primary-blue, #0066CC);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm, 6px);
+}
+
+/* Selection Colors */
+::selection {
+    background: var(--primary-blue, #0066CC);
+    color: #FFFFFF;
+}
+
+::-moz-selection {
+    background: var(--primary-blue, #0066CC);
+    color: #FFFFFF;
+}
+
+/* Scrollbar Styling for Modern Browsers */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary, #F5F7FA);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-blue, #0066CC), var(--accent-green, #00C853));
+    border-radius: var(--radius-full, 9999px);
+    border: 3px solid var(--bg-secondary, #F5F7FA);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--primary-blue-light, #4D94E6), var(--accent-green-light, #33D376));
 }
