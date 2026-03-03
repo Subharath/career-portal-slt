@@ -5,15 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SLT JobApp</title>
     
+    <!-- Modern Fonts & AOS Animations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <!-- Modern CSS Variables & Styles -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/variables.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/animations.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JobApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     <link href="~/lib/datatable/css/datatables.css" rel="stylesheet" />
 </head>
 <body class="app-shell">
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress-bar"></div>
+
     <!-- Global Loading Spinner -->
     <div id="global-loader" class="global-loader">
         <div class="slt-spinner">
@@ -72,6 +82,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>    
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/datatable/js/datatables.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

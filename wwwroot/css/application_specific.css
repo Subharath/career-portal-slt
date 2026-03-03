@@ -258,7 +258,41 @@ form {
    RESPONSIVE ADJUSTMENTS
    ============================================ */
 
-@media (max-width: 768px) {
+/* Small devices (phones, less than 576px) */
+@media (max-width: 575.98px) {
+    .wizard-content,
+    .application-form,
+    form {
+        padding: 1rem;
+        border-radius: var(--radius-md);
+    }
+    
+    .accordion-button {
+        padding: 0.875rem;
+        font-size: 0.9rem;
+    }
+    
+    .accordion-body {
+        padding: 0.875rem;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    .form-control,
+    .form-select {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    h3 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Tablets (576px to 768px) */
+@media (min-width: 576px) and (max-width: 768px) {
     .accordion-button {
         padding: 1rem;
         font-size: 0.95rem;
@@ -271,6 +305,16 @@ form {
     .nav-tabs .nav-link {
         padding: 0.625rem 1rem;
         font-size: 0.9rem;
+    }
+}
+
+/* Add horizontal scrolling for tables on mobile */
+@media (max-width: 991.98px) {
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
