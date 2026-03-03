@@ -1,55 +1,73 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="text/javascript">
-        window.onload = window.history.forward(0);  //disable browser back button. calling function on window onload
-    </script>
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - JobApp</title>
+    <title>@ViewData["Title"] - SLT JobApp</title>
+    
+    <!-- Modern CSS Variables & Styles -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/variables.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JobApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
-    <link href="~/lib/datatable/css/datatables.css" rel="stylesheet" />   
+    <link href="~/lib/datatable/css/datatables.css" rel="stylesheet" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white navbar-toggleable-sm border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/jobapplogo.png" alt="JOBAPP" width="145" height="35" /></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+<body class="app-shell">
+    <!-- Global Loading Spinner -->
+    <div id="global-loader" class="global-loader">
+        <div class="slt-spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+        <div class="loader-text">Loading SLT JobApp...</div>
+    </div>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="sticky-top z-1030">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm modern-navbar" aria-label="Primary navigation">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/jobapplogo.png" alt="SLT JOBAPP" width="145" height="35" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" 
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Apply Now</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-briefcase me-1"></i> Apply Now
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Instructions">Guide Lines</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Instructions">
+                                <i class="fas fa-book me-1"></i> Guide Lines
+                            </a>
                         </li>
                     </ul>
                 </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden-sm hidden-xs hidden-md">
-                        <img src="~/images/logo.png" width="100" height="40" />
-                    </li>
-                </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container app-content-wrap flex-grow-1 mt-4">
+        <main role="main" id="main-content" class="pb-5">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer">
+    <footer class="modern-footer">
         <div class="container">
-            &copy; 2024 - SLT JOBAPP
+            <div class="footer-content">
+                <div class="copyright">
+                    &copy; <span class="year">2026</span> SLT MOBITEL - Job Application Portal
+                </div>
+                <div>
+                    <small>Powered by SLT Digital Solutions</small>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>    
