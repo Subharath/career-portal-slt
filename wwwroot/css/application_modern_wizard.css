@@ -1,0 +1,210 @@
+﻿/* Wizard shell */
+#wizard {
+    margin-top: 1.25rem;
+}
+
+    /* jQuery Steps header area */
+    #wizard > .steps {
+        margin-bottom: 1.5rem;
+    }
+
+        #wizard > .steps ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding: 0;
+            margin: 0 0 1rem;
+        }
+
+            #wizard > .steps ul li {
+                float: none;
+                width: auto;
+                margin: 0;
+            }
+
+        #wizard > .steps a,
+        #wizard > .steps a:hover,
+        #wizard > .steps a:active {
+            border-radius: 999px;
+            padding: 0.9rem 1.15rem;
+            background: #F2F6FA;
+            color: var(--app-text-soft);
+            border: 1px solid #D9E3EC;
+            font-weight: 600;
+            min-width: 180px;
+            text-align: center;
+            transition: var(--app-transition);
+            box-shadow: none;
+        }
+
+        #wizard > .steps .current a,
+        #wizard > .steps .current a:hover,
+        #wizard > .steps .current a:active {
+            background: linear-gradient(135deg, var(--app-primary), var(--app-primary-dark));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 10px 22px rgba(0, 102, 204, 0.22);
+        }
+
+        #wizard > .steps .done a,
+        #wizard > .steps .done a:hover,
+        #wizard > .steps .done a:active {
+            background: linear-gradient(135deg, #E9F9EF, #DDF5E7);
+            color: var(--app-success-text);
+            border-color: #CDEAD8;
+        }
+
+        #wizard > .steps .disabled a,
+        #wizard > .steps .disabled a:hover,
+        #wizard > .steps .disabled a:active {
+            background: #F4F6F8;
+            color: #9AA8B3;
+            border-color: #E2E8EF;
+        }
+
+    /* Content panel */
+    #wizard > .content {
+        background: linear-gradient(180deg, #FFFFFF 0%, #FBFDFF 100%);
+        border: 1px solid var(--app-border);
+        border-radius: var(--app-radius-lg);
+        min-height: 420px;
+        padding: 1.4rem 1.2rem 1rem;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+        #wizard > .content > .body {
+            width: 100%;
+            height: auto;
+            position: static;
+            padding: 0;
+        }
+
+        #wizard > .content h4 {
+            color: var(--app-primary-dark);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+    /* Action buttons */
+    #wizard > .actions {
+        margin-top: 1.25rem;
+    }
+
+        #wizard > .actions ul {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0;
+        }
+
+        #wizard > .actions li {
+            float: none;
+            margin: 0;
+        }
+
+        #wizard > .actions a,
+        #wizard > .actions a:hover,
+        #wizard > .actions a:active {
+            border-radius: 12px;
+            padding: 0.85rem 1.35rem;
+            font-weight: 700;
+            border: 0;
+            text-decoration: none;
+            transition: var(--app-transition);
+        }
+
+        #wizard > .actions li:first-child a {
+            background: #EFF3F7;
+            color: var(--app-text);
+            border: 1px solid #D9E3EC;
+        }
+
+            #wizard > .actions li:first-child a:hover {
+                background: #E7EDF4;
+            }
+
+        #wizard > .actions li:last-child a {
+            background: linear-gradient(135deg, var(--app-accent), var(--app-accent-dark));
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(0, 200, 83, 0.20);
+        }
+
+            #wizard > .actions li:last-child a:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 14px 28px rgba(0, 200, 83, 0.26);
+            }
+
+        #wizard > .actions .disabled a,
+        #wizard > .actions .disabled a:hover {
+            background: #EDEFF2 !important;
+            color: #9AA6B2 !important;
+            box-shadow: none !important;
+            cursor: not-allowed;
+        }
+
+    /* Section spacing */
+    #wizard section > .row,
+    #wizard section > .accordion,
+    #wizard section > .alert,
+    #wizard section > .form-check,
+    #wizard section > .form-floating {
+        margin-bottom: 1.2rem;
+    }
+
+    /* Compact horizontal subject rows */
+    #wizard .accordion-body .form-group.row {
+        align-items: end;
+    }
+
+/* Mobile / tablet */
+@media (max-width: 991.98px) {
+    .row > .col-md-12 {
+        padding: 1.25rem;
+        border-radius: 18px;
+    }
+
+    h3 {
+        font-size: 1.45rem;
+    }
+
+    #wizard > .steps a,
+    #wizard > .steps a:hover,
+    #wizard > .steps a:active {
+        min-width: 140px;
+        font-size: 0.88rem;
+        padding: 0.75rem 0.9rem;
+    }
+
+    #wizard > .content {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #wizard > .steps ul {
+        flex-direction: column;
+    }
+
+        #wizard > .steps ul li {
+            width: 100%;
+        }
+
+    #wizard > .steps a,
+    #wizard > .steps a:hover,
+    #wizard > .steps a:active {
+        width: 100%;
+        min-width: auto;
+    }
+
+    #wizard > .actions ul {
+        flex-direction: column;
+    }
+
+    #wizard > .actions li,
+    #wizard > .actions a {
+        width: 100%;
+        text-align: center;
+    }
+}

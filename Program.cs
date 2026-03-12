@@ -7,6 +7,7 @@ using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
+using System.Numerics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,9 @@ builder.Services.Configure<FormOptions>(options =>
     options.MultipartBodyLengthLimit = int.MaxValue; // if don't set default value is: 128 MB
     options.MultipartHeadersLengthLimit = int.MaxValue;
 });
+
+builder.Services.AddControllers();
+builder.Services.AddHttpClient();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -98,4 +102,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+app.Run(); 

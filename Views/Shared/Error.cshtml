@@ -13,11 +13,11 @@
                     </div>
                     <h1 class="text-danger h2 mb-3">An Error Occurred</h1>
                     <h2 class="text-muted h5 mb-4">We're sorry, something went wrong while processing your request.</h2>
-                    
-                    @if (Model.ShowRequestId)
+
+                    @if (Model?.ShowRequestId == true)
                     {
                         <div class="alert alert-light border mb-4">
-                            <strong>Request ID:</strong> <code class="text-primary">@Model.RequestId</code>
+                            <strong>Request ID:</strong> <code class="text-primary">@Model!.RequestId</code>
                         </div>
                     }
                     

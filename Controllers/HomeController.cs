@@ -20,7 +20,7 @@ namespace JobApp.Controllers
             _UtilityFn = utilityFn;
             _logger = logger;
         }
-
+      
         public IActionResult Index()
         {
             try
@@ -46,6 +46,39 @@ namespace JobApp.Controllers
 
             return View("Error");
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public ActionResult Instructions()
         {

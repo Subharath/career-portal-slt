@@ -256,7 +256,8 @@ namespace JobApp.Controllers
 
             ViewBag.JobPositionName = jobPositionName;
 
-            //decide the job template to load
+            //decide the job template to load.....................................................................
+           
             if (string.IsNullOrWhiteSpace(jobTemplate))
                 jobTemplate = "Application_L1";
 
