@@ -2,73 +2,93 @@
     const fab = document.getElementById("aiFab");
     const widget = document.getElementById("aiWidget");
     const closeBtn = document.getElementById("aiClose");
-    const sendBtn = document.getElementById("aiSend");
-    const textBox = document.getElementById("aiText");
-    const msgs = document.getElementById("aiMessages");
+    const backBtn = document.getElementById("aiBackBtn");
 
-    if (!fab || !widget || !closeBtn || !sendBtn || !textBox || !msgs) {
-        // Widget not present on this page
+    const questionView = document.getElementById("aiQuestionView");
+    const answerView = document.getElementById("aiAnswerView");
+
+    const answerQuestion = document.getElementById("aiAnswerQuestion");
+    const answerText = document.getElementById("aiAnswerText");
+
+    const questionItems = document.querySelectorAll(".ai-help-item");
+
+    if (!fab || !widget || !closeBtn || !questionView || !answerView || !answerQuestion || !answerText) {
         return;
     }
 
     function openWidget() {
-        widget.style.display = "block";
+        widget.classList.add("show");
         widget.setAttribute("aria-hidden", "false");
-        setTimeout(() => textBox.focus(), 50);
     }
 
     function closeWidget() {
-        widget.style.display = "none";
+        widget.classList.remove("show");
         widget.setAttribute("aria-hidden", "true");
     }
 
-    function addMsg(type, text) {
-        const div = document.createElement("div");
-        div.className = "ai-msg " + type;
-        div.textContent = text;
-        msgs.appendChild(div);
-        msgs.scrollTop = msgs.scrollHeight;
+    function showQuestions() {
+        questionView.style.display = "block";
+        answerView.style.display = "none";
+        answerQuestion.textContent = "";
+        answerText.innerHTML = "";
     }
 
-    function removeTypingIfExists() {
-        const last = msgs.querySelector(".ai-msg.bot:last-child");
-        if (last && last.textContent === "Typing...") last.remove();
+    function showAnswer(question, answer) {
+        questionView.style.display = "none";
+        answerView.style.display = "block";
+        answerQuestion.textContent = question;
+        answerText.innerHTML = answer;
     }
 
-    async function send() {
-        const q = (textBox.value || "").trim();
-        if (!q) return;
-
-        addMsg("user", q);
-        textBox.value = "";
-        addMsg("bot", "Typing...");
+    async function loadAnswer(questionKey, questionLabel) {
+        showAnswer(questionLabel, "Loading answer...");
 
         try {
-            const res = await fetch("/ai/chat", {
+            const res = await fetch("/AI/GetAnswer", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: q })
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ questionKey: questionKey })
             });
 
+            if (!res.ok) {
+                throw new Error("Request failed");
+            }
+
             const data = await res.json();
-            removeTypingIfExists();
-            addMsg("bot", data.reply || "Sorry, I couldn't generate a reply.");
-        } catch (e) {
-            removeTypingIfExists();
-            addMsg("bot", "Oops — I couldn’t reach the AI service. Please try again.");
+            showAnswer(questionLabel, data.answer || "Sorry, I couldn't find an answer.");
+        } catch (error) {
+            showAnswer(questionLabel, "Oops — I couldn’t load the answer right now. Please try again.");
+            console.error(error);
         }
     }
 
-    fab.addEventListener("click", () => {
-        if (widget.style.display === "block") closeWidget();
-        else openWidget();
+    fab.addEventListener("click", function () {
+        if (widget.classList.contains("show")) {
+            closeWidget();
+        } else {
+            openWidget();
+        }
     });
 
     closeBtn.addEventListener("click", closeWidget);
-    sendBtn.addEventListener("click", send);
 
-    textBox.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") send();
-        if (e.key === "Escape") closeWidget();
+    if (backBtn) {
+        backBtn.addEventListener("click", showQuestions);
+    }
+
+    questionItems.forEach(item => {
+        item.addEventListener("click", function () {
+            const key = this.getAttribute("data-key");
+            const label = this.getAttribute("data-label") || this.innerText.trim();
+            loadAnswer(key, label);
+        });
+    });
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+            closeWidget();
+        }
     });
 })();

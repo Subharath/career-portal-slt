@@ -1,36 +1,34 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace JobApp.Controllers
 {
-    [ApiController]
-    public class AiController : ControllerBase
+    [Route("AI")]
+    public class AIController : Controller
     {
-        public class ChatRequest
+        public class QuestionRequest
         {
-            public string? Message { get; set; }
+            public string QuestionKey { get; set; }
         }
 
-        [HttpPost("/ai/chat")]
-        public IActionResult Chat([FromBody] ChatRequest req)
+        [HttpPost("GetAnswer")]
+        public IActionResult GetAnswer([FromBody] QuestionRequest request)
         {
-            var msg = (req.Message ?? "").Trim();
+            if (request == null || string.IsNullOrWhiteSpace(request.QuestionKey))
+            {
+                return BadRequest(new { answer = "Invalid question." });
+            }
 
-            if (string.IsNullOrWhiteSpace(msg))
-                return BadRequest(new { reply = "Please type a question." });
+            string answer = request.QuestionKey.ToLower() switch
+            {
+                "openings" => "You can view all current job openings from the careers or vacancies section on this portal.",
+                "apply" => "To apply, select your preferred vacancy, complete the application form, and upload all required documents before submission.",
+                "documents" => "Usually you need your CV, educational certificates, NIC copy, and any other documents requested in the vacancy notice.",
+                "deadline" => "You can check the deadline in the relevant job advertisement or vacancy details page.",
+                "status" => "Application status updates may be communicated through email or shown in the portal depending on the system design.",
+                _ => "Sorry, I do not have an answer for that question yet."
+            };
 
-            if (msg.Length > 500)
-                return BadRequest(new { reply = "Please keep the message under 500 characters." });
-
-            // Temporary: dummy replies (replace with real AI later)
-            var lower = msg.ToLowerInvariant();
-            string reply =
-                lower.Contains("apply") ? "To apply: click an opening → fill your details → submit. Tell me which position you want and I’ll guide you step-by-step." :
-                lower.Contains("cv") || lower.Contains("resume") ? "Usually you need a CV/Resume. Some roles may request certificates too." :
-                lower.Contains("deadline") || lower.Contains("closing") ? "Check the opening list for the closing date. If you tell me the job title, I can explain what to look for." :
-                "I can help with openings, applying, and portal guidance. What are you struggling with?";
-
-            return Ok(new { reply });
+            return Json(new { answer });
         }
     }
 }
