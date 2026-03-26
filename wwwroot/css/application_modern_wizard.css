@@ -27,31 +27,41 @@
     #wizard > .steps a:active {
         border-radius: 999px;
         padding: 0.9rem 1.15rem;
-        background: #F2F6FA;
-        color: var(--app-text-soft);
-        border: 1px solid #D9E3EC;
+        background: #F8FBFF;
+        color: #6B7280;
+        border: 1px solid #E1E8F0;
         font-weight: 600;
         min-width: 180px;
         text-align: center;
-        transition: var(--app-transition);
-        box-shadow: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    #wizard > .steps a:hover {
+        background: #EEF6FF;
+        border-color: #B8D4F0;
+        color: #0066cc;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 102, 204, 0.1);
     }
 
     #wizard > .steps .current a,
     #wizard > .steps .current a:hover,
     #wizard > .steps .current a:active {
-        background: linear-gradient(135deg, var(--app-primary), var(--app-primary-dark));
+        background: linear-gradient(135deg, #0066cc, #004499);
         color: #fff;
         border-color: transparent;
-        box-shadow: 0 10px 22px rgba(0, 102, 204, 0.22);
+        box-shadow: 0 10px 22px rgba(0, 102, 204, 0.3);
+        transform: translateY(-1px);
     }
 
     #wizard > .steps .done a,
     #wizard > .steps .done a:hover,
     #wizard > .steps .done a:active {
-        background: linear-gradient(135deg, #E9F9EF, #DDF5E7);
-        color: var(--app-success-text);
-        border-color: #CDEAD8;
+        background: linear-gradient(135deg, #3385d6, #0066cc);
+        color: #fff;
+        border-color: #0066cc;
+        box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
     }
 
     #wizard > .steps .disabled a,
@@ -116,24 +126,31 @@
     }
 
     #wizard > .actions li:first-child a {
-        background: #EFF3F7;
-        color: var(--app-text);
-        border: 1px solid #D9E3EC;
+        background: #F8FBFF;
+        color: #374151;
+        border: 1px solid #D1D5DB;
+        transition: all 0.3s ease;
     }
 
         #wizard > .actions li:first-child a:hover {
-            background: #E7EDF4;
+            background: #EEF6FF;
+            border-color: #0066cc;
+            color: #0066cc;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 102, 204, 0.1);
         }
 
     #wizard > .actions li:last-child a {
-        background: linear-gradient(135deg, var(--app-accent), var(--app-accent-dark));
+        background: linear-gradient(135deg, #0066cc, #004499);
         color: #fff;
-        box-shadow: 0 10px 22px rgba(0, 200, 83, 0.20);
+        box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
+        border: none;
     }
 
         #wizard > .actions li:last-child a:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 14px 28px rgba(0, 200, 83, 0.26);
+            background: linear-gradient(135deg, #004499, #003366);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 102, 204, 0.4);
         }
 
     #wizard > .actions .disabled a,
@@ -151,6 +168,46 @@
 #wizard section > .form-check,
 #wizard section > .form-floating {
     margin-bottom: 1.2rem;
+}
+
+/* Fix for blank pills - hide empty steps */
+#wizard > .steps ul li:empty {
+    display: none !important;
+}
+
+#wizard > .steps ul li a:empty {
+    display: none !important;
+}
+
+/* Ensure proper step numbering */
+#wizard > .steps ul li {
+    position: relative;
+}
+
+#wizard > .steps ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+}
+
+/* Hide steps with no content */
+#wizard > .steps ul li:has(a:empty) {
+    display: none !important;
+}
+
+/* Ensure steps are properly spaced */
+#wizard > .steps ul {
+    counter-reset: step-counter;
+}
+
+#wizard > .steps ul li {
+    counter-increment: step-counter;
+}
+
+#wizard > .steps ul li a::before {
+    content: counter(step-counter) ". ";
+    font-weight: 700;
 }
 
 /* Compact horizontal subject rows */

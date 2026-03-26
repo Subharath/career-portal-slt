@@ -44,7 +44,7 @@
 
 <hr />
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>Important Notice:</strong> For the best experience, please complete this application form using a desktop or laptop. Due to the complexity and size of the form, mobile devices are not recommended.
+    <strong>Important Notice:</strong> This form is now mobile-friendly! You can complete it on any device.
     <br />
     <strong>Note:</strong> File attachments must not exceed 1MB.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -69,7 +69,7 @@
                 <h2>Personal Information</h2>
                 <section>
                     <div class="form-group row">
-                        <div class="col-2 form-group">
+                        <div class="col-12 col-sm-6 col-md-2 form-group mobile-stack">
                             <label asp-for="PersonalData.Salutation" class="control-label required"></label>
                             <select asp-for="PersonalData.Salutation" class="form-control form-control-sm" autofocus>
                                 <option>Mr</option>
@@ -77,78 +77,78 @@
                                 <option>Miss</option>
                             </select>                        
                         </div>
-                        <div class="col-2 form-group">
+                        <div class="col-12 col-sm-6 col-md-2 form-group mobile-stack">
                             <label asp-for="PersonalData.Initials" class="control-label required"></label>
                             <input asp-for="PersonalData.Initials" class="form-control form-control-sm text-uppercase" maxlength="10" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Do not seperate with spaces/dots" />
                             <span asp-validation-for="PersonalData.Initials" class="text-danger"></span>
                         </div>
-                        <div class="col-3 form-group">
+                        <div class="col-12 col-sm-6 col-md-3 form-group mobile-stack">
                             <label asp-for="PersonalData.Surname" class="control-label required"></label>
                             <input asp-for="PersonalData.Surname" class="form-control form-control-sm text-capitalize" maxlength="50" />
                             <span asp-validation-for="PersonalData.Surname" class="text-danger"></span>
                         </div>
-                        <div class="col-5 form-group">
+                        <div class="col-12 col-sm-6 col-md-5 form-group mobile-stack">
                             <label asp-for="PersonalData.FullName" class="control-label required"></label>
                             <input asp-for="PersonalData.FullName" class="form-control form-control-sm text-capitalize" maxlength="100" />
                             <span asp-validation-for="PersonalData.FullName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-3 form-group">
+                        <div class="col-12 col-sm-6 col-md-3 form-group mobile-stack">
                             <label asp-for="PersonalData.NIC" class="control-label required"></label>
                             <input asp-for="PersonalData.NIC" class="form-control form-control-sm text-uppercase" maxlength="12" />
                             <span asp-validation-for="PersonalData.NIC" class="text-danger"></span>
                         </div>
-                        <div class="col-3 form-group">
+                        <div class="col-12 col-sm-6 col-md-3 form-group mobile-stack">
                             <label asp-for="PersonalData.DOB" class="control-label required"></label>
                             <input asp-for="PersonalData.DOB" class="form-control form-control-sm" asp-format="{0:yyyy-MM-dd}" type="text" readonly="readonly" style="background-color:white;" required />
                         </div>
-                        <div class="col-1 form-group">
+                        <div class="col-6 col-sm-4 col-md-1 form-group mobile-stack">
                             <label asp-for="PersonalData.AgeYears" class="control-label optional"></label>
                             <input asp-for="PersonalData.AgeYears" class="form-control form-control-sm" readonly />
                             <span asp-validation-for="PersonalData.AgeYears" class="text-danger"></span>
                         </div>
-                        <div class="col-1 form-group">
+                        <div class="col-6 col-sm-4 col-md-1 form-group mobile-stack">
                             <label asp-for="PersonalData.AgeMonths" class="control-label optional"></label>
                             <input asp-for="PersonalData.AgeMonths" class="form-control form-control-sm" readonly />
                         </div>
-                        <div class="col-1 form-group">
+                        <div class="col-6 col-sm-4 col-md-1 form-group mobile-stack">
                             <label asp-for="PersonalData.AgeDays" class="control-label optional"></label>
                             <input asp-for="PersonalData.AgeDays" class="form-control form-control-sm" readonly />
                         </div>
-                        <div class="col-2 form-group">
+                        <div class="col-6 col-sm-12 col-md-2 form-group mobile-stack">
                             <label class="dummy-label"></label>
                             <input asp-for="PersonalData.Overage" class="form-control form-control-sm" readonly />
                         </div>
                     </div>
-                    <div class="col-4 form-group">
+                    <div class="col-12 col-md-4 form-group mobile-full-width">
                         <p class="control-label required">Address</p>
                         <input asp-for="PersonalData.HouseNo" class="form-control form-control-sm" placeholder="House/Building/Apartment Number" maxlength="30" />
                     </div>
-                    <div class="col-6 form-group">
+                    <div class="col-12 col-md-6 form-group mobile-full-width">
                         <input asp-for="PersonalData.AddressLine1" class="form-control form-control-sm" placeholder="Address Line 1" maxlength="50" />
                     </div>
-                    <div class="col-6 form-group">
+                    <div class="col-12 col-md-6 form-group mobile-full-width">
                         <input asp-for="PersonalData.AddressLine2" class="form-control form-control-sm" placeholder="Address Line 2" maxlength="50" />
                     </div>
-                    <div class="col-6 form-group">
+                    <div class="col-12 col-md-6 form-group mobile-full-width">
                         <input asp-for="PersonalData.AddressLine3" class="form-control form-control-sm" placeholder="Address Line 3" maxlength="50" />
                     </div>
-                    <div class="col-6 form-group">
+                    <div class="col-12 col-md-6 form-group mobile-full-width">
                         <input asp-for="PersonalData.AddressLine4" class="form-control form-control-sm" placeholder="Address Line 4" maxlength="50" />
                     </div>
                     <div class="form-group row">
-                        <div class="col-6 form-group">
+                        <div class="col-12 col-md-6 form-group mobile-full-width">
                             <label asp-for="PersonalData.Email" class="control-label required"></label>
                             <input asp-for="PersonalData.Email" class="form-control form-control-sm" maxlength="50" required/>
                             <span asp-validation-for="PersonalData.Email" class="text-danger"></span>
                         </div>
-                        <div class="col-3 form-group">
+                        <div class="col-12 col-sm-6 col-md-3 form-group mobile-stack">
                             <label asp-for="PersonalData.ContactNo1" class="control-label required"></label>
                             <input asp-for="PersonalData.ContactNo1" class="form-control form-control-sm" placeholder="Personal Mobile Number" maxlength="10" />
                             <span asp-validation-for="PersonalData.ContactNo1" class="text-danger"></span>
                         </div>
-                        <div class="col-3 form-group">
+                        <div class="col-12 col-sm-6 col-md-3 form-group mobile-stack">
                             <label asp-for="PersonalData.ContactNo2" class="control-label optional"></label>
                             <input asp-for="PersonalData.ContactNo2" class="form-control form-control-sm" placeholder="Secondary Contact Number" maxlength="10" />
                             <span asp-validation-for="PersonalData.ContactNo2" class="text-danger"></span>
@@ -184,13 +184,13 @@
                                             <input type="hidden" asp-for="OLExam1.Attempt" class="form-control" />
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-2 form-group">
+                                            <div class="col-12 col-sm-6 col-md-2 form-group mobile-stack">
                                                 <label asp-for="OLExam1.ExamYear" class="control-label required"></label>
                                                 <select asp-for="OLExam1.ExamYear" asp-items="@ViewBag.ExamYear" class="form-select form-select-sm" required autofocus>
                                                     <option disabled selected></option>
                                                 </select>
                                             </div>
-                                            <div class="col-4 form-group">
+                                            <div class="col-12 col-sm-6 col-md-4 form-group mobile-stack">
                                                 <label asp-for="OLExam1.IndexNumber" class="control-label required"></label>
                                                 <input asp-for="OLExam1.IndexNumber" class="form-control form-control-sm" maxlength="20" required />
                                                 <span asp-validation-for="OLExam1.IndexNumber" class="text-danger"></span>
@@ -201,10 +201,10 @@
                                     <hr />
                                     @*Subjects and grades*@
                                     <div class="form-group row">
-                                        <div class="col-4 form-group">
+                                        <div class="col-12 col-sm-8 col-md-4 form-group mobile-stack">
                                             <p class="control-label required">Subject</p>
                                         </div>
-                                        <div class="col-2 form-group">
+                                        <div class="col-12 col-sm-4 col-md-2 form-group mobile-stack">
                                             <p class="control-label required">Grade</p>
                                         </div>
                                     </div>
@@ -214,10 +214,10 @@
                                         for (int i = 0; i <= 2; i++)
                                         {
                                             <div class="form-group row">
-                                                <div class="col-4 form-group">
+                                                <div class="col-12 col-sm-8 col-md-4 form-group mobile-stack">
                                                     <input asp-for="OLResults1[i].SubjectName" class="form-control form-control-sm" maxlength="50" readonly />
                                                 </div>
-                                                <div class="col-2 form-group">
+                                                <div class="col-12 col-sm-4 col-md-2 form-group mobile-stack">
                                                     <select asp-for="OLResults1[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm" required >
                                                         <option disabled selected></option>
                                                     </select>
@@ -231,12 +231,12 @@
                                         for (int i = 3; i <= 7; i++)
                                         {
                                             <div class="form-group row">
-                                                <div class="col-4 form-group">
+                                                <div class="col-12 col-sm-8 col-md-4 form-group mobile-stack">
                                                     <select asp-for="OLResults1[i].SubjectName" asp-items="@ViewBag.OLSubject" class="form-select form-select-sm" required >
                                                         <option disabled selected></option>
                                                     </select>
                                                 </div>
-                                                <div class="col-2 form-group">
+                                                <div class="col-12 col-sm-4 col-md-2 form-group mobile-stack">
                                                     <select asp-for="OLResults1[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm" required >
                                                         <option disabled selected></option>
                                                     </select>
@@ -248,12 +248,12 @@
                                         for (int i = 8; i <= 8; i++)
                                         {
                                             <div class="form-group row">
-                                                <div class="col-4 form-group">
+                                                <div class="col-12 col-sm-8 col-md-4 form-group mobile-stack">
                                                     <select asp-for="OLResults1[i].SubjectName" asp-items="@ViewBag.OLSubject" class="form-select form-select-sm">
                                                         <option selected></option>
                                                     </select>
                                                 </div>
-                                                <div class="col-2 form-group">
+                                                <div class="col-12 col-sm-4 col-md-2 form-group mobile-stack">
                                                     <select asp-for="OLResults1[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm">
                                                         <option selected></option>
                                                     </select>
@@ -262,7 +262,7 @@
                                         }
                                     }
                                     <br />
-                                    <div class="col-10 form-group">
+                                    <div class="col-12 col-md-10 form-group mobile-full-width">
                                         <label asp-for="OLExam1.AttachmentName" class="control-label required"></label>
                                         <input asp-for="OLExam1.AttachmentName" class="form-control form-control-sm" type="file" required />
                                     </div>
@@ -1058,6 +1058,25 @@
                 startIndex: 0,
                 cssClass: "wizard",
                 showFinishButtonAlways: false,
+                
+                onInit: function (event, currentIndex) {
+                    // Remove any empty steps or fix blank pills
+                    $('#wizard .steps ul li').each(function() {
+                        var $link = $(this).find('a');
+                        if (!$link.text().trim() || $link.text().trim() === '') {
+                            $(this).remove();
+                        }
+                    });
+                    
+                    // Ensure proper step numbering
+                    $('#wizard .steps ul li').each(function(index) {
+                        var $link = $(this).find('a');
+                        var text = $link.text();
+                        if (!text.match(/^\d+\./)) {
+                            $link.text((index + 1) + '. ' + text);
+                        }
+                    });
+                },
 
                 onStepChanging: function (event, currentIndex, newIndex) 
                 {

@@ -45,9 +45,15 @@
                                 "InitApply",
                                 "Application",
                                 new { intakeCode = item.IntakeCode, jobPositionName = item.JobPositionName, jobTemplate = item.JobTemplate },
-                                new { @class = "joblink" }
+                                new { @class = "joblink", title = "Click to apply for " + item.JobPositionName }
                             )
-                            <span class="home-opening-meta">Apply now</span>
+                            @Html.ActionLink(
+                                "Apply",
+                                "InitApply",
+                                "Application",
+                                new { intakeCode = item.IntakeCode, jobPositionName = item.JobPositionName, jobTemplate = item.JobTemplate },
+                                new { @class = "btn btn-primary btn-sm apply-btn", title = "Apply for " + item.JobPositionName }
+                            )
                         </li>
                     }
                 </ul>
@@ -91,4 +97,72 @@
         </article>
     </div>
 </section>
+
+<script>
+// Ensure apply buttons work correctly
+document.addEventListener('DOMContentLoaded', function() {
+    // Define blue color scheme
+    const blueColors = {
+        primary: '#0066cc',
+        primaryDark: '#004499',
+        primaryLight: '#3385d6'
+    };
+    
+    // Add click tracking for apply buttons
+    const applyButtons = document.querySelectorAll('.apply-btn, .joblink');
+    
+    applyButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Add loading state with blue styling
+            if (this.classList.contains('apply-btn')) {
+                const originalText = this.textContent;
+                this.textContent = 'Loading...';
+                this.style.pointerEvents = 'none';
+                this.style.background = `linear-gradient(135deg, ${blueColors.primaryLight}, ${blueColors.primary})`;
+                
+                // Reset after a short delay if navigation fails
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.pointerEvents = 'auto';
+                    this.style.background = `linear-gradient(135deg, ${blueColors.primary}, ${blueColors.primaryDark})`;
+                }, 3000);
+            }
+            
+            // Log the click for debugging
+            console.log('Apply button clicked:', {
+                href: this.href,
+                text: this.textContent,
+                target: e.target
+            });
+        });
+        
+        // Add enhanced hover effects with blue colors
+        button.addEventListener('mouseenter', function() {
+            if (this.classList.contains('apply-btn')) {
+                this.style.background = `linear-gradient(135deg, ${blueColors.primaryDark}, #003366)`;
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = `0 8px 20px rgba(0, 102, 204, 0.4)`;
+            }
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            if (this.classList.contains('apply-btn')) {
+                this.style.background = `linear-gradient(135deg, ${blueColors.primary}, ${blueColors.primaryDark})`;
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = `0 6px 16px rgba(0, 102, 204, 0.3)`;
+            }
+        });
+    });
+    
+    // Add keyboard navigation support
+    applyButtons.forEach(button => {
+        button.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+});
+</script>
 
