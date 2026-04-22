@@ -135,16 +135,17 @@ If your app saves attachments (like CVs):
 
 1. Open **IIS Manager**.
 2. Right-click **Application Pools** → **Add Application Pool**.
-3. Name it (e.g., `MyAppPool`).
+3. Name it **Career_Portal**.
 4. **CRITICAL:** Set the .NET CLR version to **No Managed Code** (this is required for ASP.NET Core).
 
 ### 2. Create the Website
 
 1. Right-click **Sites** → **Add Website...**
 2. **Site name:** `career-portal-slt`
-3. **Application pool:** Select the `MyAppPool` you just created.
+3. **Application pool:** Select the **Career_Portal** you just created.
 4. **Physical path:** `C:\inetpub\wwwroot\career-portal-slt`
 5. **Binding:**
+6. **Binding:**
    - Type: **https**
    - Port: **3114** (or whatever custom port you need)
    - IP address: **All Unassigned**
@@ -210,7 +211,7 @@ Go to your GitHub Repository → **Settings** → **Secrets and variables** → 
 I have created the workflow file at `.github/workflows/main.yml`. It performs these steps:
 - Builds and publishes the .NET 6 project.
 - Uses `scp-action` to copy the files to `C:\inetpub\wwwroot\career-portal-slt`.
-- Uses `ssh-action` to run `Restart-WebAppPool` on the Windows Server to refresh the app.
+- Uses `ssh-action` to run `Restart-WebAppPool -Name 'Career_Portal'` on the Windows Server to refresh the app.
 
 ---
 

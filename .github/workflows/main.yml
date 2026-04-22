@@ -44,4 +44,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            powershell -Command "Restart-WebAppPool -Name 'career-portal-slt'"
+            powershell -Command "Import-Module WebAdministration; Restart-WebAppPool -Name 'Career_Portal'"
