@@ -201,14 +201,18 @@ Ensure your public domain's DNS A-record (e.g., `dpdlab1.slt.lk`) points directl
 Automate your deployment by setting up a GitHub Actions workflow. This ensures every push to `main` builds and deploys your app automatically.
 
 ### 1. Setup GitHub Secrets
+
 Go to your GitHub Repository → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**. Add the following:
+
 - `SERVER_IP`: The public IP of your pfSense (e.g., `124.43.216.136`).
 - `SERVER_USERNAME`: Windows Server username (e.g., `Administrator`).
 - `SERVER_PASSWORD`: Windows Server password.
 - `SSH_PORT`: The SSH port (usually `22`, unless NATed differently).
 
 ### 2. Workflow Configuration
+
 I have created the workflow file at `.github/workflows/main.yml`. It performs these steps:
+
 - Builds and publishes the .NET 6 project.
 - Uses `scp-action` to copy the files to `C:\inetpub\wwwroot\career-portal-slt`.
 - Uses `ssh-action` to run `Restart-WebAppPool -Name 'Career_Portal'` on the Windows Server to refresh the app.
