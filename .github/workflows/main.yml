@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: windows-latest # Using windows runner to match environment if needed, or ubuntu-latest
+    runs-on: ubuntu-latest # Changed from windows-latest for appleboy actions support
 
     steps:
       - uses: actions/checkout@v4
