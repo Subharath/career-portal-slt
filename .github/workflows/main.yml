@@ -23,7 +23,7 @@ jobs:
         run: dotnet build --no-restore -c Release
 
       - name: Publish
-        run: dotnet publish -c Release -o ./publish
+        run: dotnet publish JobApp.csproj -c Release -o ./publish
 
       - name: Deploy via SCP
         uses: appleboy/scp-action@master
@@ -42,3 +42,6 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            powershell -Command "Restart-WebAppPool -Name 'career-portal-slt'"
