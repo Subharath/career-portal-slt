@@ -1,0 +1,44 @@
+name: Deploy to Windows Server (IIS)
+
+on:
+  push:
+    branches: ["main"] # Change to your primary branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest # Using windows runner to match environment if needed, or ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore -c Release
+
+      - name: Publish
+        run: dotnet publish -c Release -o ./publish
+
+      - name: Deploy via SCP
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        source: "./publish/*"
+        target: "C:/inetpub/wwwroot/career-portal-slt"
+        strip_components: 1 # Remove the 'publish' folder prefix
+
+    - name: Restart IIS Site
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
