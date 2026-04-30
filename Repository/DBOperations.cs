@@ -1,4 +1,4 @@
-﻿using JobApp.Models;
+using JobApp.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -248,6 +248,40 @@ namespace JobApp.Repository
             return retrunMsg;
         }
 
+        /// <summary>
+        /// Parameterized UPDATE to prevent SQL injection.
+        /// Usage: UpdateRecords("UPDATE X SET Y = @val WHERE Z = @key", new SqlParameter("@val", v), new SqlParameter("@key", k))
+        /// </summary>
+        public string UpdateRecords(string sql, params SqlParameter[] parameters)
+        {
+            string retrunMsg = "";
+
+            using SqlConnection con = _dbConnection.GetDbConnection();
+            con.Open();
+
+            using SqlCommand sqlCmd = con.CreateCommand();
+            {
+                sqlCmd.CommandType = CommandType.Text;
+                sqlCmd.CommandText = sql;
+
+                if (parameters != null)
+                {
+                    sqlCmd.Parameters.AddRange(parameters);
+                }
+
+                try
+                {
+                    if (sqlCmd.ExecuteNonQuery() > 0)
+                        retrunMsg = "SUCCESS";
+                }
+                catch (Exception exc)
+                {
+                    retrunMsg = exc.ToString();
+                }
+            }
+            return retrunMsg;
+        }
+
         public string InsertRecords(string tableName, DataTable tempTable, bool isIdentity, out decimal generatedId, string identityField = "")
         {
             string retrunMsg = "";
@@ -336,11 +370,22 @@ namespace JobApp.Repository
 
         public DataTable GetFilteringCriteriaOfJobPosition(string intakeCode)
         {
-            //string sql = "SELECT B.JobPositionCode, B.ALRequired, B.OLRequired  FROM Intake A INNER JOIN JobPosition B ON A.JobPositionID = B.JobPositionID WHERE A.IntakeCode = '" + intakeCode + "'";
-            string sql = "SELECT IntakeCode, ALRequired, OLRequired, HERequired FROM Intake WHERE IntakeCode = '" + intakeCode + "'";
-            DataTable dataTable = SelectRows(sql);
+            // Parameterized query to prevent SQL injection
+            string sql = "SELECT IntakeCode, ALRequired, OLRequired, HERequired FROM Intake WHERE IntakeCode = @intakeCode";
+            
+            DataTable dtblResult = new DataTable();
+            using SqlConnection con = _dbConnection.GetDbConnection();
 
-            return dataTable;
+            using SqlCommand sqlCmd = con.CreateCommand();
+            {
+                sqlCmd.CommandText = sql;
+                sqlCmd.Parameters.Add(new SqlParameter("@intakeCode", SqlDbType.VarChar)).Value = intakeCode;
+
+                SqlDataAdapter sqlDa = new SqlDataAdapter(sqlCmd);
+                sqlDa.Fill(dtblResult);
+            }
+
+            return dtblResult;
         }
     }
 }
