@@ -1,0 +1,624 @@
+/* Main container feeling */
+.row > .col-md-12 {
+    background: var(--app-card);
+    border: 1px solid rgba(220, 230, 240, 0.9);
+    border-radius: var(--app-radius-xl);
+    padding: 2rem 2rem 1.5rem;
+    box-shadow: var(--app-shadow-md);
+}
+
+/* Important notice */
+.alert {
+    border-radius: var(--app-radius-md);
+    border-width: 1px;
+    box-shadow: var(--app-shadow-sm);
+    padding: 1rem 1.2rem;
+}
+
+.alert-warning {
+    background: linear-gradient(180deg, #FFF9EE 0%, #FFF5E2 100%);
+    color: var(--app-warning-text);
+    border-color: var(--app-warning-border);
+}
+
+.alert-dark {
+    background: linear-gradient(180deg, #F7FAFD 0%, #F2F6FA 100%);
+    border: 1px solid var(--app-border);
+    color: var(--app-text-soft);
+}
+
+.alert h6 {
+    margin-bottom: 0.35rem;
+    font-size: 0.93rem;
+    font-weight: 600;
+}
+
+/* Labels */
+.control-label,
+.form-label,
+p.control-label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--app-text);
+    margin-bottom: 0.45rem;
+}
+
+.dummy-label {
+    min-height: 1.75rem;
+    display: block;
+}
+
+/* Form spacing */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group.row {
+    margin-bottom: 0.25rem;
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+    min-height: 44px;
+    border-radius: 12px;
+    border: 1px solid #D5E0EA;
+    background: #fff;
+    color: var(--app-text);
+    font-size: 0.95rem;
+    box-shadow: none;
+    transition: var(--app-transition);
+}
+
+.form-control-sm,
+.form-select-sm {
+    min-height: 42px;
+    font-size: 0.93rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0066cc;
+    box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);
+    background: #fff;
+    outline: none;
+}
+
+.form-control[readonly],
+.form-control:disabled,
+.form-select:disabled {
+    background: #F3F6F9 !important;
+    color: #607080;
+    border-color: #D9E3EC;
+    cursor: not-allowed;
+}
+
+/* Placeholder */
+.form-control::placeholder {
+    color: #96A2AF;
+    opacity: 1;
+}
+
+/* File inputs */
+input[type="file"].form-control {
+    padding: 0.5rem 0.75rem;
+    min-height: 46px;
+    background: #FCFDFE;
+    border-style: dashed;
+}
+
+input[type="file"].form-control:hover {
+    border-color: var(--app-primary);
+    background: #F8FBFF;
+}
+
+/* Textarea */
+textarea.form-control {
+    min-height: 120px !important;
+    border-radius: 14px;
+    padding-top: 1rem;
+}
+
+/* Floating remarks */
+.form-floating > label {
+    color: var(--app-text-muted);
+    font-weight: 500;
+}
+
+/* Checkbox */
+.form-check {
+    background: #F8FBFE;
+    border: 1px solid var(--app-border);
+    border-radius: 14px;
+    padding: 1rem 1rem 1rem 2.4rem;
+}
+
+.form-check-input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.25rem;
+    border-radius: 0.3rem;
+    border: 1px solid #AEBECC;
+}
+
+.form-check-input:checked {
+    background-color: #0066cc;
+    border-color: #0066cc;
+    box-shadow: 0 2px 4px rgba(0, 102, 204, 0.2);
+}
+
+.form-check-label {
+    color: var(--app-text);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 12px;
+    font-weight: 600;
+    transition: var(--app-transition);
+    padding: 0.7rem 1.2rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0066cc, #004499);
+    border: none;
+    box-shadow: 0 6px 16px rgba(0, 102, 204, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: linear-gradient(135deg, #004499, #003366);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 204, 0.4);
+    border: none;
+}
+
+/* Hidden submit buttons remain hidden */
+#btnPersonalData,
+#btnOL1,
+#btnALResults,
+#btnHEQual,
+#btnProfQual,
+#btnDocuments {
+    display: none !important;
+}
+
+/* Validation summary */
+.validation-summary-errors,
+div[asp-validation-summary="ModelOnly"] {
+    background: #FFF5F4;
+    border: 1px solid #F2C7C4;
+    color: #A2352A;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.25rem;
+}
+
+/* Toast */
+#toastmsg {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--app-shadow-lg);
+    background: linear-gradient(135deg, #1F2937, #111827) !important;
+    border: 0 !important;
+}
+
+#toastmsgtext {
+    font-weight: 500;
+}
+
+/* Accordion */
+.accordion {
+    border-radius: var(--app-radius-lg);
+    overflow: hidden;
+}
+
+.accordion-item {
+    border: 1px solid var(--app-border);
+    border-radius: 14px !important;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    box-shadow: var(--app-shadow-sm);
+}
+
+.accordion-button {
+    background: linear-gradient(180deg, #FDFEFF 0%, #F6FAFD 100%);
+    color: var(--app-text);
+    font-weight: 700;
+    font-size: 0.96rem;
+    padding: 1rem 1.1rem;
+    box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--app-primary-dark);
+    background: linear-gradient(180deg, #EEF6FF 0%, #F7FBFF 100%);
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.accordion-body {
+    background: #FFFFFF;
+    padding: 1.25rem 1.2rem 1rem;
+}
+
+/* ========================================
+   MOBILE RESPONSIVENESS
+   ======================================== */
+
+/* Tablet and below (768px and down) */
+@media (max-width: 768px) {
+    /* Main container adjustments */
+    .row > .col-md-12 {
+        padding: 1.5rem 1rem 1rem;
+        margin: 0 0.5rem;
+        border-radius: var(--app-radius-lg);
+    }
+
+    /* Alert adjustments */
+    .alert {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .alert h6 {
+        font-size: 0.9rem;
+    }
+
+    /* Form controls mobile optimization */
+    .form-control,
+    .form-select {
+        min-height: 48px; /* Larger touch targets */
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 0.75rem;
+    }
+
+    .form-control-sm,
+    .form-select-sm {
+        min-height: 46px;
+        font-size: 15px;
+    }
+
+    /* Labels */
+    .control-label,
+    .form-label,
+    p.control-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    }
+
+    /* Textarea */
+    textarea.form-control {
+        min-height: 100px !important;
+        font-size: 16px;
+    }
+
+    /* File inputs */
+    input[type="file"].form-control {
+        min-height: 50px;
+        font-size: 14px;
+    }
+
+    /* Checkbox adjustments */
+    .form-check {
+        padding: 0.75rem 0.75rem 0.75rem 2rem;
+    }
+
+    .form-check-input {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .form-check-label {
+        font-size: 0.9rem;
+    }
+
+    /* Button adjustments */
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+        min-height: 48px;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Accordion mobile */
+    .accordion-button {
+        font-size: 0.9rem;
+        padding: 0.85rem 1rem;
+    }
+
+    .accordion-body {
+        padding: 1rem 0.9rem 0.75rem;
+    }
+
+    /* Form spacing */
+    .form-group {
+        margin-bottom: 0.75rem;
+    }
+
+    /* jQuery Steps mobile adjustments */
+    .wizard > .steps {
+        width: 100%;
+    }
+
+    .wizard > .steps > ul > li {
+        width: auto;
+        margin-bottom: 0.5rem;
+    }
+
+    .wizard > .steps .number {
+        font-size: 0.8rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+    }
+
+    .wizard > .content {
+        min-height: auto;
+        padding: 1rem 0.5rem;
+    }
+
+    /* Bootstrap grid mobile fixes */
+    .col-2, .col-3, .col-4, .col-6, .col-8, .col-9, .col-10 {
+        width: 100% !important;
+        margin-bottom: 0.75rem;
+    }
+
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .row > [class*="col-"] {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+/* Mobile phones (576px and down) */
+@media (max-width: 576px) {
+    /* Container adjustments */
+    .row > .col-md-12 {
+        padding: 1rem 0.75rem 0.75rem;
+        margin: 0 0.25rem;
+        border-radius: var(--app-radius-md);
+    }
+
+    /* Form controls */
+    .form-control,
+    .form-select {
+        min-height: 50px;
+        font-size: 16px;
+        padding: 0.8rem 0.75rem;
+        border-radius: 10px;
+    }
+
+    /* Labels smaller */
+    .control-label,
+    .form-label,
+    p.control-label {
+        font-size: 0.85rem;
+        margin-bottom: 0.35rem;
+    }
+
+    /* Alerts */
+    .alert {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+        border-radius: var(--app-radius-md);
+    }
+
+    .alert h6 {
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+    }
+
+    /* Checkbox mobile */
+    .form-check {
+        padding: 0.6rem 0.6rem 0.6rem 1.8rem;
+        border-radius: 10px;
+    }
+
+    .form-check-label {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+
+    /* Buttons full width */
+    .btn {
+        padding: 0.9rem 1rem;
+        font-size: 0.9rem;
+        min-height: 50px;
+        border-radius: 10px;
+    }
+
+    /* Accordion mobile */
+    .accordion-item {
+        border-radius: 10px !important;
+        margin-bottom: 0.75rem;
+    }
+
+    .accordion-button {
+        font-size: 0.85rem;
+        padding: 0.75rem 0.85rem;
+    }
+
+    .accordion-body {
+        padding: 0.85rem 0.75rem 0.6rem;
+    }
+
+    /* Textarea smaller */
+    textarea.form-control {
+        min-height: 80px !important;
+        border-radius: 10px;
+    }
+
+    /* Toast mobile */
+    #toastmsg {
+        border-radius: 10px;
+        margin: 0.5rem;
+    }
+
+    /* jQuery Steps very small screens */
+    .wizard > .steps > ul > li {
+        font-size: 0.8rem;
+    }
+
+    .wizard > .steps .title {
+        font-size: 0.75rem;
+    }
+
+    /* Validation summary mobile */
+    .validation-summary-errors,
+    div[asp-validation-summary="ModelOnly"] {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+        border-radius: 10px;
+    }
+}
+
+/* Large phones landscape (667px and down) */
+@media (max-width: 667px) and (orientation: landscape) {
+    .form-control,
+    .form-select {
+        min-height: 44px;
+        padding: 0.6rem 0.75rem;
+    }
+
+    textarea.form-control {
+        min-height: 70px !important;
+    }
+
+    .btn {
+        padding: 0.7rem 1rem;
+        min-height: 44px;
+    }
+
+    .wizard > .content {
+        padding: 0.75rem 0.5rem;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .form-control,
+    .form-select,
+    .btn {
+        min-height: 48px;
+    }
+
+    .form-check-input {
+        width: 1.3rem;
+        height: 1.3rem;
+    }
+
+    /* Remove hover effects on touch devices */
+    .btn-primary:hover {
+        transform: none;
+    }
+
+    input[type="file"].form-control:hover {
+        border-color: #D5E0EA;
+        background: #FCFDFE;
+    }
+
+    /* Touch-friendly wizard navigation */
+    .wizard > .actions {
+        padding: 1rem 0.5rem;
+    }
+
+    .wizard > .actions a {
+        min-height: 48px;
+        padding: 0.75rem 1.5rem;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .form-control,
+    .form-select {
+        border-width: 0.5px;
+    }
+}
+
+/* Utility classes for mobile */
+@media (max-width: 768px) {
+    .d-md-block {
+        display: none !important;
+    }
+    
+    .d-mobile-block {
+        display: block !important;
+    }
+    
+    .text-mobile-center {
+        text-align: center !important;
+    }
+    
+    .mb-mobile-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    /* Mobile-specific form layout */
+    .mobile-stack {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 0.75rem;
+    }
+
+    .mobile-full-width {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Hide desktop-only elements */
+    .desktop-only {
+        display: none !important;
+    }
+
+    /* Show mobile-only elements */
+    .mobile-only {
+        display: block !important;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    .container-fluid {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    /* Compact form layout */
+    .form-group {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Smaller text for very small screens */
+    .control-label,
+    .form-label,
+    p.control-label {
+        font-size: 0.8rem;
+    }
+
+    .form-control,
+    .form-select {
+        font-size: 14px;
+    }
+
+    /* Compact buttons */
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+    }
+}

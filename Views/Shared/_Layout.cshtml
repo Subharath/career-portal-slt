@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,6 +19,22 @@
     <link rel="stylesheet" href="~/JobApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     <link href="~/lib/datatable/css/datatables.css" rel="stylesheet" />
+    @* new *@
+
+    <link href="~/lib/jquery-section/css/jquery.steps.css" rel="stylesheet" />
+    <link href="~/lib/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+    <link href="~/css/application_modern_theme.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/application_modern_form.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/application_modern_wizard.css" rel="stylesheet" asp-append-version="true" />
+
+
+
+
+
+
+
+
 </head>
 <body class="app-shell">
     <!-- Scroll Progress Indicator -->
@@ -86,5 +102,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/datatable/js/datatables.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    
 </body>
 </html>
