@@ -124,16 +124,38 @@
     border-bottom: 0;
 }
 
+.apply-btn {
+    background: linear-gradient(135deg, #0066cc, #004499) !important;
+    border: none !important;
+    color: white !important;
+    padding: 0.4rem 1rem !important;
+    border-radius: 6px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3) !important;
+}
+
+.apply-btn:hover {
+    background: linear-gradient(135deg, #004499, #003366) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4) !important;
+    color: white !important;
+}
+
 a.joblink {
-    color: var(--primary-blue-dark);
+    color: #0066cc;
     text-decoration: none;
     font-weight: 600;
     font-size: 1.05rem;
+    transition: all 0.3s ease;
 }
 
 a.joblink:hover {
-    color: var(--primary-blue);
-    text-decoration: underline;
+    color: #004499;
+    text-decoration: none;
+    transform: translateX(4px);
 }
 
 .home-opening-meta {
@@ -238,8 +260,14 @@ a.joblink:hover {
     .home-opening-list li {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5rem;
+        gap: 0.75rem;
         padding: 1rem;
+    }
+    
+    .apply-btn {
+        padding: 0.5rem 1.2rem !important;
+        font-size: 0.9rem !important;
+        align-self: flex-end;
     }
 
     .home-title {
@@ -283,7 +311,11 @@ a.joblink:hover {
     .home-opening-list li {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5rem;
+        gap: 0.75rem;
+    }
+    
+    .apply-btn {
+        align-self: flex-end;
     }
 
     .home-title {
