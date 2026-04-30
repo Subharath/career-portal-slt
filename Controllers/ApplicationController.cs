@@ -1,10 +1,10 @@
-﻿using JobApp.Models;
+using JobApp.Models;
 using JobApp.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis;
+using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
@@ -19,7 +19,6 @@ namespace JobApp.Controllers
         private readonly IDBOperations _DBOperations;
         private readonly IUtilityFn _UtilityFn;
         private string applicationFolderName = "";
-        private string documentsOk = "";
         private bool isHERequired = true;
 
         public ApplicationController(IDBOperations dbOperations, IUtilityFn utilityFn)
@@ -256,7 +255,8 @@ namespace JobApp.Controllers
 
             ViewBag.JobPositionName = jobPositionName;
 
-            //decide the job template to load
+            //decide the job template to load.....................................................................
+           
             if (string.IsNullOrWhiteSpace(jobTemplate))
                 jobTemplate = "Application_L1";
 
@@ -304,18 +304,27 @@ namespace JobApp.Controllers
             #region OL
             if (isOk)
             {
-                if (applicationData.OLExam1 != null)
+                // Only process O/L if actual exam data was submitted (ExamYear > 0)
+                // Templates like L2 (Engineer/Accountant) don't include O/L sections,
+                // so ExamYear stays at default 0 — skip processing to avoid false FAIL
+                if (applicationData.OLExam1 != null && applicationData.OLExam1.ExamYear > 0)
                 {
                     //OL Exam data
                     applicationData.OLExam1.ApplicationCode = applicationCode;
-                    applicationData.OLExam2.ApplicationCode = applicationCode;
-                    applicationData.OLExam3.ApplicationCode = applicationCode;
-
                     response = await UpdateOLExamResults(applicationData.OLExam1, applicationData.OLResults1);
                     if (response.IsSuccess)
                     {
-                        await UpdateOLExamResults(applicationData.OLExam2, applicationData.OLResults2);
-                        await UpdateOLExamResults(applicationData.OLExam3, applicationData.OLResults3);
+                        // Only process 2nd/3rd attempts if they have data
+                        if (applicationData.OLExam2 != null && applicationData.OLExam2.ExamYear > 0)
+                        {
+                            applicationData.OLExam2.ApplicationCode = applicationCode;
+                            await UpdateOLExamResults(applicationData.OLExam2, applicationData.OLResults2);
+                        }
+                        if (applicationData.OLExam3 != null && applicationData.OLExam3.ExamYear > 0)
+                        {
+                            applicationData.OLExam3.ApplicationCode = applicationCode;
+                            await UpdateOLExamResults(applicationData.OLExam3, applicationData.OLResults3);
+                        }
                     }
                     else
                         isOk = false;
@@ -340,7 +349,11 @@ namespace JobApp.Controllers
             #region Higher Education
             if (isOk)
             {
-                if (isHERequired && applicationData.HEQualifications[0] == null)
+                // Check if HE is required AND the first qualification has no data
+                if (isHERequired && (applicationData.HEQualifications == null 
+                    || applicationData.HEQualifications[0] == null
+                    || (string.IsNullOrWhiteSpace(applicationData.HEQualifications[0].QualName) 
+                        && string.IsNullOrWhiteSpace(applicationData.HEQualifications[0].OtherQualName))))
                 { 
                     isOk = false;
                     response.Message = "Error in updating higher education qualifications, ";
@@ -444,51 +457,34 @@ namespace JobApp.Controllers
                 applicationData.OtherDocuments.ApplicationCode = applicationCode;
                 response = await UpdateOtherDocuments(applicationData.OtherDocuments);
                 isOk = response.IsSuccess;
-                if (isOk)
-                    documentsOk = "OK";
             }
             #endregion
             
             
-            if (isOk && documentsOk == "OK")
+            #region SaveStatus — parameterized SQL to prevent injection
+            if (isOk)
             {
-                DataTable tmpTbl = _DBOperations.SelectRows("SELECT * FROM OtherDocument WHERE ApplicationCode = '" + applicationCode + "'");
-
-                if (tmpTbl.Rows.Count > 0)
-                {
-                    DataRow dr = tmpTbl.Rows[0];
-                    if (!string.IsNullOrEmpty(dr["CVName"].ToString()))
-                    {
-                        string sql = "UPDATE Application SET SaveStatus = 'OK' WHERE ApplicationCode = '" + applicationCode + "'";
-                        _DBOperations.UpdateRecords(sql);
-                    }
-                    else
-                        documentsOk = "";
-                }
-                else
-                    documentsOk = "";
+                // All sections saved successfully — mark as OK
+                string sqlOk = "UPDATE Application SET SaveStatus = @status WHERE ApplicationCode = @appCode";
+                _DBOperations.UpdateRecords(sqlOk, 
+                    new SqlParameter("@status", "OK"), 
+                    new SqlParameter("@appCode", applicationCode));
             }
-
-            if (! isOk)
-                reasonForFailure = response.Message;
-
-            if (! isOk || documentsOk != "OK")
+            else
             {
-                //need to update the application table status fld as FAILED, if in case some primary data are saved and failure happened after that
-                string sql = "UPDATE Application SET SaveStatus = 'FAIL' WHERE ApplicationCode = '" + applicationCode + "'";
-                _DBOperations.UpdateRecords(sql);
-                reasonForFailure = reasonForFailure + "Error in uploading attachments, ";
+                // Something failed — mark as FAIL with reason
+                reasonForFailure = (response?.Message ?? "") + "Error in uploading attachments, ";
+                string sqlFail = "UPDATE Application SET SaveStatus = @status WHERE ApplicationCode = @appCode";
+                _DBOperations.UpdateRecords(sqlFail, 
+                    new SqlParameter("@status", "FAIL"), 
+                    new SqlParameter("@appCode", applicationCode));
             }
+            #endregion
 
-            if (isOk && documentsOk == "OK")
+            if (isOk)
                 ViewBag.Message = "SUCCESS";
             else
                 ViewBag.Message = "FAIL";
-
-            //ViewBag.FullName = applicationData.PersonalData.FullName;
-            //ViewBag.JobPosition = jobPositionName;
-            //ViewBag.ApplicationCode = applicationCode;
-            //return View("Acknowledge");
 
             return RedirectToAction("Acknowledge", new { applicationData.PersonalData.FullName , jobPositionName, applicationCode, ViewBag.Message, reasonForFailure });
         }
@@ -965,42 +961,51 @@ namespace JobApp.Controllers
             string message = "FAIL";
             decimal id;
             Response response = new();
-            string fileName = "";
-            string propName = "";
             string? applicationCode = otherDocument.ApplicationCode;
-
-            DataTable tmpTable = new DataTable();
 
             try
             {
-                Type t = typeof(OtherDocument);
-
-                foreach (var prop in t.GetProperties())
-                {
-                    tmpTable.Columns.Add(prop.Name, typeof(string));
-                }
+                // Build DataTable with explicit string columns (NOT IFormFile reflection)
+                DataTable tmpTable = new DataTable();
+                tmpTable.Columns.Add("ApplicationCode", typeof(string));
+                tmpTable.Columns.Add("CVName", typeof(string));
+                tmpTable.Columns.Add("NICName", typeof(string));
+                tmpTable.Columns.Add("BCName", typeof(string));
+                tmpTable.Columns.Add("DLName", typeof(string));
+                tmpTable.Columns.Add("Remarks", typeof(string));
 
                 DataRow dr = tmpTable.NewRow();
+                dr["ApplicationCode"] = applicationCode ?? "";
+                dr["Remarks"] = otherDocument.Remarks ?? "";
 
-                foreach (var prop in t.GetProperties())
+                // Process each file explicitly — handles null optional files gracefully
+                var fileFields = new (string ColumnName, IFormFile? File, string FilePrefix)[]
                 {
-                    propName = prop.Name;
+                    ("CVName",  otherDocument.CVName,  "CV"),
+                    ("NICName", otherDocument.NICName, "NIC"),
+                    ("BCName",  otherDocument.BCName,  "BC"),
+                    ("DLName",  otherDocument.DLName,  "DL")
+                };
 
-                    if (propName.ToLower().Contains("name")) //attachment names fields
+                response.IsSuccess = true; // Start optimistic — only fail on actual errors
+
+                foreach (var field in fileFields)
+                {
+                    if (field.File != null && field.File.Length > 0)
                     {
-                        if (prop.GetValue(otherDocument) != null)
+                        response = await UploadFile(field.File, field.FilePrefix);
+                        dr[field.ColumnName] = field.FilePrefix;
+
+                        if (!response.IsSuccess)
                         {
-                            fileName = propName.Substring(0, propName.IndexOf("Name"));
-                            response = await UploadFile((IFormFile)prop.GetValue(otherDocument), fileName);
-
-                            dr[propName] = fileName;
-
-                            if (! response.IsSuccess)
-                                break;
+                            _UtilityFn.CreateLog($"UpdateOtherDocuments:UploadFailed:{field.ColumnName}:{applicationCode}", "error");
+                            break;
                         }
                     }
                     else
-                        dr[propName] = prop.GetValue(otherDocument);
+                    {
+                        dr[field.ColumnName] = DBNull.Value; // Optional file not provided
+                    }
                 }
 
                 if (response.IsSuccess)
@@ -1012,10 +1017,14 @@ namespace JobApp.Controllers
                     {
                         response.IsSuccess = true;
                     }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.Message = "Failed to insert OtherDocument record: " + message;
+                    }
                 }
 
                 _UtilityFn.CreateLog("UpdateOtherDocuments:" + message + ":" + applicationCode, "info");
-
             }
             catch (Exception ex)
             {
@@ -1026,39 +1035,64 @@ namespace JobApp.Controllers
             return response;
         }
 
+        // Allowed file extensions for uploads (as declared in the UI)
+        private static readonly string[] AllowedExtensions = { ".pdf", ".jpg", ".jpeg", ".png" };
+        private const long MaxFileSizeBytes = 1 * 1024 * 1024; // 1 MB
+
         private async Task<Response> UploadFile(IFormFile postedFile, string fileName)
         {
             Response response = new Response();
 
             try
             {
-                if (postedFile.Length > 0)
+                if (postedFile == null || postedFile.Length <= 0)
                 {
-                    var uploadPath = Path.Combine(StaticData.UploadPath, applicationFolderName);
-
-                    if (!Directory.Exists(uploadPath))
-                    {
-                        Directory.CreateDirectory(uploadPath);
-                    }
-
-                    fileName += Path.GetExtension(postedFile.FileName);
-                    uploadPath = Path.Combine(uploadPath, fileName);
-
-                    using (var stream = System.IO.File.Create(uploadPath))
-                    {
-                        await postedFile.CopyToAsync(stream);
-                    }
-
-                    response.IsSuccess = true;
-
-                    //file.SaveAsAsync(Path.Combine(uploads, fileName));
+                    response.IsSuccess = false;
+                    response.Message = $"File '{fileName}' is empty or null.";
+                    return response;
                 }
+
+                // Validate file extension
+                string extension = Path.GetExtension(postedFile.FileName).ToLowerInvariant();
+                if (!AllowedExtensions.Contains(extension))
+                {
+                    response.IsSuccess = false;
+                    response.Message = $"File '{postedFile.FileName}' has invalid type '{extension}'. Allowed: pdf, jpg, jpeg, png.";
+                    _UtilityFn.CreateLog($"UploadFile:InvalidType:{extension}:{fileName}", "error");
+                    return response;
+                }
+
+                // Validate file size
+                if (postedFile.Length > MaxFileSizeBytes)
+                {
+                    response.IsSuccess = false;
+                    response.Message = $"File '{postedFile.FileName}' exceeds 1MB limit.";
+                    _UtilityFn.CreateLog($"UploadFile:TooLarge:{postedFile.Length}bytes:{fileName}", "error");
+                    return response;
+                }
+
+                var uploadPath = Path.Combine(StaticData.UploadPath, applicationFolderName);
+
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+
+                fileName += extension;
+                uploadPath = Path.Combine(uploadPath, fileName);
+
+                using (var stream = System.IO.File.Create(uploadPath))
+                {
+                    await postedFile.CopyToAsync(stream);
+                }
+
+                response.IsSuccess = true;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
-
-                _UtilityFn.CreateLog("UploadFile:" + ex.Message + ":" + fileName, "info");
+                _UtilityFn.CreateLog($"UploadFile:Exception:{ex.Message}:{fileName}", "error");
             }
 
             return response;
