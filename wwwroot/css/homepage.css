@@ -60,7 +60,8 @@
 }
 
 .home-hero-logo {
-    max-width: 200px;
+    max-width: 300px;
+    width: 100%;
     filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));
     transition: transform var(--transition-base);
 }
@@ -325,19 +326,9 @@ a.joblink:hover {
 
 
 
-.home-hero-top-right-logo {
-    position: absolute;
-    top: 2rem;
-    right: 2.5rem;
-    max-width: 150px;
-    z-index: 2;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-}
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .home-hero-top-right-logo {
-        max-width: 100px;
-        top: 1.5rem;
-        right: 1.5rem;
+    .home-hero-logo {
+        max-width: 200px;
     }
 }

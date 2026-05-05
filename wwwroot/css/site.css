@@ -516,6 +516,37 @@ select.form-control {
     transform: scale(1.05);
 }
 
+.navbar-brand-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.navbar-brand-secondary {
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.25s ease;
+    margin-left: -0.3rem;
+}
+
+.navbar-brand-secondary img {
+    transition: transform 0.25s ease;
+    max-height: 35px;
+    width: auto;
+}
+
+.navbar-brand-secondary:hover img {
+    transform: scale(1.05);
+}
+
+.navbar-collapse {
+    justify-content: flex-end !important;
+}
+
+.navbar-nav {
+    margin-left: auto !important;
+}
+
 .modern-navbar .nav-link {
     color: #1a3b5c;
     font-weight: 600;
@@ -614,6 +645,22 @@ main {
 @media (max-width: 768px) {
     .modern-navbar {
         padding: 0.5rem 0;
+    }
+
+    .navbar-brand-wrapper {
+        gap: 0.25rem;
+    }
+
+    .navbar-brand-wrapper .navbar-brand img {
+        max-width: 120px;
+    }
+
+    .navbar-brand-secondary img {
+        max-width: 80px;
+    }
+
+    .navbar-divider {
+        height: 25px;
     }
 
     .modern-navbar .nav-link {
