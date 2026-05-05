@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="~/lib/aos/dist/aos.css" rel="stylesheet" />
 
     <!-- Modern CSS Variables & Styles -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -53,16 +53,21 @@
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="sticky-top z-1030">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm modern-navbar" aria-label="Primary navigation">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/jobapplogo.png" alt="SLT JOBAPP" width="145" height="35" />
-                </a>
+            <div class="container-fluid">
+                <div class="navbar-brand-wrapper d-flex align-items-center">
+                    <a class="navbar-brand m-0" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/images/jobapplogo.png" alt="SLT JOBAPP" width="165" height="40" />
+                    </a>
+                    <a class="navbar-brand-secondary m-0" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/images/transzent-logo.jpeg" alt="Transzent" width="112" height="40" />
+                    </a>
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" 
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end ms-auto">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                                 <i class="fas fa-briefcase me-1"></i> Apply Now
@@ -98,7 +103,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>    
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="~/lib/aos/dist/aos.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/datatable/js/datatables.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
