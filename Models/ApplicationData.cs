@@ -45,7 +45,8 @@ namespace JobApp.Models
         public string FullName { get; set; }
 
         [DisplayName("NIC Number")]
-        [RegularExpression(@"^[0-9,V,v,X,x]{9,12}$", ErrorMessage = "9 digits with V/X or 12 digits allowed.")]
+        [Required(ErrorMessage = "NIC Number is required.")]
+        [RegularExpression(@"^([0-9]{9}[VvXx]|[0-9]{12})$", ErrorMessage = "NIC must be either 9 digits followed by V/X or exactly 12 digits.")]
         public string NIC { get; set; }
         public string DrivingLicenseNo { get; set; }
 
@@ -63,11 +64,12 @@ namespace JobApp.Models
         public string Email { get; set; }
 
         [DisplayName("Personal Mobile Number")]
-        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Only 10 digits numbers are valid.")]
+        [Required(ErrorMessage = "Mobile Number is required.")]
+        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Mobile number must be exactly 10 digits.")]
         public string ContactNo1 { get; set; }
 
         [DisplayName("Secondary Contact Number")]
-        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Only 10 digits numbers are valid.")]
+        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Mobile number must be exactly 10 digits.")]
         public string? ContactNo2 { get; set; }
        
         
