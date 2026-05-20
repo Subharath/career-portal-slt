@@ -214,8 +214,9 @@ Go to your GitHub Repository → **Settings** → **Secrets and variables** → 
 I have created the workflow file at `.github/workflows/main.yml`. It performs these steps:
 
 - Builds and publishes the .NET 6 project.
-- Uses `scp-action` to copy the files to a unique staging folder under `C:\inetpub\wwwroot\career-portal-slt-staging`.
-- Uses `ssh-action` to stop the app pool, mirror the staging contents into `C:\inetpub\wwwroot\career-portal-slt`, and start the app pool again.
+- Uses `ssh-action` to stop the IIS app pool before deployment.
+- Uses `scp-action` to copy the files directly into `C:\inetpub\wwwroot\career-portal-slt`.
+- Uses `ssh-action` to start the IIS app pool again after the copy finishes.
 
 ---
 
