@@ -168,4 +168,7 @@ wwwroot/lib/
 # Application specific - appsettings with sensitive data (optional)
 # Uncomment the line below if appsettings contains secrets
 # appsettings.Development.json
-# appsettings.Production.json
+appsettings.json
+
+# Frontend assets restored by LibMan
+wwwroot/lib/

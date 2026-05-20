@@ -21,6 +21,11 @@
     {
       "library": "sweetalert@2.1.2",
       "destination": "wwwroot/lib/sweetalert/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "jquery-validation@1.21.0",
+      "destination": "wwwroot/lib/jquery-validation"
     }
   ]
 }
