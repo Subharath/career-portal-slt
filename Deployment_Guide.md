@@ -206,7 +206,7 @@ Go to your GitHub Repository → **Settings** → **Secrets and variables** → 
 
 - `SERVER_IP`: The public IP of your pfSense (e.g., `124.43.216.136`).
 - `SERVER_USERNAME`: Windows Server username (e.g., `Administrator`).
-- `SERVER_PASSWORD`: Windows Server password.
+- `SSH_PRIVATE_KEY`: The private key used for SSH access.
 - `SSH_PORT`: The SSH port (usually `22`, unless NATed differently).
 
 ### 2. Workflow Configuration
@@ -214,8 +214,8 @@ Go to your GitHub Repository → **Settings** → **Secrets and variables** → 
 I have created the workflow file at `.github/workflows/main.yml`. It performs these steps:
 
 - Builds and publishes the .NET 6 project.
-- Uses `scp-action` to copy the files to `C:\inetpub\wwwroot\career-portal-slt`.
-- Uses `ssh-action` to run `Restart-WebAppPool -Name 'Career_Portal'` on the Windows Server to refresh the app.
+- Uses `scp-action` to copy the files to a unique staging folder under `C:\inetpub\wwwroot\career-portal-slt-staging`.
+- Uses `ssh-action` to stop the app pool, mirror the staging contents into `C:\inetpub\wwwroot\career-portal-slt`, and start the app pool again.
 
 ---
 

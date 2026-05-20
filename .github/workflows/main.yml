@@ -25,7 +25,7 @@ jobs:
       - name: Publish
         run: dotnet publish JobApp.csproj -c Release -o ./publish
 
-      - name: Deploy via SCP
+      - name: Deploy to Staging via SCP
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -33,10 +33,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "./publish/*"
-          target: "C:/inetpub/wwwroot/career-portal-slt"
+          target: "C:/inetpub/wwwroot/career-portal-slt-staging/${{ github.run_id }}"
           strip_components: 1 # Remove the 'publish' folder prefix
 
-      - name: Restart IIS Site
+      - name: Swap Staging into Live Site
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -44,4 +44,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            powershell -Command "Import-Module WebAdministration; Restart-WebAppPool -Name 'Career_Portal'"
+            powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference = 'Stop'; $appPool = 'Career_Portal'; $livePath = 'C:\inetpub\wwwroot\career-portal-slt'; $stagingPath = 'C:\inetpub\wwwroot\career-portal-slt-staging\${{ github.run_id }}'; Import-Module WebAdministration; if (Test-Path \"IIS:\\AppPools\\$appPool\") { Stop-WebAppPool -Name $appPool }; robocopy $stagingPath $livePath /MIR /R:2 /W:2 /NFL /NDL /NJH /NJS /NC /NS; if ($LASTEXITCODE -ge 8) { throw \"Robocopy failed with exit code $LASTEXITCODE\" }; Remove-Item $stagingPath -Recurse -Force; Start-WebAppPool -Name $appPool"
