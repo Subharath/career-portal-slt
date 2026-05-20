@@ -3,6 +3,31 @@
    ============================================ */
 
 /* Navbar Brand */
+header.app-header {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 248, 252, 0.98) 100%);
+    border-bottom: 1px solid rgba(0, 102, 204, 0.12);
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+nav.app-navbar {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+@media (min-width: 576px) {
+    .navbar-brand-wrapper {
+        min-width: 320px;
+    }
+
+    .app-navbar .navbar-collapse {
+        flex-grow: 1;
+    }
+
+    .app-navbar .navbar-nav {
+        gap: 0.75rem;
+    }
+}
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -13,6 +38,11 @@ a.navbar-brand {
 
 a.navbar-brand:hover {
     transform: translateY(-2px);
+}
+
+.app-navbar .nav-link {
+    font-weight: 600;
+    padding-inline: 0.5rem;
 }
 
 /* Modern Link Styling */
