@@ -325,7 +325,6 @@ body {
     background: linear-gradient(135deg, var(--primary-blue, #0066CC), var(--accent-green, #00C853));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 /* Touch-friendly spacing for mobile */
