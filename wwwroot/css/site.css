@@ -507,6 +507,13 @@ select.form-control {
     transition: all var(--transition-base);
 }
 
+.brand-divider {
+    width: 1px;
+    height: 24px;
+    background-color: rgba(26, 59, 92, 0.2);
+    align-self: center;
+}
+
 .modern-navbar .navbar-brand img {
     transition: transform 0.25s ease;
 }
