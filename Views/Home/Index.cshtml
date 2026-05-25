@@ -8,7 +8,9 @@
 <section class="home-hero mb-4" data-aos="fade-in" data-aos-duration="1000">
     <div class="home-hero-media"></div>
     <div class="home-hero-overlay">
-        <img src="~/images/logo.png" alt="SLT Mobitel" class="home-hero-top-right-logo" />
+        <div class="home-hero-logo-wrap">
+            <img src="~/images/logo.png" alt="SLT Mobitel" class="home-hero-top-right-logo" />
+        </div>
         <div class="row align-items-center g-4 w-100">
             <div class="col-lg-8">
                 <p class="home-eyebrow mb-2">SLT MOBITEL CAREERS</p>
@@ -16,10 +18,7 @@
                 <p class="home-subtitle mb-4">
                     A streamlined portal for new employees to discover opportunities and apply with confidence.
                 </p>
-                <div class="d-flex flex-wrap gap-2">
-                    <a href="#openings" class="btn btn-light btn-lg px-4">View Openings</a>
-                    @Html.ActionLink("Join Talent Pool", "Join", "Home", null, new { @class = "btn btn-outline-light btn-lg px-4" })
-                </div>
+
             </div>
         </div>
     </div>

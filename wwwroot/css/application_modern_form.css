@@ -99,6 +99,7 @@ p.control-label {
 .form-control::placeholder {
     color: #96A2AF;
     opacity: 1;
+    text-transform: none;
 }
 
 /* File inputs */
