@@ -333,19 +333,41 @@ a.joblink:hover {
 
 
 
-.home-hero-top-right-logo {
+.home-hero-logo-wrap {
     position: absolute;
-    top: 2rem;
+    top: 1.75rem;
     right: 2.5rem;
-    max-width: 150px;
     z-index: 2;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+    padding: 0.6rem 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-hero-logo-wrap:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255,255,255,0.15) inset;
+}
+
+.home-hero-top-right-logo {
+    max-width: 150px;
+    display: block;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
 }
 
 @media (max-width: 768px) {
+    .home-hero-logo-wrap {
+        top: 1rem;
+        right: 1rem;
+        padding: 0.4rem 0.7rem;
+        border-radius: 10px;
+    }
+
     .home-hero-top-right-logo {
         max-width: 100px;
-        top: 1.5rem;
-        right: 1.5rem;
     }
 }
