@@ -1,4 +1,4 @@
-﻿@model JobApp.Models.ApplicationData
+@model JobApp.Models.ApplicationData
 
 @{
     ViewData["Title"] = "Apply";
@@ -64,7 +64,7 @@
                 <h2>Personal Information</h2>
                 <section>
                     <div class="form-group row">
-                        <div class="col-2 form-group">
+                        <div class="col-12 col-sm-6 col-md-2 form-group">
                             <label asp-for="PersonalData.Salutation" class="control-label required"></label>
                             <select asp-for="PersonalData.Salutation" class="form-control form-control-sm" autofocus>
                                 <option>Mr</option>
@@ -72,17 +72,17 @@
                                 <option>Miss</option>
                             </select>                        
                         </div>
-                        <div class="col-2 form-group">
+                        <div class="col-12 col-sm-6 col-md-2 form-group">
                             <label asp-for="PersonalData.Initials" class="control-label required"></label>
                             <input asp-for="PersonalData.Initials" class="form-control form-control-sm text-uppercase" maxlength="10" placeholder="e.g. KAD" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Do not seperate with spaces/dots" />
                             <span asp-validation-for="PersonalData.Initials" class="text-danger"></span>
                         </div>
-                        <div class="col-3 form-group">
+                        <div class="col-12 col-sm-6 col-md-3 form-group">
                             <label asp-for="PersonalData.Surname" class="control-label required"></label>
                             <input asp-for="PersonalData.Surname" class="form-control form-control-sm text-capitalize" maxlength="50" placeholder="e.g. Silva" />
                             <span asp-validation-for="PersonalData.Surname" class="text-danger"></span>
                         </div>
-                        <div class="col-5 form-group">
+                        <div class="col-12 col-sm-6 col-md-5 form-group">
                             <label asp-for="PersonalData.FullName" class="control-label required"></label>
                             <input asp-for="PersonalData.FullName" class="form-control form-control-sm text-capitalize" maxlength="100" placeholder="e.g. Kamal Anurudda Dushen Silva" />
                             <span asp-validation-for="PersonalData.FullName" class="text-danger"></span>
