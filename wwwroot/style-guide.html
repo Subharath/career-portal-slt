@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLT JobApp - UI Style Guide</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F7FA;
+            padding: 2rem;
+        }
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        .section {
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #0066CC, #00C853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .color-box {
+            border-radius: 10px;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.25s;
+        }
+        .color-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        .color-name {
+            font-weight: 600;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        .color-hex {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+        .button-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .component-demo {
+            background: #F5F7FA;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <h1 style="text-align: center; margin-bottom: 3rem;">
+            <span style="background: linear-gradient(135deg, #0066CC, #00C853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 3rem;">
+                SLT JobApp UI Style Guide
+            </span>
+        </h1>
+
+        <!-- Color Palette Section -->
+        <div class="section">
+            <h2 class="section-title">🎨 Color Palette</h2>
+            
+            <h3 style="margin-top: 2rem;">Primary Colors</h3>
+            <div class="color-grid">
+                <div class="color-box" style="background: #0066CC; color: white;">
+                    <div class="color-name">Primary Blue</div>
+                    <div class="color-hex">#0066CC</div>
+                </div>
+                <div class="color-box" style="background: #4D94E6; color: white;">
+                    <div class="color-name">Primary Blue Light</div>
+                    <div class="color-hex">#4D94E6</div>
+                </div>
+                <div class="color-box" style="background: #004C99; color: white;">
+                    <div class="color-name">Primary Blue Dark</div>
+                    <div class="color-hex">#004C99</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Green Accent Colors</h3>
+            <div class="color-grid">
+                <div class="color-box" style="background: #00C853; color: white;">
+                    <div class="color-name">Accent Green</div>
+                    <div class="color-hex">#00C853</div>
+                </div>
+                <div class="color-box" style="background: #4DB848; color: white;">
+                    <div class="color-name">SLT Green</div>
+                    <div class="color-hex">#4DB848</div>
+                </div>
+                <div class="color-box" style="background: #00A3E0; color: white;">
+                    <div class="color-name">Secondary Blue</div>
+                    <div class="color-hex">#00A3E0</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Neutral Colors</h3>
+            <div class="color-grid">
+                <div class="color-box" style="background: #2C3E50; color: white;">
+                    <div class="color-name">Text Primary</div>
+                    <div class="color-hex">#2C3E50</div>
+                </div>
+                <div class="color-box" style="background: #546E7A; color: white;">
+                    <div class="color-name">Text Secondary</div>
+                    <div class="color-hex">#546E7A</div>
+                </div>
+                <div class="color-box" style="background: #F5F7FA; color: #2C3E50; border: 1px solid #E0E6ED;">
+                    <div class="color-name">Background</div>
+                    <div class="color-hex">#F5F7FA</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">State Colors</h3>
+            <div class="color-grid">
+                <div class="color-box" style="background: #00C853; color: white;">
+                    <div class="color-name">Success</div>
+                    <div class="color-hex">#00C853</div>
+                </div>
+                <div class="color-box" style="background: #FFA726; color: white;">
+                    <div class="color-name">Warning</div>
+                    <div class="color-hex">#FFA726</div>
+                </div>
+                <div class="color-box" style="background: #EF5350; color: white;">
+                    <div class="color-name">Error</div>
+                    <div class="color-hex">#EF5350</div>
+                </div>
+                <div class="color-box" style="background: #29B6F6; color: white;">
+                    <div class="color-name">Info</div>
+                    <div class="color-hex">#29B6F6</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons Section -->
+        <div class="section">
+            <h2 class="section-title">🔘 Buttons</h2>
+            <div class="component-demo">
+                <div class="button-grid">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-check"></i> Primary Button
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="fas fa-heart"></i> Success Button
+                    </button>
+                    <button class="btn btn-info">
+                        <i class="fas fa-info-circle"></i> Info Button
+                    </button>
+                    <button class="btn btn-outline-dark">
+                        <i class="fas fa-download"></i> Outline Button
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Elements Section -->
+        <div class="section">
+            <h2 class="section-title">📝 Form Elements</h2>
+            <div class="component-demo">
+                <div style="max-width: 500px;">
+                    <label class="control-label required">Full Name</label>
+                    <input type="text" class="form-control" placeholder="Enter your full name">
+                    
+                    <label class="control-label" style="margin-top: 1rem;">Email Address</label>
+                    <input type="email" class="form-control" placeholder="your.email@example.com">
+                    
+                    <label class="control-label" style="margin-top: 1rem;">Select Position</label>
+                    <select class="form-select">
+                        <option>Software Engineer</option>
+                        <option>Product Manager</option>
+                        <option>Data Scientist</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="section">
+            <h2 class="section-title">🎴 Cards</h2>
+            <div class="component-demo">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-rocket"></i> Card Title
+                        </div>
+                        <div class="card-body">
+                            This is a modern card with gradient header and shadow effects.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5><i class="fas fa-star" style="color: #FFA726;"></i> Simple Card</h5>
+                            <p>Cards without headers are also supported.</p>
+                            <button class="btn btn-primary btn-sm">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typography Section -->
+        <div class="section">
+            <h2 class="section-title">📄 Typography</h2>
+            <div class="component-demo">
+                <h1 style="margin-bottom: 1rem;">Heading 1 - Display</h1>
+                <h2 style="margin-bottom: 1rem;">Heading 2 - Section Title</h2>
+                <h3 style="margin-bottom: 1rem;">Heading 3 - Subsection</h3>
+                <h4 style="margin-bottom: 1rem;">Heading 4 - Component Title</h4>
+                <p style="color: #2C3E50; margin-bottom: 0.5rem;">
+                    <strong>Body Text:</strong> This is regular paragraph text using the eye-friendly color #2C3E50 instead of pure black.
+                </p>
+                <p style="color: #546E7A; margin-bottom: 0.5rem;">
+                    <strong>Secondary Text:</strong> Used for captions and less important information.
+                </p>
+                <p style="color: #78909C;">
+                    <strong>Light Text:</strong> Used for hints and subtle information.
+                </p>
+            </div>
+        </div>
+
+        <!-- Shadows Section -->
+        <div class="section">
+            <h2 class="section-title">🌗 Shadow Elevations</h2>
+            <div class="component-demo">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                    <div style="padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);">
+                        <strong>Small Shadow</strong>
+                        <p style="font-size: 0.85rem; color: #546E7A; margin: 0.5rem 0 0;">For subtle elevation</p>
+                    </div>
+                    <div style="padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                        <strong>Medium Shadow</strong>
+                        <p style="font-size: 0.85rem; color: #546E7A; margin: 0.5rem 0 0;">For cards and containers</p>
+                    </div>
+                    <div style="padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);">
+                        <strong>Large Shadow</strong>
+                        <p style="font-size: 0.85rem; color: #546E7A; margin: 0.5rem 0 0;">For modals and emphasis</p>
+                    </div>
+                    <div style="padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);">
+                        <strong>X-Large Shadow</strong>
+                        <p style="font-size: 0.85rem; color: #546E7A; margin: 0.5rem 0 0;">For hero sections</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animations Section -->
+        <div class="section">
+            <h2 class="section-title">✨ Animations</h2>
+            <div class="component-demo">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                    <div class="animate-fade-in" style="padding: 1.5rem; background: white; border-radius: 10px; text-align: center;">
+                        <strong>Fade In</strong>
+                    </div>
+                    <div class="animate-scale-in" style="padding: 1.5rem; background: white; border-radius: 10px; text-align: center;">
+                        <strong>Scale In</strong>
+                    </div>
+                    <div class="hover-lift" style="padding: 1.5rem; background: white; border-radius: 10px; text-align: center;">
+                        <strong>Hover Lift</strong>
+                    </div>
+                    <div class="hover-grow" style="padding: 1.5rem; background: white; border-radius: 10px; text-align: center;">
+                        <strong>Hover Grow</strong>
+                    </div>
+                    <div class="float" style="padding: 1.5rem; background: white; border-radius: 10px; text-align: center;">
+                        <strong>Float</strong>
+                    </div>
+                    <div class="animate-pulse" style="padding: 1.5rem; background: white; border-radius: 10px; text-align: center;">
+                        <strong>Pulse</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gradients Section -->
+        <div class="section">
+            <h2 class="section-title">🌈 Gradient Examples</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div style="padding: 2rem; background: linear-gradient(135deg, #0066CC, #004C99); border-radius: 10px; color: white; text-align: center;">
+                    <strong>Primary Gradient</strong>
+                </div>
+                <div style="padding: 2rem; background: linear-gradient(135deg, #00C853, #009640); border-radius: 10px; color: white; text-align: center;">
+                    <strong>Success Gradient</strong>
+                </div>
+                <div style="padding: 2rem; background: linear-gradient(135deg, #00A3E0, #007BA7); border-radius: 10px; color: white; text-align: center;">
+                    <strong>Info Gradient</strong>
+                </div>
+                <div style="padding: 2rem; background: linear-gradient(135deg, #0066CC, #00C853); border-radius: 10px; color: white; text-align: center;">
+                    <strong>Hero Gradient</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding-top: 3rem; border-top: 2px solid #E0E6ED; margin-top: 3rem; color: #546E7A;">
+            <p><strong>SLT JobApp Modern UI - Style Guide</strong></p>
+            <p style="font-size: 0.9rem;">For complete documentation, see UI_UPGRADE_DOCUMENTATION.md</p>
+        </div>
+    </div>
+</body>
+</html>

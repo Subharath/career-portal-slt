@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "Join Talent Pool";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-11 col-lg-10">
+        <div class="card">
+            <div class="card-header border-0 py-4" style="background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));">
+                <h3 class="mb-0 text-white"><i class="fas fa-users me-2"></i>Join Our Talent Pool</h3>
+                <p class="mb-0 mt-2" style="opacity: 0.9;">Submit your profile for future opportunities</p>
+            </div>
+            <div class="card-body p-5">
+                <form asp-action="InitApply" asp-controller="Application">
+                    <input type="hidden" id="jobPositionName" name="jobPositionName" />
+
+                    <div class="row align-items-end g-3">
+                        <div class="col-md-6">
+                            <label class="control-label required" for="intakeCode">
+                                Select your interested job position
+                            </label>
+                            <select asp-items="@ViewBag.JobPosition" 
+                                    id="intakeCode" 
+                                    name="intakeCode" 
+                                    class="form-select" 
+                                    required 
+                                    autofocus>
+                                <option disabled selected>-- Choose a position --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" id="proceedBtn" class="btn btn-primary w-100" disabled style="background: #6c757d; border-color: #6c757d; transition: all 0.3s ease;">
+                                <i class="fas fa-arrow-right me-2"></i>Proceed
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="alert" style="background: var(--bg-tertiary); border-left: 4px solid var(--primary-blue); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 2rem;">
+                    <h6 style="color: var(--primary-blue-dark); margin-bottom: 1rem;">
+                        <i class="fas fa-info-circle me-2"></i>Important Notice
+                    </h6>
+                    <p style="color: #2C3E50; margin: 0; line-height: 1.6;">
+                        Applications and CVs submitted for the Talent Pool will be retained for a period of <strong>six months</strong> 
+                        and securely discarded thereafter.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function() {
+            // Define blue color scheme
+            const blueColors = {
+                primary: '#0066cc',
+                primaryDark: '#004499',
+                primaryLight: '#3385d6',
+                disabled: '#6c757d',
+                disabledLight: '#adb5bd'
+            };
+            
+            // Initially disable the proceed button with gray styling
+            $("#proceedBtn").prop('disabled', true)
+                           .removeClass('btn-primary')
+                           .addClass('btn-secondary')
+                           .css({
+                               'background': blueColors.disabled,
+                               'border-color': blueColors.disabled,
+                               'color': 'white',
+                               'transition': 'all 0.3s ease'
+                           });
+            
+            $("#intakeCode").on('change', function (ev) {
+                
+                var selectedText = $("#intakeCode").find('option:selected').text();
+                var selectedValue = $(this).val();
+                
+                $("#jobPositionName").val(selectedText);
+                
+                // Enable/disable proceed button with blue color scheme
+                if (selectedValue && selectedValue !== '') {
+                    $("#proceedBtn").prop('disabled', false)
+                                   .removeClass('btn-secondary')
+                                   .addClass('btn-primary')
+                                   .css({
+                                       'background': `linear-gradient(135deg, ${blueColors.primary}, ${blueColors.primaryDark})`,
+                                       'border-color': blueColors.primary,
+                                       'color': 'white',
+                                       'box-shadow': `0 4px 12px rgba(0, 102, 204, 0.3)`,
+                                       'transform': 'translateY(0px)'
+                                   })
+                                   .hover(
+                                       function() {
+                                           $(this).css({
+                                               'background': `linear-gradient(135deg, ${blueColors.primaryDark}, ${blueColors.primary})`,
+                                               'transform': 'translateY(-2px)',
+                                               'box-shadow': `0 6px 16px rgba(0, 102, 204, 0.4)`
+                                           });
+                                       },
+                                       function() {
+                                           $(this).css({
+                                               'background': `linear-gradient(135deg, ${blueColors.primary}, ${blueColors.primaryDark})`,
+                                               'transform': 'translateY(0px)',
+                                               'box-shadow': `0 4px 12px rgba(0, 102, 204, 0.3)`
+                                           });
+                                       }
+                                   );
+                } else {
+                    $("#proceedBtn").prop('disabled', true)
+                                   .addClass('btn-secondary')
+                                   .removeClass('btn-primary')
+                                   .css({
+                                       'background': blueColors.disabled,
+                                       'border-color': blueColors.disabled,
+                                       'color': 'white',
+                                       'box-shadow': 'none',
+                                       'transform': 'translateY(0px)'
+                                   })
+                                   .off('mouseenter mouseleave'); // Remove hover effects
+                }
+
+            });
+            
+            // Add blue focus styling to the select dropdown
+            $("#intakeCode").css({
+                'border-color': '#ced4da',
+                'transition': 'all 0.3s ease'
+            }).focus(function() {
+                $(this).css({
+                    'border-color': blueColors.primary,
+                    'box-shadow': `0 0 0 0.25rem rgba(0, 102, 204, 0.25)`
+                });
+            }).blur(function() {
+                $(this).css({
+                    'border-color': '#ced4da',
+                    'box-shadow': 'none'
+                });
+            });
+
+        });
+    </script>
+}

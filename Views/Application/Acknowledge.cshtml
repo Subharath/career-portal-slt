@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Acknowledge";
+}
+
+<style>
+    .checkicon {
+        color: var(--success);
+        font-size: 4.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .erroricon {
+        color: var(--error);
+        font-size: 4.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .disagreeicon {
+        color: var(--warning);
+        font-size: 4.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-body {
+        line-height: 1.8;
+        font-weight: 400;
+        color: var(--text-secondary);
+    }
+    
+    .card-header {
+        background: transparent !important;
+        border-bottom: none !important;
+        padding-top: 2.5rem;
+    }
+</style>
+
+@{
+    if (ViewBag.Message == "SUCCESS")
+    {
+        <div class="card col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+            <div class="card-header checkicon text-center">
+                <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title text-center">Thank you! We received your application.</h5>
+                <p class="card-text text-center">Hi <b>@ViewBag.FullName</b>, Thank you for taking the time to apply for the <b>@ViewBag.JobPosition</b> position at Sri Lanka Telecom. We appreciate your interest in joining the team and the effort you put into submitting your application with us. <br> Your reference number is <b>@ViewBag.ApplicationCode</b></p>
+            </div>
+        </div>
+    }
+    else if (ViewBag.Message == "DENY")
+    {
+        <div class="card col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+            <div class="card-header disagreeicon text-center">
+                <i class="fa-solid fa-thumbs-down" aria-hidden="true"></i>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title text-center">We respect your disagreement</h5>
+                <p class="card-text text-center">The data entered by you is not recorded for any recruitment.</p>
+            </div>
+        </div>
+    }
+    else if (ViewBag.Message == "FAKE")
+    {
+        <div class="card col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+            <div class="card-header erroricon text-center">
+                <i class="fa-solid fa-exclamation-circle" aria-hidden="true"></i>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title text-center">Sorry! your attempt is invalid</h5>
+                <p class="card-text text-center">Either closing date is already passed or currently we don't have the job opportunity your are trying to apply for.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+            <div class="card-header erroricon text-center">
+                <i class="fa-solid fa-exclamation-circle" aria-hidden="true"></i>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title text-center">Sorry! Some error occured.</h5>
+                <p class="card-text text-center">Due to following or some other cause - @ViewBag.Reason <br /> Your application was not submitted successfully. Please try again later.</p>
+            </div>
+        </div>
+    }
+}
+
+
+
