@@ -1,0 +1,84 @@
+﻿﻿:root {
+    --app-primary: #0066CC;
+    --app-primary-dark: #004C99;
+    --app-primary-light: #4D94E6;
+    --app-accent: #00C853;
+    --app-accent-dark: #00A344;
+    --app-bg: #F4F7FB;
+    --app-card: #FFFFFF;
+    --app-card-soft: #F9FBFD;
+    --app-border: #DCE6F0;
+    --app-text: #1F2D3D;
+    --app-text-soft: #546E7A;
+    --app-text-muted: #7B8A97;
+    --app-warning: #FFF7E8;
+    --app-warning-border: #FFD899;
+    --app-warning-text: #8A5A00;
+    --app-info: #EAF5FF;
+    --app-info-border: #B8DAFF;
+    --app-info-text: #0D4F8B;
+    --app-success: #EAFBF1;
+    --app-success-border: #B6E5C8;
+    --app-success-text: #116B3A;
+    --app-danger: #FFF1F0;
+    --app-danger-border: #F2B8B5;
+    --app-danger-text: #B42318;
+    --app-radius-sm: 10px;
+    --app-radius-md: 14px;
+    --app-radius-lg: 18px;
+    --app-radius-xl: 24px;
+    --app-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+    --app-shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --app-shadow-lg: 0 14px 40px rgba(15, 23, 42, 0.12);
+    --app-transition: all 0.25s ease;
+}
+
+body {
+    background: radial-gradient(circle at top left, rgba(77, 148, 230, 0.10), transparent 22%), radial-gradient(circle at top right, rgba(0, 200, 83, 0.08), transparent 18%), linear-gradient(180deg, #F7FAFD 0%, #F3F6FA 100%);
+    color: var(--app-text);
+}
+
+h3 {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--app-text);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+    h3 small.text-muted {
+        color: var(--app-primary) !important;
+        font-weight: 600;
+    }
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--app-border);
+    opacity: 1;
+    margin: 1.5rem 0 2rem;
+}
+
+.required::after {
+    content: " *";
+    color: #dc3545;
+    font-weight: 700;
+}
+
+.optional {
+    opacity: 0.9;
+}
+
+.text-danger,
+.field-validation-error,
+.validation-summary-errors {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.badge.bg-primary {
+    background: linear-gradient(135deg, var(--app-primary), var(--app-primary-dark)) !important;
+    border-radius: 999px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.82rem;
+    box-shadow: var(--app-shadow-sm);
+}

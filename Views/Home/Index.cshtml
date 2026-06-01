@@ -1,0 +1,253 @@
+@model IEnumerable<JobApp.Models.IntakeViewModel>
+@{
+    ViewData["Title"] = "SLT JobApp - Welcome";
+}
+
+<link href="~/css/homepage.css" rel="stylesheet" />
+
+<section class="home-hero mb-4" data-aos="fade-in" data-aos-duration="1000">
+    <div class="home-hero-media"></div>
+    <div class="home-hero-overlay">
+        <div class="home-hero-logo-wrap">
+            <img src="~/images/logo.png" alt="SLT Mobitel" class="home-hero-top-right-logo" />
+        </div>
+        <div class="row align-items-center g-4 w-100">
+            <div class="col-lg-8">
+                <p class="home-eyebrow mb-2">SLT MOBITEL CAREERS</p>
+                <h1 class="home-title mb-3">Build Your Future With Us</h1>
+                <p class="home-subtitle mb-4">
+                    A streamlined portal for new employees to discover opportunities and apply with confidence.
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (Model != null && Model.Any())
+{
+    <section class="portal-card portal-openings mb-4" id="openings" data-aos="fade-up" data-aos-delay="100">
+        <div class="row g-4 align-items-start">
+            <div class="col-lg-5">
+                <h2 class="mb-3"><i class="fas fa-briefcase me-2"></i>Current Openings</h2>
+                <p class="mb-0">
+                    Explore active positions and start your application in a few clicks.
+                </p>
+            </div>
+            <div class="col-lg-7">
+                <ul class="home-opening-list mb-0">
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            @Html.ActionLink(
+                                item.JobPositionName,
+                                "InitApply",
+                                "Application",
+                                new { intakeCode = item.IntakeCode, jobPositionName = item.JobPositionName, jobTemplate = item.JobTemplate },
+                                new { @class = "joblink", title = "Click to apply for " + item.JobPositionName }
+                            )
+                            @Html.ActionLink(
+                                "Apply",
+                                "InitApply",
+                                "Application",
+                                new { intakeCode = item.IntakeCode, jobPositionName = item.JobPositionName, jobTemplate = item.JobTemplate },
+                                new { @class = "btn btn-primary btn-sm apply-btn", title = "Apply for " + item.JobPositionName }
+                            )
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </section>
+} 
+@* Talent pool section *@
+
+@* <section class="portal-card portal-talent mb-4" data-aos="fade-up" data-aos-delay="150">
+    <div class="row g-3 align-items-center">
+        <div class="col-md-8">
+            <h3 class="mb-2"><i class="fas fa-users me-2"></i>Join Our Talent Pool</h3>
+            <p class="mb-0">You can join with our Talent Pool and find your next job.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            @Html.ActionLink("Post Your Resume", "Join", "Home", null, new { @class = "btn btn-success btn-lg px-4" })
+        </div>
+    </div>
+</section> *@
+
+<section class="row g-3 mb-2" data-aos="fade-up" data-aos-delay="200">
+    <div class="col-md-4">
+        <article class="home-feature-card h-100">
+            <i class="fas fa-eye home-feature-icon"></i>
+            <h5>Our Vision</h5>
+            <p>All Sri Lankans seamlessly connected with world-class information, communication and entertainment services.</p>
+        </article>
+    </div>
+    <div class="col-md-4">
+        <article class="home-feature-card h-100">
+            <i class="fas fa-heart home-feature-icon"></i>
+            <h5>Our Mission</h5>
+            <p>Your trusted and proven partner for innovative and exciting communication experiences delivered with passion, quality and commitment.</p>
+        </article>
+    </div>
+    <div class="col-md-4">
+        <article class="home-feature-card home-values-card h-100">
+            <div class="values-front">
+                <i class="fas fa-star home-feature-icon"></i>
+                <h5>Our Values</h5>
+                <p class="values-hint">Hover to explore</p>
+            </div>
+            <div class="values-back">
+                <div class="values-nav">
+                    <button class="values-nav-btn" id="valuesPrev" title="Previous">&#8592;</button>
+                    <button class="values-nav-btn" id="valuesNext" title="Next">&#8594;</button>
+                </div>
+                <div class="values-slide active">
+                    <span class="values-keyword">Customer Caring</span>
+                    <span class="values-text">We put our customers at the centre of everything we do</span>
+                </div>
+                <div class="values-slide">
+                    <span class="values-keyword">Trustworthy</span>
+                    <span class="values-text">We are true to our promises</span>
+                </div>
+                <div class="values-slide">
+                    <span class="values-keyword">Innovative</span>
+                    <span class="values-text">We continuously invent new opportunities through creative thinking</span>
+                </div>
+                <div class="values-slide">
+                    <span class="values-keyword">Responsive</span>
+                    <span class="values-text">We are ready to listen and act promptly</span>
+                </div>
+                <div class="values-slide">
+                    <span class="values-keyword">Teamwork</span>
+                    <span class="values-text">We are one team with a common purpose to achieve common goals</span>
+                </div>
+                <div class="values-slide">
+                    <span class="values-keyword">Excellence</span>
+                    <span class="values-text">We are committed to exceptional performance</span>
+                </div>
+                <div class="values-slide">
+                    <span class="values-keyword">Results Driven</span>
+                    <span class="values-text">We are committed to enhancing shareholder value</span>
+                </div>
+                <div class="values-dots">
+                    <span class="values-dot active"></span>
+                    <span class="values-dot"></span>
+                    <span class="values-dot"></span>
+                    <span class="values-dot"></span>
+                    <span class="values-dot"></span>
+                    <span class="values-dot"></span>
+                    <span class="values-dot"></span>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+<script>
+// Ensure apply buttons work correctly
+document.addEventListener('DOMContentLoaded', function() {
+    // Define blue color scheme
+    const blueColors = {
+        primary: '#0066cc',
+        primaryDark: '#004499',
+        primaryLight: '#3385d6'
+    };
+    
+    // Add click tracking for apply buttons
+    const applyButtons = document.querySelectorAll('.apply-btn, .joblink');
+    
+    applyButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Add loading state with blue styling
+            if (this.classList.contains('apply-btn')) {
+                const originalText = this.textContent;
+                this.textContent = 'Loading...';
+                this.style.pointerEvents = 'none';
+                this.style.background = `linear-gradient(135deg, ${blueColors.primaryLight}, ${blueColors.primary})`;
+                
+                // Reset after a short delay if navigation fails
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.pointerEvents = 'auto';
+                    this.style.background = `linear-gradient(135deg, ${blueColors.primary}, ${blueColors.primaryDark})`;
+                }, 3000);
+            }
+            
+            // Log the click for debugging
+            console.log('Apply button clicked:', {
+                href: this.href,
+                text: this.textContent,
+                target: e.target
+            });
+        });
+        
+        // Add enhanced hover effects with blue colors
+        button.addEventListener('mouseenter', function() {
+            if (this.classList.contains('apply-btn')) {
+                this.style.background = `linear-gradient(135deg, ${blueColors.primaryDark}, #003366)`;
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = `0 8px 20px rgba(0, 102, 204, 0.4)`;
+            }
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            if (this.classList.contains('apply-btn')) {
+                this.style.background = `linear-gradient(135deg, ${blueColors.primary}, ${blueColors.primaryDark})`;
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = `0 6px 16px rgba(0, 102, 204, 0.3)`;
+            }
+        });
+    });
+    
+    // Add keyboard navigation support
+    applyButtons.forEach(button => {
+        button.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+});
+
+// Values card auto-rotate + nav
+(function() {
+    const card = document.querySelector('.home-values-card');
+    if (!card) return;
+    const slides = card.querySelectorAll('.values-slide');
+    const dots = card.querySelectorAll('.values-dot');
+    let current = 0;
+    let timer;
+
+    function goTo(n) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+    }
+
+    function startTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => goTo(current + 1), 2200);
+    }
+
+    card.addEventListener('mouseenter', startTimer);
+    card.addEventListener('mouseleave', () => clearInterval(timer));
+
+    document.getElementById('valuesPrev').addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        goTo(current - 1);
+        startTimer();
+    });
+
+    document.getElementById('valuesNext').addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        goTo(current + 1);
+        startTimer();
+    });
+})();
+</script>
+

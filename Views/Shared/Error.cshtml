@@ -1,0 +1,52 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center p-4 p-md-5">
+                    <div class="text-danger mb-4">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 4rem;"></i>
+                    </div>
+                    <h1 class="text-danger h2 mb-3">An Error Occurred</h1>
+                    <h2 class="text-muted h5 mb-4">We're sorry, something went wrong while processing your request.</h2>
+
+                    @if (Model?.ShowRequestId == true)
+                    {
+                        <div class="alert alert-light border mb-4">
+                            <strong>Request ID:</strong> <code class="text-primary">@Model!.RequestId</code>
+                        </div>
+                    }
+                    
+                    <p class="text-secondary mb-4">
+                        Please try again in a few minutes. The system may be under maintenance or experiencing high load.
+                        You can contact SLT-Mobitel for more detailed information about the error that occurred.
+                    </p>
+                    
+                    <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
+                        <a asp-action="Index" asp-controller="Home" class="btn btn-primary px-4">
+                            <i class="fas fa-home me-2"></i>Return to Home
+                        </a>
+                        <button onclick="window.location.reload()" class="btn btn-outline-primary px-4">
+                            <i class="fas fa-redo me-2"></i>Try Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<h3>Development Mode</h3>
+<p>
+    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+</p>
+<p>
+    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
+    It can result in displaying sensitive information from exceptions to end users.
+    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
+    and restarting the app.
+</p>*@

@@ -1,0 +1,2165 @@
+@model JobApp.Models.ApplicationData
+
+@{
+    ViewData["Title"] = "Apply";
+}
+
+<style>
+    .swal-text {
+        color: black;
+    }
+
+    .swal-button {
+        color: black;
+        border-color: navy;
+    }
+
+    .swal-title {
+        color: navy;
+    }
+</style>
+
+<link href="~/css/application_specific.css" rel="stylesheet" />
+<link href="~/lib/jquery-section/css/jquery.steps.css" rel="stylesheet" />
+<link href="~/lib/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+@* new css *@ 
+<link href="~/css/application_modern_theme.css" rel="stylesheet" />
+<link href="~/css/application_modern_form.css" rel="stylesheet" />
+<link href="~/css/application_modern_wizard.css" rel="stylesheet" />
+
+
+
+
+<div class="mb-4">
+    <h3>Application for the Post of <small class="text-muted">@ViewBag.JobPositionName</small></h3>
+    <p class="text-muted mb-0" style="color:#546E7A !important;">
+        Please complete each step carefully and upload clear supporting documents.
+    </p>
+</div>
+
+<partial name="_LoadingPartial" />
+
+<hr />
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Note:</strong> File attachments must not exceed 1MB.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form enctype="multipart/form-data" asp-action="Apply" id="applicationForm" autocomplete="on">
+            <input type="hidden" value="@ViewBag.JobPositionName" id="jobPositionName" name="jobPositionName"/>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="PersonalData.ApplicationID" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="PersonalData.ApplicationCode" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="PersonalData.IntakeCode" class="form-control" />
+            </div>
+
+            <div id="wizard">
+                <h2>Personal Information</h2>
+                <section>
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-6 col-md-2 form-group">
+                            <label asp-for="PersonalData.Salutation" class="control-label required"></label>
+                            <select asp-for="PersonalData.Salutation" class="form-control form-control-sm" autofocus>
+                                <option>Mr</option>
+                                <option>Mrs</option>
+                                <option>Miss</option>
+                            </select>                        
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-2 form-group">
+                            <label asp-for="PersonalData.Initials" class="control-label required"></label>
+                            <input asp-for="PersonalData.Initials" class="form-control form-control-sm text-uppercase" maxlength="10" placeholder="e.g. KAD" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Do not seperate with spaces/dots" />
+                            <span asp-validation-for="PersonalData.Initials" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 form-group">
+                            <label asp-for="PersonalData.Surname" class="control-label required"></label>
+                            <input asp-for="PersonalData.Surname" class="form-control form-control-sm text-capitalize" maxlength="50" placeholder="e.g. Silva" />
+                            <span asp-validation-for="PersonalData.Surname" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-5 form-group">
+                            <label asp-for="PersonalData.FullName" class="control-label required"></label>
+                            <input asp-for="PersonalData.FullName" class="form-control form-control-sm text-capitalize" maxlength="100" placeholder="e.g. Kamal Anurudda Dushen Silva" />
+                            <span asp-validation-for="PersonalData.FullName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-3 form-group">
+                            <label asp-for="PersonalData.NIC" class="control-label required"></label>
+                            <input asp-for="PersonalData.NIC" class="form-control form-control-sm text-uppercase" maxlength="12" />
+                            <span asp-validation-for="PersonalData.NIC" class="text-danger"></span>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label asp-for="PersonalData.DOB" class="control-label required"></label>
+                            <input asp-for="PersonalData.DOB" class="form-control form-control-sm" asp-format="{0:yyyy-MM-dd}" type="text" readonly="readonly"  style="background-color:white;" required/>
+                        </div>
+                        <div class="col-6 age-fields-row">
+                            <div class="col form-group">
+                                <label asp-for="PersonalData.AgeYears" class="control-label optional"></label>
+                                <input asp-for="PersonalData.AgeYears" class="form-control form-control-sm" readonly />
+                                <span asp-validation-for="PersonalData.AgeYears" class="text-danger"></span>
+                            </div>
+                            <div class="col form-group">
+                                <label asp-for="PersonalData.AgeMonths" class="control-label optional"></label>
+                                <input asp-for="PersonalData.AgeMonths" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col form-group">
+                                <label asp-for="PersonalData.AgeDays" class="control-label optional"></label>
+                                <input asp-for="PersonalData.AgeDays" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col form-group">
+                                <label class="dummy-label"></label>
+                                <input asp-for="PersonalData.Overage" class="form-control form-control-sm" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 form-group">
+                        <p class="control-label required">Address</p>
+                        <input asp-for="PersonalData.HouseNo" class="form-control form-control-sm" placeholder="House/Building/Apartment Number" maxlength="30" />
+                    </div>
+                    <div class="col-6 form-group">
+                        <input asp-for="PersonalData.AddressLine1" class="form-control form-control-sm" placeholder="Address Line 1" maxlength="50" />
+                    </div>
+                    <div class="col-6 form-group">
+                        <input asp-for="PersonalData.AddressLine2" class="form-control form-control-sm" placeholder="Address Line 2" maxlength="50" />
+                    </div>
+                    <div class="col-6 form-group">
+                        <input asp-for="PersonalData.AddressLine3" class="form-control form-control-sm" placeholder="Address Line 3" maxlength="50" />
+                    </div>
+                    <div class="col-6 form-group">
+                        <input asp-for="PersonalData.AddressLine4" class="form-control form-control-sm" placeholder="Address Line 4" maxlength="50" />
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6 form-group">
+                            <label asp-for="PersonalData.Email" class="control-label required"></label>
+                            <input asp-for="PersonalData.Email" class="form-control form-control-sm" maxlength="50" required/>
+                            <span asp-validation-for="PersonalData.Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label asp-for="PersonalData.ContactNo1" class="control-label required"></label>
+                            <input asp-for="PersonalData.ContactNo1" class="form-control form-control-sm" placeholder="Personal Mobile Number" maxlength="10" />
+                            <span asp-validation-for="PersonalData.ContactNo1" class="text-danger"></span>
+                        </div>
+                        <div class="col-3 form-group">
+                            <label asp-for="PersonalData.ContactNo2" class="control-label optional"></label>
+                            <input asp-for="PersonalData.ContactNo2" class="form-control form-control-sm" placeholder="Secondary Contact Number" maxlength="10" />
+                            <span asp-validation-for="PersonalData.ContactNo2" class="text-danger"></span>
+                        </div>
+                    </div>
+@*                    <div class="form-group">
+                        <label asp-for="PersonalData.Overage" class="control-label"></label>
+                        <input asp-for="PersonalData.Overage" class="form-control" />
+                        <span asp-validation-for="PersonalData.Overage" class="text-danger"></span>
+                    </div>*@
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" id="btnPersonalData" style="display:none"/>
+                    </div>
+                </section>
+                
+                <h2>O/L Examination Results</h2>
+                <section>
+                    <div class="accordion" id="accordionOL">
+                        @*/OL 1st Attempt Results Panel*@
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#OLcollapse1" aria-expanded="true" aria-controls="OLcollapse1">
+                                    1st Attempt
+                                </button>
+                            </h2>
+                            <div id="OLcollapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#accordionOL">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="OLExam1.ExamCode" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="OLExam1.Attempt" class="form-control" />
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-2 form-group">
+                                                <label asp-for="OLExam1.ExamYear" class="control-label required"></label>
+                                                <select asp-for="OLExam1.ExamYear" asp-items="@ViewBag.ExamYear" class="form-select form-select-sm" required autofocus>
+                                                    <option disabled selected></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4 form-group">
+                                                <label asp-for="OLExam1.IndexNumber" class="control-label required"></label>
+                                                <input asp-for="OLExam1.IndexNumber" class="form-control form-control-sm" maxlength="20" required />
+                                                <span asp-validation-for="OLExam1.IndexNumber" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <hr />
+                                    @*Subjects and grades*@
+                                    <div class="form-group row">
+                                        <div class="col-4 form-group">
+                                            <p class="control-label required">Subject</p>
+                                        </div>
+                                        <div class="col-2 form-group">
+                                            <p class="control-label required">Grade</p>
+                                        </div>
+                                    </div>
+
+                                    @*mandatory subjects*@
+                                    @{
+                                        for (int i = 0; i <= 2; i++)
+                                        {
+                                            <div class="form-group row">
+                                                <div class="col-4 form-group">
+                                                    <input asp-for="OLResults1[i].SubjectName" class="form-control form-control-sm" maxlength="50" readonly />
+                                                </div>
+                                                <div class="col-2 form-group">
+                                                    <select asp-for="OLResults1[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm" required>
+                                                        <option disabled selected></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                    @*other subjects*@
+                                    @{
+                                        for (int i = 3; i <= 7; i++)
+                                        {
+                                            <div class="form-group row">
+                                                <div class="col-4 form-group">
+                                                    <select asp-for="OLResults1[i].SubjectName" asp-items="@ViewBag.OLSubject" class="form-select form-select-sm" required>
+                                                        <option disabled selected></option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-2 form-group">
+                                                    <select asp-for="OLResults1[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm" required>
+                                                        <option disabled selected></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        @*optional subject - for applicants who sat before 1995 only 8 subjects others 9 subjects. in future it will be 7 subjects with no grades*@
+                                        for (int i = 8; i <= 8; i++)
+                                        {
+                                            <div class="form-group row">
+                                                <div class="col-4 form-group">
+                                                    <select asp-for="OLResults1[i].SubjectName" asp-items="@ViewBag.OLSubject" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-2 form-group">
+                                                    <select asp-for="OLResults1[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    <br />
+                                    <div class="col-10 form-group">
+                                        <label asp-for="OLExam1.AttachmentName" class="control-label required"></label>
+                                        <input asp-for="OLExam1.AttachmentName" class="form-control form-control-sm" type="file" required />
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        <input type="submit" value="Create" class="btn btn-primary" id="btnOL1" style="display:none" />
+                                    </div>                                  
+                                </div>
+                            </div>
+                        </div>
+
+                        @*/OL Results 2nd Attempt Panel*@
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading1">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#OLcollapse2" aria-expanded="true" aria-controls="OLcollapse2">
+                                    2nd Attempt
+                                </button>
+                            </h2>
+
+                            <div id="OLcollapse2" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#accordionOL">
+                                <div class="accordion-body">
+                                    <div class="alert alert-dark">
+                                        <h6>If you have sit for any subject, enter exam year, index number and each subject with the grade. Incomplete results will be discarded.</h6>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="OLExam2.ExamCode" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="OLExam2.Attempt" class="form-control" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group row">
+                                                <div class="col-2 form-group">
+                                                    <label asp-for="OLExam2.ExamYear" class="control-label"></label>
+                                                    <select asp-for="OLExam2.ExamYear" asp-items="@ViewBag.ExamYear" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-4 form-group">
+                                                    <label asp-for="OLExam2.IndexNumber" class="control-label"></label>
+                                                    <input asp-for="OLExam2.IndexNumber" class="form-control form-control-sm" maxlength="20" />
+                                                    <span asp-validation-for="OLExam2.IndexNumber" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <hr />
+                                    @*Subjects and grades*@
+                                    <div class="form-group row">
+                                        <div class="col-4 form-group">
+                                            <p class="control-label">Subject</p>
+                                        </div>
+                                        <div class="col-2 form-group">
+                                            <p class="control-label">Grade</p>
+                                        </div>
+                                    </div>
+
+                                    @*mandatory subjects*@
+                                    @{
+                                        for (int i = 0; i <= 2; i++)
+                                        {
+                                            <div class="form-group row">
+                                                <div class="col-4 form-group">
+                                                    <input asp-for="OLResults2[i].SubjectName" class="form-control form-control-sm" maxlength="50" readonly />
+                                                </div>
+                                                <div class="col-2 form-group">
+                                                    <select asp-for="OLResults2[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                    @*other subjects*@
+                                    @{
+                                        for (int i = 3; i <= 8; i++)
+                                        {
+                                            <div class="form-group row">
+                                                <div class="col-4 form-group">
+                                                    <select asp-for="OLResults2[i].SubjectName" asp-items="@ViewBag.OLSubject" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-2 form-group">
+                                                    <select asp-for="OLResults2[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    }
+                                    <br />
+                                    <div class="col-10 form-group">
+                                        <label asp-for="OLExam2.AttachmentName" class="control-label"></label>
+                                        <input asp-for="OLExam2.AttachmentName" class="form-control form-control-sm" type="file"/>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+
+                        @*/OL Results 3rd Attempt Panel*@
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading1">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#OLcollapse3" aria-expanded="true" aria-controls="OLcollapse3">
+                                    3rd Attempt
+                                </button>
+                            </h2>
+
+                            <div id="OLcollapse3" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#accordionOL">
+                                <div class="accordion-body">
+                                    <div class="alert alert-dark">
+                                        <h6>If you have sit for any subject, enter exam year, index number and each subject with the grade. Incomplete results will be discarded.</h6>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="OLExam3.ExamCode" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="OLExam3.Attempt" class="form-control" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group row">
+                                                <div class="col-2 form-group">
+                                                    <label asp-for="OLExam3.ExamYear" class="control-label"></label>
+                                                    <select asp-for="OLExam3.ExamYear" asp-items="@ViewBag.ExamYear" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-4 form-group">
+                                                    <label asp-for="OLExam3.IndexNumber" class="control-label"></label>
+                                                    <input asp-for="OLExam3.IndexNumber" class="form-control form-control-sm" maxlength="20" />
+                                                    <span asp-validation-for="OLExam3.IndexNumber" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    @*Subjects and grades*@
+                                    <div class="form-group row">
+                                        <div class="col-6 form-group">
+                                            <p class="control-label">Subject</p>
+                                        </div>
+                                        <div class="col-2 form-group">
+                                            <p class="control-label">Grade</p>
+                                        </div>
+                                    </div>
+
+                                    @*mandatory subjects*@
+                                    @{
+                                        for (int i = 0; i <= 2; i++)
+                                        {
+                                            <div class="form-group row">
+                                                <div class="col-4 form-group">
+                                                    <input asp-for="OLResults3[i].SubjectName" class="form-control form-control-sm" maxlength="50" readonly />
+                                                </div>
+                                                <div class="col-2 form-group">
+                                                    <select asp-for="OLResults3[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                    @*other subjects*@
+                                    @{
+                                        for (int i = 3; i <= 8; i++)
+                                        {
+                                            <div class="form-group row">
+                                                <div class="col-4 form-group">
+                                                    <select asp-for="OLResults3[i].SubjectName" asp-items="@ViewBag.OLSubject" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-2 form-group">
+                                                    <select asp-for="OLResults3[i].Grade" asp-items="@ViewBag.OLGrade" class="form-select form-select-sm">
+                                                        <option selected></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    }
+                                    <br />
+                                    <div class="col-10 form-group">
+                                        <label asp-for="OLExam3.AttachmentName" class="control-label"></label>
+                                        <input asp-for="OLExam3.AttachmentName" class="form-control form-control-sm" type="file" />
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <h2>A/L Examination Results</h2>
+                <section>
+                    <div class="alert alert-dark">
+                        <h6>Enter your best results on one sitting.</h6>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="ALExam.ExamCode" class="form-control" />
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2 form-group">
+                                <label asp-for="ALExam.ExamYear" class="control-label"></label>
+                                <select asp-for="ALExam.ExamYear" asp-items="@ViewBag.ExamYear" class="form-select form-select-sm" autofocus>
+                                    <option selected></option>
+                                </select>
+                            </div>
+                            <div class="col-4 form-group">
+                                <label asp-for="ALExam.IndexNumber" class="control-label"></label>
+                                <input asp-for="ALExam.IndexNumber" class="form-control form-control-sm" maxlength="20" />
+                                <span asp-validation-for="ALExam.IndexNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                    @*Subjects and grades*@
+                    <div class="form-group row">
+                        <div class="col-4 form-group">
+                            <p class="control-label">Subject</p>
+                        </div>
+                        <div class="col-2 form-group">
+                            <p class="control-label">Grade</p>
+                        </div>
+                    </div>
+
+                    @*subjects*@
+                    @{
+                        for (int i = 0; i <= 2; i++)
+                        {
+                            <div class="form-group row">
+                                <div class="col-4 form-group">
+                                    <select asp-for="ALResults[i].SubjectName" asp-items="@ViewBag.ALSubject" class="form-select form-select-sm" >
+                                        <option selected></option>
+                                    </select>
+                                </div>
+                                <div class="col-2 form-group">
+                                    <select asp-for="ALResults[i].Grade" asp-items="@ViewBag.ALGrade" class="form-select form-select-sm">
+                                        <option selected></option>
+                                    </select>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="form-group row">
+                            <div class="col-4 form-group">
+                                <input type="text" value="General English" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col-2 form-group">
+                                <select asp-items="@ViewBag.ALGrade" class="form-select form-select-sm">
+                                    <option disabled selected></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        // for (int i = 3; i <= 3; i++)
+                        // {
+                        //     <div class="form-group row">
+                        //         <div class="col-4 form-group">
+                        //             <select asp-for="ALResults[i].SubjectName" asp-items="@ViewBag.ALSubject" class="form-select form-select-sm">
+                        //                 <option selected></option>
+                        //             </select>
+                        //         </div>
+                        //         <div class="col-2 form-group">
+                        //             <select asp-for="ALResults[i].Grade" asp-items="@ViewBag.ALGrade" class="form-select form-select-sm">
+                        //                 <option selected></option>
+                        //             </select>
+                        //         </div>
+                        //     </div>
+                        // }
+                    }
+
+                    <br />
+                    <div class="col-8 form-group">
+                        <label asp-for="ALExam.AttachmentName" class="control-label"></label>
+                        <input asp-for="ALExam.AttachmentName" class="form-control form-control-sm" type="file" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" id="btnALResults" style="display:none" />
+                    </div>
+                </section>
+
+                <h2>Higher Education Qualifications</h2>
+                <section>
+                    <div class="alert alert-dark">
+                        <h6>Specify in the order of relevancy.</h6>
+                        <h6 class="message">Qualifications without proof will be discarded. i.e. Attach the relevant certificate for each qualification.</h6>
+                    </div>
+                    <div class="accordion" id="accordionHEQual">
+                        @*/Higher Education Panel 1*@
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                    1. Most relevant qualification
+                                </button>
+                            </h2>
+                            <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#accordionHEQual">
+                                <div class="accordion-body">
+                                    <div class="form-group row">
+                                        <div class="col-3 form-group">
+                                            <label asp-for="HEQualifications[0].QualType" class="control-label"></label>
+                                            <select asp-for="HEQualifications[0].QualType" asp-items="@ViewBag.QualType" class="form-select form-select-sm" >
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-2 form-group">
+                                            <label asp-for="HEQualifications[0].NVQLevel" class="control-label"></label>
+                                            <select asp-for="HEQualifications[0].NVQLevel" asp-items="@ViewBag.NVQLevel" class="form-select form-select-sm" disabled>
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                     <div class="form-group row">
+                                        <div class="col-5 form-group">
+                                            <label asp-for="HEQualifications[0].QualName" class="control-label"></label>
+                                            <select asp-for="HEQualifications[0].QualName" id="QualName0" asp-items="@ViewBag.QualName" class="form-select form-select-sm" disabled >
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5 form-group">
+                                            <label class="dummy-label"></label>
+                                            <input asp-for="HEQualifications[0].OtherQualName" class="form-control form-control-sm" maxlength="50" id="OtherQualName0" placeholder="Specify the non-listed qualification" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-5 form-group">
+                                            <label asp-for="HEQualifications[0].HEInstituteName" class="control-label"></label>
+                                            <select asp-for="HEQualifications[0].HEInstituteName" asp-items="@ViewBag.HEInstitute" class="form-select form-select-sm" >
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5 form-group">
+                                            <label class="dummy-label"></label>
+                                            <input asp-for="HEQualifications[0].OtherInstitute" class="form-control form-control-sm" maxlength="50" id="OtherInstitute0" placeholder="Specify the non-listed institute/university" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-4 form-group">
+                                            <label asp-for="HEQualifications[0].SpecializedArea" class="control-label"></label>
+                                            <input asp-for="HEQualifications[0].SpecializedArea" class="form-control form-control-sm" maxlength="50" />
+                                        </div>
+                                        <div class="col-3 form-group">
+                                            <label asp-for="HEQualifications[0].QualStatus" class="control-label"></label>
+                                            <select asp-for="HEQualifications[0].QualStatus" class="form-select form-select-sm" >
+                                                <option selected></option>
+                                                <option>Completed</option>
+                                                <option>Following</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-3 form-group">
+                                            <label asp-for="HEQualifications[0].AwardedYearMonth" class="control-label optional"></label>
+                                            <input asp-for="HEQualifications[0].AwardedYearMonth" class="form-control form-control-sm" id="AwardedDate0"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 form-group">
+                                        <label asp-for="HEQualifications[0].AttachmentName" class="control-label"></label>
+                                        <input asp-for="HEQualifications[0].AttachmentName" class="form-control form-control-sm" type="file" />
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+
+                        @*/Higher Education Panel 2*@
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                                    2. Other qualifications
+                                </button>
+                            </h2>
+                            <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionHEQual">
+                                <div class="accordion-body">
+                                    <div class="form-group row">
+                                        <div class="col-3 form-group">
+                                            <label asp-for="HEQualifications[1].QualType" class="control-label"></label>
+                                            <select asp-for="HEQualifications[1].QualType" asp-items="@ViewBag.QualType" class="form-select form-select-sm">
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-2 form-group">
+                                            <label asp-for="HEQualifications[1].NVQLevel" class="control-label"></label>
+                                            <select asp-for="HEQualifications[1].NVQLevel" asp-items="@ViewBag.NVQLevel" class="form-select form-select-sm" disabled>
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-5 form-group">
+                                            <label asp-for="HEQualifications[1].QualName" class="control-label optional"></label>
+                                            <select asp-for="HEQualifications[1].QualName" id="QualName1" asp-items="@ViewBag.QualName" class="form-select form-select-sm" disabled>
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5 form-group">
+                                            <label class="dummy-label"></label>
+                                            <input asp-for="HEQualifications[1].OtherQualName" class="form-control form-control-sm" maxlength="50" id="OtherQualName1" placeholder="Specify the non-listed qualification" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-5 form-group">
+                                            <label asp-for="HEQualifications[1].HEInstituteName" class="control-label optional"></label>
+                                            <select asp-for="HEQualifications[1].HEInstituteName" asp-items="@ViewBag.HEInstitute" class="form-select form-select-sm">
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5 form-group">
+                                            <label class="dummy-label"></label>
+                                            <input asp-for="HEQualifications[1].OtherInstitute" class="form-control form-control-sm" maxlength="50" id="OtherInstitute1" placeholder="Specify the non-listed institute/university" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-4 form-group">
+                                            <label asp-for="HEQualifications[1].SpecializedArea" class="control-label"></label>
+                                            <input asp-for="HEQualifications[1].SpecializedArea" class="form-control form-control-sm" maxlength="50" />
+                                        </div>
+                                        <div class="col-3 form-group">
+                                            <label asp-for="HEQualifications[1].QualStatus" class="control-label"></label>
+                                            <select asp-for="HEQualifications[1].QualStatus" class="form-select form-select-sm">
+                                                <option selected></option>
+                                                <option>Completed</option>
+                                                <option>Following</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-3 form-group">
+                                            <label asp-for="HEQualifications[1].AwardedYearMonth" class="control-label"></label>
+                                            <input asp-for="HEQualifications[1].AwardedYearMonth" class="form-control form-control-sm" id="AwardedDate1" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-8 form-group">
+                                        <label asp-for="HEQualifications[1].AttachmentName" class="control-label"></label>
+                                        <input asp-for="HEQualifications[1].AttachmentName" class="form-control form-control-sm" type="file"/>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+
+                        @*/Higher Education Panel 3*@
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                    3. Other qualifications
+                                </button>
+                            </h2>
+                            <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#accordionHEQual">
+                                <div class="accordion-body">
+                                    <div class="form-group row">
+                                        <div class="col-3 form-group">
+                                            <label asp-for="HEQualifications[2].QualType" class="control-label"></label>
+                                            <select asp-for="HEQualifications[2].QualType" asp-items="@ViewBag.QualType" class="form-select form-select-sm">
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-2 form-group">
+                                            <label asp-for="HEQualifications[2].NVQLevel" class="control-label"></label>
+                                            <select asp-for="HEQualifications[2].NVQLevel" asp-items="@ViewBag.NVQLevel" class="form-select form-select-sm" disabled>
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-5 form-group">
+                                            <label asp-for="HEQualifications[2].QualName" class="control-label optional"></label>
+                                            <select asp-for="HEQualifications[2].QualName" id="QualName2" asp-items="@ViewBag.QualName" class="form-select form-select-sm" disabled>
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5 form-group">
+                                            <label class="dummy-label"></label>
+                                            <input asp-for="HEQualifications[2].OtherQualName" class="form-control form-control-sm" maxlength="50" id="OtherQualName2" placeholder="Specify the non-listed qualification" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-5 form-group">
+                                            <label asp-for="HEQualifications[2].HEInstituteName" class="control-label optional"></label>
+                                            <select asp-for="HEQualifications[2].HEInstituteName" asp-items="@ViewBag.HEInstitute" class="form-select form-select-sm">
+                                                <option selected></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5 form-group">
+                                            <label class="dummy-label"></label>
+                                            <input asp-for="HEQualifications[2].OtherInstitute" class="form-control form-control-sm" maxlength="50" id="OtherInstitute2" placeholder="Specify the non-listed institute/university" disabled />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-4 form-group">
+                                            <label asp-for="HEQualifications[2].SpecializedArea" class="control-label"></label>
+                                            <input asp-for="HEQualifications[2].SpecializedArea" class="form-control form-control-sm" maxlength="50" />
+                                        </div>
+                                        <div class="col-3 form-group">
+                                            <label asp-for="HEQualifications[2].QualStatus" class="control-label"></label>
+                                            <select asp-for="HEQualifications[2].QualStatus" class="form-select form-select-sm">
+                                                <option selected></option>
+                                                <option>Completed</option>
+                                                <option>Following</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-3 form-group">
+                                            <label asp-for="HEQualifications[2].AwardedYearMonth" class="control-label"></label>
+                                            <input asp-for="HEQualifications[2].AwardedYearMonth" class="form-control form-control-sm" id="AwardedDate2" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-8 form-group">
+                                        <label asp-for="HEQualifications[2].AttachmentName" class="control-label"></label>
+                                        <input asp-for="HEQualifications[2].AttachmentName" class="form-control form-control-sm" type="file" />
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*dummy dropdown with all qualification names*@
+                    <select id="AllQualNames" asp-items="@ViewBag.QualName" style="display:none">
+                    </select>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" id="btnHEQual" style="display:none"/>
+                    </div>
+                </section>
+
+                <h2>Professional Membership Qualifications</h2>
+                <section>
+                    <div class="alert alert-dark">
+                        <h6>Specify in the order of relevancy.</h6>
+                        <h6 class="message">Qualifications without proof will be discarded. i.e. Attach the relevent certificate for each qualification.</h6>
+                    </div>
+                    @{
+                        for(int i = 0; i <= 1; i++)
+                        {
+                            <h4><span class="badge bg-primary">@(i+1)</span></h4>
+                            
+                            <div class="form-group row">
+                                <div class="col-3 form-group">
+                                    <label asp-for="ProfQualifications[i].MembershipType" class="control-label"></label>
+                                    <select asp-for="ProfQualifications[i].MembershipType" asp-items="@ViewBag.MembershipType" class="form-select form-select-sm">
+                                        <option selected></option>
+                                    </select>
+                                </div>
+                                <div class="col-3 form-group">
+                                    <label asp-for="ProfQualifications[i].PQInsituteName" class="control-label"></label>
+                                    <select asp-for="ProfQualifications[i].PQInsituteName" asp-items="@ViewBag.PQInstitute" class="form-select form-select-sm">
+                                        <option selected></option>
+                                    </select>
+                                </div>
+                                <div class="col-3 form-group">
+                                    <label asp-for="ProfQualifications[i].MembershipNo" class="control-label"></label>
+                                    <input asp-for="ProfQualifications[i].MembershipNo" class="form-control form-control-sm" maxlength="20" />
+                                </div>
+                            </div>
+                            
+                            <br />
+
+                            <div class="col-8 form-group">
+                                <label asp-for="ProfQualifications[i].AttachmentName" class="control-label"></label>
+                                <input asp-for="ProfQualifications[i].AttachmentName" class="form-control form-control-sm" type="file" />
+                            </div>
+
+                            <hr />
+                        }
+                    }
+                    
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" id="btnProfQual" style="display:none" />
+                    </div>
+                </section>
+
+                <h2>Work Experience</h2>
+                <section>
+                    <div class="alert alert-dark">
+                        <h6>Please follow reverse-chronological order (i.e. most recent experience first).</h6>
+                    </div>
+                    @{
+                        for (int i = 0; i <= 1; i++)
+                        {
+                            <h4><span class="badge bg-primary">@(i + 1)</span></h4>
+
+                            <div class="form-group row">
+                                <div class="col-5 form-group">
+                                    <label asp-for="WorkExperiences[i].CompanyName" class="control-label"></label>
+                                    <input asp-for="WorkExperiences[i].CompanyName" class="form-control form-control-sm" maxlength="50" />
+                                </div>
+                                <div class="col-5 form-group">
+                                    <label asp-for="WorkExperiences[i].PositionHeld" class="control-label"></label>
+                                    <input asp-for="WorkExperiences[i].PositionHeld" class="form-control form-control-sm" maxlength="50" />
+                                </div>
+                                <div class="col-2 form-group">
+                                    <label asp-for="WorkExperiences[i].EmploymentNature" class="control-label"></label>
+                                    <select asp-for="WorkExperiences[i].EmploymentNature" class="form-select form-select-sm">
+                                        <option selected></option>
+                                        <option>Trainee/Intern</option>
+                                        <option>Permanent</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-3 form-group">
+                                    <label asp-for="WorkExperiences[i].JobStatus" class="control-label"></label>
+                                    <select asp-for="WorkExperiences[i].JobStatus" class="form-select form-select-sm">
+                                        <option selected></option>
+                                        <option value="Active">Active (Currently doing job)</option>
+                                        <option value="Inactive">Inactive (Left job)</option>
+                                    </select>
+                                </div>
+                                <div class="col-2 form-group">
+                                    <label asp-for="WorkExperiences[i].StartYearMonth" class="control-label"></label>
+                                    <input asp-for="WorkExperiences[i].StartYearMonth" class="form-control form-control-sm" id="StartYearMonth@(i)" />
+                                </div>
+                                <div class="col-2 form-group">
+                                    <label asp-for="WorkExperiences[i].EndYearMonth" class="control-label"></label>
+                                    <input asp-for="WorkExperiences[i].EndYearMonth" class="form-control form-control-sm" id="EndYearMonth@(i)" disabled/>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="col-8 form-group">
+                                <label asp-for="WorkExperiences[i].AttachmentName" class="control-label"></label>
+                                <input asp-for="WorkExperiences[i].AttachmentName" class="form-control form-control-sm" type="file" />
+                            </div>
+
+                            <hr />
+                            <br />
+                        }
+                    }
+
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" id="btnProfQual" style="display:none" />
+                    </div>
+                </section>
+
+                <h2>Submission</h2>
+                <section>
+                    <div class="alert alert-dark">
+                        <h6>Please attach the following in pdf, jpg, jpeg or png format. Both sides of the document must be visible.</h6>
+                    </div>
+                    <br />
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="OtherDocuments.CVName" class="control-label required"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="OtherDocuments.CVName" class="form-control form-control-sm" type="file" required/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="OtherDocuments.NICName" class="control-label required"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="OtherDocuments.NICName" class="form-control form-control-sm" type="file" required/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="OtherDocuments.BCName" class="control-label required"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="OtherDocuments.BCName" class="form-control form-control-sm" type="file" required />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="OtherDocuments.DLName" class="control-label required"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="OtherDocuments.DLName" class="form-control form-control-sm" type="file" required />
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="form-floating col-10">
+                        <textarea asp-for="OtherDocuments.Remarks" class="form-control" placeholder="Remarks" style="height: 100px" maxlength="200"></textarea>
+                        <label asp-for="OtherDocuments.Remarks" class="control-label"></label>
+                    </div>
+
+                    <br />
+                    
+                    @*declaration*@
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="declaration" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="You must tick here to submit the application.">
+                        <label class="form-check-label" >
+                            I hereby declare that all the information given above is true and correct to the best of my knowledge.
+                        </label>
+                    </div>                            
+                    
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" id="btnDocuments" style="display:none" />
+                    </div>
+                </section>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@*<div class="alert alert-secondary">
+    1. <span class="required"></span> marked entries are manadatory.<br />
+    2. Each attachment size must not exceed 1MB.
+    3. Age is calculated as on for the closing date of the application.
+</div>*@
+
+
+<div class="toast toast-dismissable position-fixed top-0 end-0 align-items-center text-white bg-dark border-1" role="alert" aria-live="assertive" aria-atomic="true" id="toastmsg" data-bs-delay="10000" data-bs-autohide="true">
+    <div class="d-flex">
+        <div class="toast-body" id="toastmsgtext">
+            Duplicate subjects.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-section/js/jquery.steps.js"></script>
+    <script src="~/lib/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/sweetalert/sweetalert.min.js"></script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function() {
+            
+            //main application wizard
+            $("#wizard").steps({
+                headerTag: "h2",
+                bodyTag: "section",
+                transitionEffect: "slide",
+                stepsOrientation: "horizontal",
+                enableAllSteps: false,
+                startIndex: 0,
+                cssClass: "wizard",
+                showFinishButtonAlways: false,
+
+                onStepChanging: function (event, currentIndex, newIndex) 
+                {
+                    //debugger;
+                    if (currentIndex > newIndex) {
+                        return true;
+                    }
+                    if (currentIndex == 0) {
+                        return validateStep0(); //personal data
+                    }
+                    if (currentIndex == 1) {
+                        return validateStep1(); //O/L
+                        //return true;
+                    }
+                    if (currentIndex == 2) {
+                        return validateStep2(); //A/L
+                    }
+                    if (currentIndex == 3) {
+                        return validateStep3(); //higher education qualifications
+                    }
+                    if (currentIndex == 4) {
+                        return validateStep4(); //professional qualifications
+                    }
+                    if (currentIndex == 5) {
+                        return validateStep5(); //working experience
+                    }
+                    if (currentIndex == 6) {
+                        return true;
+                        //return validateStep6(); //other attachments
+                    }
+                },
+
+                onStepChanged: function (event, currentIndex, newIndex) 
+                {
+                    if (currentIndex == 1) {
+                        $("#OLExam1_ExamYear").focus() //OL
+                    }
+                    if (currentIndex == 2) {
+                        $("#ALExam_ExamYear").focus() //AL
+                    }
+                    if (currentIndex == 3) {
+                        $("#HEQualifications_0__QualType").focus() //HE
+                    }
+                    if (currentIndex == 4) {
+                        $("#ProfQualifications_0__MembershipType").focus() //PQ
+                    }
+                    if (currentIndex == 5) {
+                        $("#WorkExperiences_0__CompanyName").focus() //WORK
+                    }
+                },
+
+                onFinishing: function (e, currentIndex) {
+                    return validateStep6();
+                },
+
+                onFinished: function (e, currentIndex) {
+                    swal({
+                        title: "Information Collection Consent",
+                        text: "Personal information collected through this site will be used solely for recruitment and employment-related purposes only.",
+                        icon: "info",
+                        buttons: {
+                            cancel: "Disagree",
+                            confirm: "Agree",
+                        },
+                    })
+                    .then((willConfirm) => {
+                        if (willConfirm) {
+                            ShowProgress();
+                            $('#applicationForm').submit();
+                        }
+                        else {
+                                window.location.href = '@Url.Action("Deny", "Application")';
+                          }
+                    });
+                }
+            });
+
+            initForm();
+
+            //main application step validations
+            //personal data
+            function validateStep0() {
+
+                var isOk = true;
+                var section = "#wizard-p-0";
+
+                //hide span elements which show required validation error
+                //bcos for required fields only making their border red color is enough
+                $(section).find("span").each(function () {
+                    $(this).hide();
+                });
+
+                //debugger;
+                $(section).find('[required]').each(function () {
+
+                    if (! $(this).val())
+                    {
+                       //debugger;
+                       //alert("data-val-required");
+                       $("#btnPersonalData").click();
+
+                       isOk = false;
+                       return false;
+                    }
+                });
+
+                //when required fields are all filled, enable/show the span elements to show the regex or other validation  errors
+                if (isOk)
+                {
+                    $(section).find("span").each(function () {
+                        $(this).show();
+                    });
+
+                    $(section).find("input[type=text]").each(function () {
+
+                        if ($(this).hasClass("input-validation-error"))
+                        {
+                            //alert("input-validation-error");
+                            //$("#btnPersonalData").click();
+                            isOk = false;
+                            return false;
+                        }
+                    });
+                }
+
+                return isOk;
+            }
+
+            //O/L 
+            function validateStep1() {
+                var isOk = validateOLAttempt1();
+                
+                //alert(isOk);
+
+                if (isOk)
+                    isOk = validateOLAttempt2();
+
+                if (isOk)
+                    isOk = validateOLAttempt3();
+
+                return isOk;
+            }
+
+            //A/L
+            function validateStep2() {
+
+                var isOk = true;
+                var section = "#wizard-p-2";
+                var sectionName = "A/L Results";
+
+                //hide span elements which show required validation error
+                //bcos for required fields only making their border red color is enough
+                //$(section).find("span").each(function () {
+                //    $(this).hide();
+                //});
+
+                //$(section).find("[required]").each(function () {
+
+                //    if ($(this).val() == "")
+                //    {
+                //        $("#btnALResults").click();
+
+                //       isOk = false;
+                //       return false;
+                //    }
+                //});
+
+                //when required fields are all filled, enable/show the span elements to show the regex or other validation  errors
+                if (isOk)
+                {
+                    $("section").find("span").each(function () {
+                        $(this).show();
+                    });
+
+                    //alert(isOk);
+                    //debugger;
+                    $("section").find("input[type=text]").each(function () {
+
+                        if ($(this).hasClass("input-validation-error"))
+                        {
+                            //alert(isOk);
+                            $("#btnALResults").click();
+                            isOk = false;
+                            return false;
+                        }
+                    });
+                }
+
+                if (isOk) 
+                {
+                    if (! checkDuplicateSubjects(section)) 
+                    {
+                        $("#toastmsgtext").html("Duplicate A/L Subjects.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk)
+                {
+                    if (! checkFileType(section)) 
+                    {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are not valid types.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) 
+                {
+                    if (! checkFileSize(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are larger than 1MB.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                return isOk;
+            }
+
+            //Higher Education
+            function validateStep3() {
+
+                var isOk = validateHEQualX("#collapse1","Higher Education (1)");
+                
+                if (isOk)
+                {
+                    isOk = validateHEQualX("#collapse2","Higher Education (2)");
+                }
+
+                if (isOk)
+                {
+                    isOk = validateHEQualX("#collapse3","Higher Education (3)");
+                }
+
+                return isOk;
+            }
+
+            //Prof Qualifications
+            function validateStep4() {
+
+                var isOk = true;
+                var section = "#wizard-p-4";
+                var sectionName = "Professional Qualifications";
+
+                if (isOk)
+                {
+                    if (!checkProfQual(section, "0"))
+                    {
+                        $("#toastmsgtext").html("Complete or Remove the partially filled entries in " + sectionName + "-1");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk)
+                {
+                    if (!checkProfQual(section, "1"))
+                    {
+                        $("#toastmsgtext").html("Complete or Remove the partially filled entries in " + sectionName + "-2");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) {
+                    if (!checkFileType(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are not valid types.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) {
+                    if (!checkFileSize(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are larger than 1MB.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                return isOk;
+            }
+          
+            //Work Experience
+            function validateStep5() {
+
+                var isOk = true;
+                var section = "#wizard-p-5";
+                var sectionName = "Work Experience";
+
+                if (isOk)
+                {
+                    if (!checkWorkExp(section, "0"))
+                    {
+                        $("#toastmsgtext").html("Complete or Remove the partially filled entries in " + sectionName + "-1");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk)
+                {
+                    if (!checkWorkExp(section, "1")) {
+                        $("#toastmsgtext").html("Complete or Remove the partially filled entries in " + sectionName + "-2");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) {
+                    if (!checkFileType(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are not valid types.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) {
+                    if (!checkFileSize(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are larger than 1MB.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                return isOk;
+            }
+
+            //Other Attachments
+            function validateStep6() {
+
+                var isOk = true;
+                var section = "#wizard-p-6";
+                var sectionName = "this section";
+
+                $(section).find('[required]').each(function () {
+
+                    if (! $(this).val()) {
+                        $("#btnDocuments").click();
+
+                        isOk = false;
+                        return false;
+                    }
+                });
+
+                if (isOk) {
+                    if (!checkFileType(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are not valid types.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) {
+                    if (!checkFileSize(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are larger than 1MB.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk)                
+                {
+                    if (! $("#declaration").is(":checked")) {
+                        //alert("ok");
+                        $("#declaration").tooltip("show");
+                        isOk = false;
+                        return false;
+                    }
+                }
+
+                return isOk;
+            }
+
+            //OL 1st attempt validation
+            function validateOLAttempt1()
+            {
+                var isOk = true;
+                var section = "#OLcollapse1";
+                var sectionName = "O/L 1st Attempt";
+
+                $(section).collapse('show');
+
+                $(section).find("span").each(function () {
+                    $(this).hide();
+                });
+
+                //debugger;
+                $(section).find('[required]').each(function () {
+
+                    if (! $(this).val()) {
+                        $("#btnOL1").click();
+
+                        isOk = false;
+                        return false;
+                    }
+                });
+
+                if (isOk) {
+                    $(section).find("span").each(function () {
+                        $(this).show();
+                    });
+
+                    $(section).find("input[type=text]").each(function () {
+
+                        if ($(this).hasClass("input-validation-error")) {
+                            $("#btnOL1").click();
+                            isOk = false;
+                            return false;
+                        }
+                    });
+                }
+
+                //alert(isOk);
+
+                if (isOk)
+                {
+                    if (! checkDuplicateSubjects(section)) {
+                        $("#toastmsgtext").html("Duplicate Subjects in " + sectionName);
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk)
+                {
+                    if (! checkFileType(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are not valid types.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) 
+                {                    
+                    if (! checkFileSize(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are larger than 1MB.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                return isOk;
+            }
+
+            //OL 2nd attempt - validate only the duplicate subjects & attachment
+            function validateOLAttempt2()
+            {
+                var isOk = true;
+                var section = "#OLcollapse2";
+                var sectionName = "O/L 2nd Attempt";
+
+                if (isOk) {
+                    if (! checkDuplicateSubjects(section)) {
+                        $("#toastmsgtext").html("Duplicate Subjects in " + sectionName);
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk)
+                {
+                    if (! checkFileType(section)) 
+                    {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are not valid types.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) 
+                {
+                    if (!checkFileSize(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are larger than 1MB.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                return isOk;
+            }
+
+            //OL 3rd attempt - validate only the the duplicate subjects & attachment
+            function validateOLAttempt3() {
+
+                var isOk = true;
+                var section = "#OLcollapse3";
+                var sectionName = "O/L 3rd Attempt";
+
+                if (isOk) {
+                    if (! checkDuplicateSubjects(section)) {
+                        $("#toastmsgtext").html("Duplicate Subjects in " + sectionName);
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk)
+                {
+                    if (! checkFileType(section)) 
+                    {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are not valid types.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) 
+                {
+                    if (!checkFileSize(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are larger than 1MB.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                return isOk;
+            }
+
+            //Higher Education 1
+            function validateHEQual1()
+            {
+                var isOk = true;
+                var section = "#collapse1";
+                var sectionName = "Higher Education (1)";
+
+                //1st exapnd the panel before validating
+                $(section).collapse('show');
+
+                //hide span elements which show required validation error
+                //bcos for required fields only making their border red color is enough
+                $(section).find("span").each(function () {
+                    $(this).hide();
+                });
+
+                $(section).find("[required]").each(function () {
+
+                    if (! $(this).val())
+                    {
+                        $("#btnHEQual").click();
+
+                       isOk = false;
+                       return false;
+                    }
+                });
+
+                //when required fields are all filled, enable/show the span elements to show the regex or other validation  errors
+                if (isOk)
+                {
+                    $(section).find("span").each(function () {
+                        $(this).show();
+                    });
+
+                    //alert(isOk);
+                    //debugger;
+                    $(section).find("input[type=text]").each(function () {
+
+                        if ($(this).hasClass("input-validation-error"))
+                        {
+                            //alert(isOk);
+                            $("#btnHEQual").click();
+                            isOk = false;
+                            return false;
+                        }
+                    });
+                }
+
+                if (isOk)
+                {
+                    if (! checkFileType(section)) 
+                    {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are not valid types.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) 
+                {
+                    if (!checkFileSize(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are larger than 1MB.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                return isOk;
+            }
+
+            //Higher Education 2 & 3
+            function validateHEQualX(section, sectionName)
+            {
+                var isOk = true;
+
+                if (! checkHEQual(section))
+                {
+                    $('#collapse1').collapse('hide');
+                    $('#collapse1').removeClass('accordion-collapse collapse show');
+                    $('#collapse1').addClass('accordion-collapse collapse');
+
+                    $(section).collapse('show');
+                    $(section).addClass('accordion-collapse collapse show');
+
+                    $("#toastmsgtext").html("Complete or Remove the partially filled entries in " + sectionName);
+                    $("#toastmsg").toast("show");
+                    isOk = false;
+                }
+
+                if (isOk) 
+                {
+                    if (! checkFileType(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are not valid types.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                if (isOk) 
+                {
+                    if (! checkFileSize(section)) {
+                        $("#toastmsgtext").html("Some file attachments in " + sectionName + " are larger than 1MB.");
+                        $("#toastmsg").toast("show");
+                        isOk = false;
+                    }
+                }
+
+                return isOk;
+            }
+
+            //control events
+            $("#PersonalData_DOB").on('change', function (ev) {
+                var dob = $(this).val();
+                getAge(dob);
+                //alert(dob);
+            });
+
+            //select qualtype ^ at the start, $ at the end, * anywhere
+            $("select[id$='QualType']").on('change', function (ev) 
+            {
+                var ctrlId = $(this).attr('id');
+                var position = ctrlId.search("_");
+                var intId = ctrlId.substring(position + 1, position + 2);
+                
+                var ctrlDependId = "#HEQualifications_" + intId + "__NVQLevel";
+                var ctrlDependId_2 = "#QualName" + intId;
+                var ctrlDependId_3 = "#OtherQualName" + intId;
+
+                filterQualName($(this).val(), intId);
+                
+                $(ctrlDependId_3).val('');
+                $(ctrlDependId_3).prop('disabled', true);
+
+                var selectedText = $(this).find('option:selected').text();
+
+                if (selectedText != "")
+                    $(ctrlDependId_2).prop('disabled', false);
+                else
+                    $(ctrlDependId_2).prop('disabled', true);
+
+                if (selectedText.toUpperCase().indexOf("NVQ") >= 0)
+                {
+                    $(ctrlDependId).prop('disabled', false);
+                    if (intId == 0)
+                        $(ctrlDependId).prop('required', true);
+                }
+                else
+                {
+                    $(ctrlDependId).prop('disabled', true);
+                    $(ctrlDependId).prop('selected', false);
+                    $(ctrlDependId).val('');
+                    if (intId == 0)
+                    {
+                        $(ctrlDependId).removeAttr('required', 'true');
+                        $(ctrlDependId).removeClass('input-validation-error');
+                    }
+                }
+            });
+
+            //enable/disable textbox to type non-listed qual name
+            $("select[id^='QualName']").on('change', function (ev)
+            {
+                var ctrlId = $(this).attr('id');
+                var position = 7; //ctrlId.search("_");
+                var intId = ctrlId.substring(position + 1, position + 2);
+
+                var ctrlDependId = "#OtherQualName" + intId;
+
+                if ($(this).val().toLowerCase() == 'other')
+                {
+                    $(ctrlDependId).prop('disabled', false);
+                    $(ctrlDependId).focus();
+                    if (intId == 0)
+                        $(ctrlDependId).prop('required', true);
+
+                }
+                else 
+                {
+                    $(ctrlDependId).val('');
+                    $(ctrlDependId).prop('disabled', 'disabled');
+                    if (intId == 0) {
+                        $(ctrlDependId).removeAttr('required', 'true');
+                        $(ctrlDependId).removeClass('input-validation-error');
+                    }
+                }
+
+            });
+
+            //enable/disable textbox to type non-listed institute
+            $("select[id$='HEInstituteName']").on('change', function (ev) {
+                var ctrlId = $(this).attr('id');
+                var position = ctrlId.search("_");
+                var intId = ctrlId.substring(position + 1, position + 2);
+
+                var ctrlDependId = "#OtherInstitute" + intId;
+
+                if ($(this).val().toLowerCase() == 'other') {
+                    $(ctrlDependId).prop('disabled', false);
+                    $(ctrlDependId).focus();
+                    if (intId == 0)
+                        $(ctrlDependId).prop('required', true);
+                }
+                else {
+                    $(ctrlDependId).val('');
+                    $(ctrlDependId).prop('disabled', 'disabled');
+                    if (intId == 0) {
+                        $(ctrlDependId).removeAttr('required', 'true');
+                        $(ctrlDependId).removeClass('input-validation-error');
+                    }
+                }
+
+            });
+            
+            //select HE qualification status - completed/following
+            $("select[id$='QualStatus']").on('change', function (ev) 
+            {
+                var ctrlId = $(this).attr('id');
+                var position = ctrlId.search("_");
+                var intId = ctrlId.substring(position + 1, position + 2);
+
+                var ctrlDependId = "#AwardedDate" + intId;
+                var ctrlDependId_2 = "#HEQualifications_" + intId + "__AttachmentName" ;
+
+                if ($(this).val() == "Completed")
+                {
+                    $(ctrlDependId).prop('disabled', false);
+                    $(ctrlDependId_2).prop('disabled', false);
+
+                    if (intId == 0)
+                    {
+                        $(ctrlDependId).prop('required', true);
+                        $(ctrlDependId_2).prop('required', true);
+                    }
+                }
+                else
+                {
+                    $(ctrlDependId).prop('disabled', true);
+                    $(ctrlDependId_2).prop('disabled', true);
+
+                    $(ctrlDependId).val('');
+                    $(ctrlDependId_2).val('');
+
+                    if (intId == 0)
+                    {
+                        $(ctrlDependId).removeAttr('required', 'true');
+                        $(ctrlDependId).removeClass('input-validation-error');
+                        
+                        $(ctrlDependId_2).removeAttr('required', 'true');
+                        $(ctrlDependId_2).removeClass('input-validation-error');
+                    }
+                }
+            });
+
+            //select Work experience status - left the job/currently doing
+            $("select[id$='JobStatus']").on('change', function (ev) {
+                var ctrlId = $(this).attr('id');
+                var position = ctrlId.search("_");
+                var intId = ctrlId.substring(position + 1, position + 2);
+
+                var ctrlDependId = "#EndYearMonth" + intId;
+
+                if ($(this).val() == "Inactive") {
+                    $(ctrlDependId).prop('disabled', false);
+                }
+                else {
+                    $(ctrlDependId).prop('disabled', true);
+                    $(ctrlDependId).val('');
+                }
+            });
+            
+            function initForm()
+            {     
+                var year = new Date().getFullYear();
+                year = year - 16;
+
+                var maxDate = new Date(year,1,1);
+                
+                // max date the user can choose, in this case dates before 16 years
+                maxDate = maxDate.toISOString().substring(0,10);
+
+                //$('#PersonalData_DOB').prop('max', maxDate);
+
+                $("#PersonalData_DOB").datepicker(
+                {
+                    format: 'yyyy-mm-dd',
+                    minViewMode: "days",
+                    startView: "years",
+                    autoclose: true,
+                    endDate: maxDate
+                });
+
+                $("#wizard-p-0").find("label[for^='PersonalData_Age']").each(function () {
+                    $(this).hide();
+                });
+
+                $("#wizard-p-0").find("input[id^='PersonalData_Age']").each(function () {
+                    $(this).hide();
+                });
+
+                $("#PersonalData_Overage").hide();
+
+                const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+                const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+                $("input[id^='AwardedDate']").datepicker(
+                {
+                        format: 'yyyy-mm',
+                        minViewMode: "months",
+                        startView: "months",
+                        autoclose: true,
+                        endDate: '+0d', //disable future dates
+                });
+
+                $("select[id^='QualName']").each(function (){
+                    $(this).append('<option>Other</option>');
+                });
+
+                $("select[id$='HEInstituteName']").each(function () {
+                    $(this).append('<option>Other</option>');
+                });
+
+                $("#wizard-p-5").find("input[id*='YearMonth']").each(function () {
+                    $(this).datepicker(
+                    {
+                        format: 'yyyy-mm',
+                        minViewMode: "months",
+                        startView: "months",
+                        autoclose: true,
+                        endDate: '+0d', //disable future dates
+                    });
+                });
+            }
+
+            //------general functions--------
+            function checkDuplicateSubjects(section)
+            {
+                var subjects = [];
+                var noDuplicates = true;
+
+                $(section).find("select[id*=SubjectName]").each(function () {
+                    
+                    var subject = $(this).val();
+                    
+                    if (subject != "")
+                    {
+                        if (subjects.includes(subject))
+                        {
+                            console.log(subject);
+                            noDuplicates = false;
+                            return false;
+                        }
+                        else
+                        {
+                            subjects.push(subject);
+                        }
+                    }
+
+                });
+
+                
+                return noDuplicates;
+            }
+
+            function getAge(birthdate)
+            {
+                var intakecode = $("#PersonalData_IntakeCode").val();
+                var dob = { birthDate: birthdate, intakeCode: intakecode };
+
+                //var x = JSON.stringify(dob);
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: "json",
+                    url: "@Url.Action("GetAge", "Application")", //'/Application/GetAge',
+                    data: dob,
+                    //contentType: 'application/json; charset=utf-8',                   
+                    success: function (r) {
+                        console.log("RESULT", r);
+                        displayAge(r);
+                    },
+                    error: function (xhr, status, error) {
+                        var err = eval("(" + xhr.responseText + ")");
+                        alert(err.Message);
+                    }
+                });
+            }
+
+            function displayAge(age)
+            {
+                $("#wizard-p-0").find("label[for^='PersonalData_Age']").each(function () {
+                    $(this).show();
+                });
+
+                $("#wizard-p-0").find("input[id^='PersonalData_Age']").each(function () {
+                    $(this).show();
+                });
+
+                $("#PersonalData_AgeYears").val(age[0]);
+                $("#PersonalData_AgeMonths").val(age[1]);
+                $("#PersonalData_AgeDays").val(age[2]);
+                $("#PersonalData_Overage").val(age[3]);
+
+                if (age[3] != "")
+                {
+                    $("#PersonalData_Overage").show();
+                }
+                else
+                {
+                    $("#PersonalData_Overage").hide();
+                }
+            }
+
+            function filterQualName(selectedId, ctrlId)
+            {
+                var ctrlQualNameId = "QualName" + ctrlId;
+                var select = document.getElementById(ctrlQualNameId);
+
+                $(select).empty();
+                $(select).append('<option selected> </option>')
+
+                $('#AllQualNames option').each(function () {
+                    var optionValue = $(this).val();
+                    var optionText = $(this).text();
+
+                    if (optionValue == selectedId)
+                        $(select).append('<option value="' + optionText + '">' + optionText + '</option>');
+                });
+
+                $(select).append('<option>Other</option>');
+            }
+
+            function checkFileType(section)
+            {
+                var isValid = true;
+
+                var validExtensions = ["jpg", "pdf", "jpeg", "png"]
+
+                $(section).find('input[type="file"]').each(function()
+                {
+                    if ($(this).val().length > 0)
+                    {
+                        //pop() will return the last element of the string array
+                        var file = $(this).val().split('.').pop().toLowerCase();
+                        if (validExtensions.indexOf(file) == -1) {
+                            isValid = false;
+                            return false;
+                        }
+                    }
+                });
+
+                return isValid;
+            }
+
+            function checkFileSize(section)
+            {
+                var isValid = true;
+
+                $(section).find('input[type="file"]').each(function()
+                {
+                    if ($(this).val().length > 0 && this.files[0].size > 1048576) //1Mb
+                    {
+                        isValid = false;
+                        return false;
+                    }
+                });
+
+                return isValid;
+            }
+
+            function checkHEQual(section)
+            {
+                var isValid = true;
+                var isQualNameFilled = false;
+                var isQualTypeFilled = false;
+
+                if ($(section).find("[id$='QualType']").val())
+                {
+                    isQualTypeFilled = true;
+
+                    if (! $(section).find("[id^='QualName']").val())
+                    {
+                        isValid = false;
+                    }
+                }
+
+                if ($(section).find("[id^='QualName']").val())
+                {   
+                    isQualNameFilled = true;
+
+                    if ($(section).find("[id^='QualName']").val() == "Other" && ! $(section).find("[id^='OtherQualName']").val())
+                    {
+                        isValid = false;
+                    }
+                }
+
+                var selectedText = $(section).find("[id$='QualType']").find('option:selected').text();
+
+                if (selectedText.toUpperCase().indexOf("NVQ") >= 0 && ! $(section).find("[id$='NVQLevel']").val())
+                {
+                    isValid = false;
+                }
+
+                if (isQualTypeFilled && isQualNameFilled && isValid)
+                {
+                    if (! $(section).find("[id$='HEInstituteName']").val())
+                    {
+                        isValid = false;
+                    }
+                    else if ($(section).find("[id$='HEInstituteName']").val() == "Other" && ! $(section).find("[id^='OtherInstitute']").val())
+                    {
+                        isValid = false;
+                    }
+                }
+
+                if (isQualNameFilled && isValid)
+                {
+                    if (! $(section).find("[id$='QualStatus']").val())
+                    {
+                        isValid = false;
+                    }
+                    else if ($(section).find("[id$='QualStatus']").val() == "Completed")
+                    {
+                        if (!$(section).find("[id^='AwardedDate']").val()) {
+                            isValid = false;
+                        }
+                        else if (! $(section).find("[id$='AttachmentName']").val())
+                        {
+                            isValid = false;
+                        }
+                    }
+                }
+
+                return isValid;
+            }
+
+            function checkProfQual(section, subdiv)
+            {
+                var isValid = true;
+                var filledCount = 0;
+                var ctrlScope = 'ProfQualifications_' + subdiv;
+
+                $(section).find("[id^=" + ctrlScope + "]").each(function ()
+                {
+                    if ($(this).val())
+                        filledCount++;
+                });
+
+                if (filledCount > 0 && filledCount < 4)
+                    isValid = false;
+                
+                return isValid;
+            }
+
+            function checkWorkExp(section, subdiv)
+            {
+                var isValid = true;
+                var isCompanyFilled = false;
+                var isPositionFilled = false;
+                var ctrlScope = 'WorkExperiences_' + subdiv + '__';
+
+                if ($(section).find("[id$='" + ctrlScope + "CompanyName']").val())
+                {
+                    isCompanyFilled = true;
+                }
+
+                if ($(section).find("[id$='" + ctrlScope + "PositionHeld']").val()) {
+                    isPositionFilled = true;
+                }
+
+                if (isCompanyFilled && !isPositionFilled)
+                {
+                    return false;
+                }
+
+                if (!isCompanyFilled && isPositionFilled)
+                {
+                    return false;
+                }
+                
+                if (isCompanyFilled && isPositionFilled)
+                {
+                    if (! $(section).find("[id$='" + ctrlScope + "EmploymentNature']").val()) {
+                        isValid = false;
+                        return false;
+                    }
+
+                    var ctrlDependId1 = "#StartYearMonth" + subdiv;
+                    var ctrlDependId2 = "#EndYearMonth" + subdiv;
+
+                    var jobStatus = $(section).find("[id$='" + ctrlScope + "JobStatus']").val();
+                    var startDate = $(ctrlDependId1).val();
+                    var endDate = $(ctrlDependId2).val();
+
+                    //alert(jobStatus);
+                    //alert(startDate);
+                    //alert(endDate);
+
+                    if (! jobStatus) {
+                        isValid = false;
+                        return false;
+                    }
+                    else
+                    {
+                        if (jobStatus == 'Inactive' && ! endDate) {
+                            isValid = false;
+                            return false;
+                        }
+                    }
+
+                    if (jobStatus == 'Active' && ! startDate) {
+                        isValid = false;
+                        return false;
+                    }
+                }
+
+                return isValid;
+            }
+
+            function ShowProgress() {
+                setTimeout(function () 
+                {
+                    var modal = $('<div />');
+                    modal.addClass("modalx");
+                    $('body').append(modal);
+                    var loading = $(".loading");
+                    loading.show();
+                    var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+                    var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+                    loading.css({ top: top, left: left });
+                }, 200);
+            }
+        })
+    </script>
+}
