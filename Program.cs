@@ -25,6 +25,11 @@ builder.Services.Configure<FormOptions>(options =>
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 
+// Persist Data Protection keys to a fixed folder to prevent Antiforgery/Session key loss on App Pool recycle
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"C:\inetpub\wwwroot\career-portal-slt\Keys"))
+    .SetApplicationName("JobApp");
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
