@@ -1,5 +1,6 @@
 using JobApp.Models;
 using JobApp.Repository;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Localization;
