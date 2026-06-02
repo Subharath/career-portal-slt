@@ -98,22 +98,24 @@
                             <label asp-for="PersonalData.DOB" class="control-label required"></label>
                             <input asp-for="PersonalData.DOB" class="form-control form-control-sm" asp-format="{0:yyyy-MM-dd}" type="text" readonly="readonly"  style="background-color:white;" required/>
                         </div>
-                        <div class="col-1 form-group">
-                            <label asp-for="PersonalData.AgeYears" class="control-label optional"></label>
-                            <input asp-for="PersonalData.AgeYears" class="form-control form-control-sm" readonly />
-                            <span asp-validation-for="PersonalData.AgeYears" class="text-danger"></span>
-                        </div>
-                        <div class="col-1 form-group">
-                            <label asp-for="PersonalData.AgeMonths" class="control-label optional"></label>
-                            <input asp-for="PersonalData.AgeMonths" class="form-control form-control-sm" readonly />
-                        </div>
-                        <div class="col-1 form-group">
-                            <label asp-for="PersonalData.AgeDays" class="control-label optional"></label>
-                            <input asp-for="PersonalData.AgeDays" class="form-control form-control-sm" readonly />
-                        </div>
-                        <div class="col-2 form-group">
-                            <label class="dummy-label"></label>
-                            <input asp-for="PersonalData.Overage" class="form-control form-control-sm" readonly />
+                        <div class="col-6 age-fields-row">
+                            <div class="col form-group">
+                                <label asp-for="PersonalData.AgeYears" class="control-label optional"></label>
+                                <input asp-for="PersonalData.AgeYears" class="form-control form-control-sm" readonly />
+                                <span asp-validation-for="PersonalData.AgeYears" class="text-danger"></span>
+                            </div>
+                            <div class="col form-group">
+                                <label asp-for="PersonalData.AgeMonths" class="control-label optional"></label>
+                                <input asp-for="PersonalData.AgeMonths" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col form-group">
+                                <label asp-for="PersonalData.AgeDays" class="control-label optional"></label>
+                                <input asp-for="PersonalData.AgeDays" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col form-group">
+                                <label class="dummy-label"></label>
+                                <input asp-for="PersonalData.Overage" class="form-control form-control-sm" readonly />
+                            </div>
                         </div>
                     </div>
                     <div class="col-4 form-group">
