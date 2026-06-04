@@ -101,18 +101,22 @@
                             <label asp-for="PersonalData.DOB" class="control-label required"></label>
                             <input asp-for="PersonalData.DOB" class="form-control form-control-sm" asp-format="{0:yyyy-MM-dd}" type="text" readonly="readonly" style="background-color:white;" required />
                         </div>
-                        <div class="col-6 col-sm-4 col-md-1 form-group mobile-stack">
-                            <label asp-for="PersonalData.AgeYears" class="control-label optional"></label>
-                            <input asp-for="PersonalData.AgeYears" class="form-control form-control-sm" readonly />
-                            <span asp-validation-for="PersonalData.AgeYears" class="text-danger"></span>
-                        </div>
-                        <div class="col-6 col-sm-4 col-md-1 form-group mobile-stack">
-                            <label asp-for="PersonalData.AgeMonths" class="control-label optional"></label>
-                            <input asp-for="PersonalData.AgeMonths" class="form-control form-control-sm" readonly />
-                        </div>
-                        <div class="col-6 col-sm-4 col-md-1 form-group mobile-stack">
-                            <label asp-for="PersonalData.AgeDays" class="control-label optional"></label>
-                            <input asp-for="PersonalData.AgeDays" class="form-control form-control-sm" readonly />
+                        <div class="col-12 col-sm-12 col-md-4 form-group">
+                            <div class="d-flex justify-content-between mx-n1">
+                                <div class="px-1" style="width: 33%">
+                                    <label asp-for="PersonalData.AgeYears" class="control-label optional"></label>
+                                    <input asp-for="PersonalData.AgeYears" class="form-control form-control-sm text-center" readonly />
+                                </div>
+                                <div class="px-1" style="width: 33%">
+                                    <label asp-for="PersonalData.AgeMonths" class="control-label optional"></label>
+                                    <input asp-for="PersonalData.AgeMonths" class="form-control form-control-sm text-center" readonly />
+                                </div>
+                                <div class="px-1" style="width: 33%">
+                                    <label asp-for="PersonalData.AgeDays" class="control-label optional"></label>
+                                    <input asp-for="PersonalData.AgeDays" class="form-control form-control-sm text-center" readonly />
+                                </div>
+                            </div>
+                            <span asp-validation-for="PersonalData.AgeYears" class="text-danger d-block mt-1"></span>
                         </div>
                         <div class="col-6 col-sm-12 col-md-2 form-group mobile-stack">
                             <label class="dummy-label"></label>
@@ -1868,15 +1872,16 @@
             
             function initForm()
             {     
-                var year = new Date().getFullYear();
-                year = year - 16;
+                var today = new Date();
+                var maxD = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+                var minD = new Date(today.getFullYear() - 60, today.getMonth(), today.getDate() + 1);
 
-                var maxDate = new Date(year,1,1);
-                
-                // max date the user can choose, in this case dates before 16 years
-                maxDate = maxDate.toISOString().substring(0,10);
-
-                //$('#PersonalData_DOB').prop('max', maxDate);
+                function fmtDt(d) {
+                    var month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();
+                    if (month.length < 2) month = '0' + month;
+                    if (day.length < 2) day = '0' + day;
+                    return [year, month, day].join('-');
+                }
 
                 $("#PersonalData_DOB").datepicker(
                 {
@@ -1884,7 +1889,8 @@
                     minViewMode: "days",
                     startView: "years",
                     autoclose: true,
-                    endDate: maxDate
+                    startDate: fmtDt(minD),
+                    endDate: fmtDt(maxD)
                 });
 
                 $("#wizard-p-0").find("label[for^='PersonalData_Age']").each(function () {
