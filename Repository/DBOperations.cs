@@ -387,5 +387,16 @@ namespace JobApp.Repository
 
             return dtblResult;
         }
+
+        public bool IsTalentPoolEnabled()
+        {
+            string sql = "SELECT IsTalentPoolEnabled FROM TalentPoolSettings";
+            DataTable dt = SelectRows(sql);
+            if (dt.Rows.Count > 0)
+            {
+                return (bool)dt.Rows[0]["IsTalentPoolEnabled"];
+            }
+            return false; // Default to false if no setting is found
+        }
     }
 }
