@@ -94,7 +94,7 @@
                     <div class="form-group row">
                         <div class="col-12 col-sm-6 col-md-3 form-group">
                             <label asp-for="PersonalData.NIC" class="control-label required"></label>
-                            <input asp-for="PersonalData.NIC" class="form-control form-control-sm text-uppercase" maxlength="12" required />
+                            <input asp-for="PersonalData.NIC" class="form-control form-control-sm text-uppercase" maxlength="12" />
                             <span asp-validation-for="PersonalData.NIC" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3 form-group">
@@ -1122,8 +1122,6 @@
                 //when required fields are all filled, enable/show the span elements to show the regex or other validation  errors
                 if (isOk)
                 {
-                    $("#btnPersonalData").click(); //trigger unobtrusive validation to catch regex errors
-
                     $(section).find("span").each(function () {
                         $(this).show();
                     });
@@ -1132,6 +1130,8 @@
 
                         if ($(this).hasClass("input-validation-error"))
                         {
+                            //alert("input-validation-error");
+                            //$("#btnPersonalData").click();
                             isOk = false;
                             return false;
                         }
