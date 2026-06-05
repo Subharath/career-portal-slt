@@ -16,5 +16,6 @@ namespace JobApp.Repository
         string UpdateRecords(string sql, params SqlParameter[] parameters);
         string InsertRecords(string tableName, DataTable tempTable, bool isIdentity, out decimal generatedId, string identityField = "");
         DataTable GetFilteringCriteriaOfJobPosition(string intakeCode);
+        bool IsTalentPoolEnabled();
     }
 }
