@@ -61,17 +61,20 @@
     </section>
 }
 
-<section class="portal-card portal-talent mb-4" data-aos="fade-up" data-aos-delay="150">
-    <div class="row g-3 align-items-center">
-        <div class="col-md-8">
-            <h3 class="mb-2"><i class="fas fa-users me-2"></i>Join Our Talent Pool</h3>
-            <p class="mb-0">You can join with our Talent Pool and find your next job.</p>
+@if (ViewBag.IsTalentPoolEnabled)
+{
+    <section class="portal-card portal-talent mb-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-8">
+                <h3 class="mb-2"><i class="fas fa-users me-2"></i>Join Our Talent Pool</h3>
+                <p class="mb-0">You can join with our Talent Pool and find your next job.</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                @Html.ActionLink("Post Your Resume", "Join", "Home", null, new { @class = "btn btn-success btn-lg px-4" })
+            </div>
         </div>
-        <div class="col-md-4 text-md-end">
-            @Html.ActionLink("Post Your Resume", "Join", "Home", null, new { @class = "btn btn-success btn-lg px-4" })
-        </div>
-    </div>
-</section>
+    </section>
+}
 
 <section class="row g-3 mb-2" data-aos="fade-up" data-aos-delay="200">
     <div class="col-md-4">
