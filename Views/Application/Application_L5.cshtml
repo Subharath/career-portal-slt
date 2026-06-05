@@ -110,6 +110,7 @@
                                 </div>
                             </div>
                             <span asp-validation-for="PersonalData.AgeYears" class="text-danger d-block mt-1"></span>
+                            <small class="text-muted d-block mt-1">Note: Age is calculated as of the closing date (@ViewBag.ClosingDate).</small>
                         </div>
                         <div class="col-12 col-sm-6 col-md-2 form-group">
                             <label class="dummy-label"></label>
@@ -1753,9 +1754,10 @@
             
             function initForm()
             {     
-                var today = new Date();
-                var maxD = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
-                var minD = new Date(today.getFullYear() - 60, today.getMonth(), today.getDate() + 1);
+                var closingDateStr = '@ViewBag.ClosingDate';
+                var refDate = closingDateStr ? new Date(closingDateStr) : new Date();
+                var maxD = new Date(refDate.getFullYear() - 16, refDate.getMonth(), refDate.getDate());
+                var minD = new Date(refDate.getFullYear() - 60, refDate.getMonth(), refDate.getDate() + 1);
 
                 function fmtDt(d) {
                     var month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();

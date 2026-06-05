@@ -65,12 +65,14 @@ namespace JobApp.Controllers
                 if (dr["ClosingDate"] != DBNull.Value)
                 {
                     DateTime closingDate = Convert.ToDateTime(dr["ClosingDate"]);
+                    ViewBag.ClosingDate = closingDate.ToString("yyyy-MM-dd");
                     if (closingDate < DateTime.Today) {
                         isValidTry = false;
                     }
                 }
                 else //may be a talent pool try
                 {
+                    ViewBag.ClosingDate = DateTime.Today.ToString("yyyy-MM-dd");
                     if (! string.IsNullOrEmpty(dr["IntakeYearMonth"].ToString()))
                         isValidTry = false;
                 }
