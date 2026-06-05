@@ -36,7 +36,7 @@ namespace JobApp.Controllers
                 DataTable tmpTable = _DBOperations.SelectRows(sql);
 
                 List<IntakeViewModel> list = _UtilityFn.ConvertToList<IntakeViewModel>(tmpTable);
-
+                ViewBag.IsTalentPoolEnabled = _DBOperations.IsTalentPoolEnabled();
                 return View(list);
             }
             catch (Exception ex)
@@ -54,6 +54,11 @@ namespace JobApp.Controllers
 
         public IActionResult Join()
         {
+            ViewBag.IsTalentPoolEnabled = _DBOperations.IsTalentPoolEnabled();
+            if (!ViewBag.IsTalentPoolEnabled)
+            {
+                return View();
+            }
             try
             {
                 //get the available job opennings
